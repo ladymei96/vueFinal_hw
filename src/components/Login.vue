@@ -11,8 +11,11 @@
           <input type="checkbox" value="remember-me"> Remember me
           </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2020僅供學習使用</p>
+      <button class="btn btn-lg btn-primary btn-block mb-5" type="submit">Sign in</button>
+      <div class="d-flex justify-content-between">
+        <a href="#" @click.prevent="goHome">回到首頁</a>
+        <p class="text-muted">&copy; 2020僅供學習使用</p>
+      </div>
     </form>
   </div>
 </template>
@@ -41,6 +44,9 @@ export default {
           alert(`${response.data.message} 請重新登入`);
         }
       })
+    },
+    goHome(){
+      this.$router.push('/');
     }
   },
 }

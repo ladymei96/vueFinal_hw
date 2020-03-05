@@ -1,0 +1,23 @@
+.btn-cart{
+  position: relative;
+}
+.btn-cart .badge{
+    position: absolute;
+    bottom:-1px;
+    right:-2px;
+}
+.navbar-nav-row{
+  flex-direction: row;
+}
+.navbar-nav-row .nav-link{
+  padding-right:.5rem;
+  padding-left:.5rem;
+}
+.logo-size{
+  font-size:1.25rem;
+}
+@media (min-width: 992px) { 
+  .logo-size{
+    font-size:1rem;
+  }
+}
