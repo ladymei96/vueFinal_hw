@@ -32,18 +32,21 @@
           </ul>
           <ul class="navbar-nav">
             <li class="nav-tiem">
+              <!-- <a href="#" class="nav-link text-dark">
+                <i class="fas fa-user-circle fa-lg"></i>
+              </a> -->
+              <router-link to="/login" class="nav-link text-dark">
+                <i class="fas fa-user-circle fa-lg"></i>
+              </router-link>
+            </li>
+            <li class="nav-tiem">
               <a href="#" class="nav-link text-dark">
-                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                <i class="fas fa-heart fa-lg"></i>
               </a>
             </li>
             <li class="nav-tiem">
               <a href="#" class="nav-link text-dark">
-              <i class="fa fa-heart" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li class="nav-tiem">
-              <a href="#" class="nav-link text-dark">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <i class="fas fa-shopping-bag fa-lg"></i>
               </a>
             </li>
           </ul>
@@ -59,7 +62,7 @@
           <p class="text-vertical h5">What's HOT</p>
         </div>
       </div>
-      <div class="bg-primary box bg-cover"></div>
+      <div class="bg-primary block-bg bg-cover"></div>
     </section>
 
   </div><!---->
@@ -77,10 +80,11 @@ export default {
 </script>
 
 <style>
-.jumbotron-bg-image{
+/* 背景圖片寫在style內暫時無解 */
+/* .jumbotron-bg-image{
   background-image: url(../assets/image/index_banner.jpg);
-}
-.box{
+} */
+.block-bg{
   width: 135px;
   height: 180px;
   background-image: url(../assets/image/index_section.jpg);

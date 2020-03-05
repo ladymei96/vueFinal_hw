@@ -2,6 +2,11 @@
   background-position: center center;
   background-size:cover;
 }
+
+//背景圖_index
+.jumbotron-bg-image{
+  background-image: url(~@/assets/image/index_banner.jpg);
+}
 // text
 .text-vertical{
   writing-mode: vertical-rl;

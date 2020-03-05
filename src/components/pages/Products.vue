@@ -19,6 +19,12 @@ export default {
     return {
       
     }
+  },
+  created(){
+    // const api = 'https://vue-course-api.hexschool.io/api/ladymei/products';
+    // this.$http.get(api).then((response) => {
+    // console.log(response.data);
+    // });
   }
 }
 </script>
