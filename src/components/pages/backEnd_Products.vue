@@ -182,8 +182,12 @@ export default {
           vm.isLoading = false;
           vm.products = re.data.products;
           vm.pagination = re.data.pagination;
+          vm.showpage();
         }
       })
+    },//測試用
+    showpage(){
+      console.log(this.pagination);
     },
     openModal(isNew, item){
       if(isNew){
@@ -209,9 +213,8 @@ export default {
       this.$http[httpMethod](api, {data:vm.tempProduct}).then((re)=>{
         if(re.data.success){
           $('#productModal').modal('hide');
-          this.getProducts();
+          this.getProducts(vm.pagination.current_page);
         }
-        // console.log(re);
       })
     },
     removeProductModal(item){
@@ -241,7 +244,7 @@ export default {
       }).then((re)=>{
         if(re.data.success){
           vm.$set(vm.tempProduct, 'imageUrl', re.data.imageUrl);
-          vm.status.fileUploading = false;
+          vm.status.fileUploading = false;//關閉loading效果
         }else{
           vm.status.fileUploading = false;
           this.$bus.$emit('message:push', re.data.message, 'danger');

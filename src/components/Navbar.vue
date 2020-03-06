@@ -19,9 +19,9 @@
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
         <li class="nav-tiem d-none d-lg-inline">
-          <a href="#" class="nav-link text-dark logo-size mb-0">
+          <router-link to="/login" class="nav-link text-dark logo-size mb-0">
             <i class="fas fa-user-circle fa-lg"></i>
-          </a>
+          </router-link>
         </li>
         <li class="nav-tiem">
           <a href="#" class="nav-link text-dark logo-size mb-0">
