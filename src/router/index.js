@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import Home from'../components/Home';
 import pageFram from '../components/PageFram';
 import Products from'../components/pages/Products';
+import Product from'../components/pages/Product';
 // import Coupons from'../components/Coupons';
 import Login from '../components/Login';
 import Dashboard from '../components/Dashboard';
@@ -37,11 +38,11 @@ export default new VueRouter({
           path:'',
           component:Products,
         },
-        // {
-        //   name:'單一產品頁',
-        //   path:,
-        //   component:Product,
-        // }
+        {
+          name:'單一產品頁',
+          path:'product',
+          component:Product,
+        }
       ],
     },
     {

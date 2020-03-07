@@ -8,6 +8,10 @@
   background-image: url(~@/assets/image/index_banner.jpg);
 }
 // text
+*{
+  font-family: 'Ubuntu', 'Noto Sans TC', ;
+}
+
 .text-vertical{
   writing-mode: vertical-rl;
 }

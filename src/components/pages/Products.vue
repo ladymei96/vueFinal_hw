@@ -8,17 +8,11 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <!-- <img src="@/assets/image/products_carousel_1.jpg" class="d-block w-100" alt="banner_1"> -->
-          <span class="d-block w-100 carousel-bg-1 bg-cover"></span>
+        <div class="carousel-item active carousel-bg-1 carousel-item-height bg-cover">
         </div>
-        <div class="carousel-item">
-          <!-- <img src="@/assets/image/products_carousel_2.jpg" class="d-block w-100" alt="banner_2"> -->
-          <span class="d-block w-100 carousel-bg-2 bg-cover"></span>
+        <div class="carousel-item carousel-bg-2 carousel-item-height bg-cover">
         </div>
-        <div class="carousel-item">
-          <!-- <img src="@/assets/image/products_carousel_3.jpg" class="d-block w-100" alt="banner_3"> -->
-          <span class="d-block w-100 carousel-bg-3 bg-cover"></span>
+        <div class="carousel-item carousel-bg-3 carousel-item-height bg-cover">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -33,26 +27,6 @@
 <!-- 卡片項目 -->
     <div class="container">
       <div class="row">
-
-        <!-- <div class="col-lg-4 col-md-6 mb-5">
-          <div class="card h-100 shadow position-relative">
-            <div class="card-body">
-              <img src="https://picsum.photos/300/236?random=1" class="card-img-top" alt="product-image">
-              <h5 class="card-title">測試用標題</h5>
-              <p class="text-right text-muted mb-0"><del>$99999</del></p>
-              <p class="h5 text-right mb-0">$90000</p>
-            </div>
-
-            寫兩層蓋上去
-            <div class="card-body card-content position-absolute bg-primary text-white h-100 p-4">
-              <h5 class="card-title">內容標題</h5>
-              <p>內容描述、簡介、Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, asperiores!</p>
-              <a href="#" class="text-white d-block text-right h3">more_</a>
-              <a href="#"><img src="@/assets/image/plus_white.png" width="50px"></a>
-            </div>
-          </div>
-        </div> -->
-
         <div class="col-lg-4 col-md-6 mb-5" v-for="item in products" :key="item.id">
           <div class="card h-100 shadow">
             <div class="card-body">
@@ -61,13 +35,26 @@
               <p class="text-right text-muted mb-0"><del>{{item.origin_price | currency}}</del></p>
               <p class="h5 text-right mb-0">{{item.price | currency}}</p>
             </div>
-            
-            <div class="card-body card-content position-absolute bg-primary text-white h-100 p-4">
+
+            <div class="card h-100 position-absolute card-content bg-primary text-white">
+              <div class="card-header h-25 pt-4">
+                <h5 class="card-title">{{item.title}}</h5>
+              </div>
+              <div class="card-body">
+                <p>{{item.description}}</p>
+              </div>
+              <div class="card-footer d-flex flex-column">
+                <!-- <router-link class="text-white align-self-end h3" to="/products/product">more_</router-link> -->
+                <a href="#" @click.prevent="postItem(), productId = item.id" class="text-white align-self-end h3">more_</a>
+                <a href="#" class="align-self-start"><img src="@/assets/image/plus_white.png" width="50px"></a>
+              </div>
+            </div>
+            <!-- <div class="card-body card-content position-absolute bg-primary text-white h-100 p-4">
               <h5 class="card-title">{{item.title}}</h5>
               <p>{{item.description}}</p>
               <a href="#" class="text-white d-block text-right h3">more_</a>
               <a href="#"><img src="@/assets/image/plus_white.png" width="50px"></a>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -85,6 +72,7 @@ export default {
     return {
       products:[],
       pagination:{},
+      productId:'',
     }
   },
   methods:{
@@ -94,9 +82,15 @@ export default {
       this.$http.get(api).then((re) => {
         vm.products = re.data.products;
         vm.pagination = re.data.pagination;
-        console.log(re.data.products);
+        // console.log(re.data.products);
       })
+    },
+    postItem(){
+      this.$router.push('products/product');
     }
+  },
+  destroyed(){
+    this.$bus.$emit('postProduct', this.productId);
   },
   created(){
     //this.$bus.$emit('addCount');
@@ -106,17 +100,38 @@ export default {
 </script>
 
 <style>
+/* 先智障寫法，再優化 */
+.carousel-item-height{
+  height: 200px;
+}
+@media (min-width: 576px) { 
+  .carousel-item-height{
+    height: 250px;
+  }
+}
+@media (min-width: 768px) {
+  .carousel-item-height{
+    height: 300px;
+  }
+}
+@media (min-width: 992px) { 
+  .carousel-item-height{
+    height: 400px;
+  }
+}
+/*vue back寫在template上-未解決*/
 .carousel-bg-1{
   background-image: url(../../assets/image/products_carousel_1.jpg);
-  height: 400px;
 }
 .carousel-bg-2{
   background-image: url(../../assets/image/products_carousel_2.jpg);
-  height: 400px;
 }
 .carousel-bg-3{
   background-image: url(../../assets/image/products_carousel_3.jpg);
-  height: 400px;
+}
+.card-header,.card-footer{
+  background-color:transparent;
+  border-top:none;
 }
 .card-content{
   opacity: 0;
