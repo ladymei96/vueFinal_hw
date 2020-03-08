@@ -1,20 +1,19 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-5">
-<!--把漢堡icon跟logo換位置，達到RWD時logo置中-->
-<div class="d-flex">
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <a href="#" class="nav-link text-dark d-block d-lg-none h5 mb-0">
-        <i class="fas fa-user-circle fa-lg"></i>
-      </a>
-</div>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-sm-5">
+      <div class="d-flex">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <a href="#" class="nav-link text-dark d-lg-none logo-size mb-0">
+          <i class="fas fa-user-circle fa-lg"></i>
+        </a>
+      </div>
 
       <router-link class="navbar-brand" to="/">
-        <img src="../assets/image/logo_black.png" width="100px" alt="webLogo">
+        <img class="d-none d-lg-block" src="../assets/image/logo_black.png" width="100px" alt="webLogo">
+        <img class="d-block d-lg-none" src="../assets/image/logo_black.png" width="80px" alt="webLogo">
       </router-link>
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
@@ -83,4 +82,7 @@ export default {
   }
 }
 </script>
+<style>
+
+</style>
 

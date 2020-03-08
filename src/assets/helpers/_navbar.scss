@@ -14,10 +14,8 @@
   padding-left:.5rem;
 }
 .logo-size{
-  font-size:1.25rem;
+  font-size:1rem;
 }
-@media (min-width: 992px) { 
-  .logo-size{
-    font-size:1rem;
-  }
+.dropdown-item:hover{
+  background-color: $gray-400;
 }

@@ -45,16 +45,10 @@
               </div>
               <div class="card-footer d-flex flex-column">
                 <!-- <router-link class="text-white align-self-end h3" to="/products/product">more_</router-link> -->
-                <a href="#" @click.prevent="postItem(), productId = item.id" class="text-white align-self-end h3">more_</a>
+                <a href="#" @click.prevent="productDetail(item.id)" class="text-white align-self-end h3">more_</a>
                 <a href="#" class="align-self-start"><img src="@/assets/image/plus_white.png" width="50px"></a>
               </div>
             </div>
-            <!-- <div class="card-body card-content position-absolute bg-primary text-white h-100 p-4">
-              <h5 class="card-title">{{item.title}}</h5>
-              <p>{{item.description}}</p>
-              <a href="#" class="text-white d-block text-right h3">more_</a>
-              <a href="#"><img src="@/assets/image/plus_white.png" width="50px"></a>
-            </div> -->
           </div>
         </div>
 
@@ -72,7 +66,6 @@ export default {
     return {
       products:[],
       pagination:{},
-      productId:'',
     }
   },
   methods:{
@@ -85,12 +78,9 @@ export default {
         // console.log(re.data.products);
       })
     },
-    postItem(){
-      this.$router.push('products/product');
+    productDetail(id){
+      this.$router.push(`products/product/${id}`);
     }
-  },
-  destroyed(){
-    this.$bus.$emit('postProduct', this.productId);
   },
   created(){
     //this.$bus.$emit('addCount');
@@ -103,6 +93,8 @@ export default {
 /* 先智障寫法，再優化 */
 .carousel-item-height{
   height: 200px;
+  
+  /* transition: height .5s .3s;會影響輪播效果 */
 }
 @media (min-width: 576px) { 
   .carousel-item-height{
@@ -131,7 +123,7 @@ export default {
 }
 .card-header,.card-footer{
   background-color:transparent;
-  border-top:none;
+  border:none;
 }
 .card-content{
   opacity: 0;

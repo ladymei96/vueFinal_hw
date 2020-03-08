@@ -18,6 +18,10 @@ import CouponsBackEnd from '../components/pages/backEnd_Coupons';
 Vue.use(VueRouter);
 
 export default new VueRouter({
+  //動態路由間切換，讓頁面回到視窗頂部
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  },
   routes:[
     {
       path:'*',
@@ -40,7 +44,7 @@ export default new VueRouter({
         },
         {
           name:'單一產品頁',
-          path:'product',
+          path:'product/:id',
           component:Product,
         }
       ],
