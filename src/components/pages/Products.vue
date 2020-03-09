@@ -24,10 +24,86 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
+
+    <div class="container text-center">
+      <h2>測試區</h2>
+      <div>{{category}}</div>
+      <div>{{brand}}</div>
+    </div>
+
+<!-- 產品分類-選單 -->
+    <div class="container text-center mb-5">
+      <div class="list-group list-group-horizontal-sm" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">單反相機</a>
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反鏡頭', brand = ''" data-toggle="list" href="#dslr-lens" role="tab" aria-controls="dslr-lens">單反鏡頭</a>
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反相機', brand = ''" data-toggle="list" href="#evil-body" role="tab" aria-controls="evil-body">無反相機</a>
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">無反鏡頭</a>
+      </div>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade" id="dslr-body" role="tabpanel" aria-labelledby="list-home-list">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click.prevent="brand = 'Canon'">Canon</a><!-- active-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click.prevent="brand = 'Nikon'">Nikon</a>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="dslr-lens" role="tabpanel" aria-labelledby="list-profile-list">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Tamron'" href="#">Tamron</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Sigma'" href="#">Sigma</a>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="evil-body" role="tabpanel" aria-labelledby="list-messages-list">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Canon'" href="#" >Canon</a><!-- active-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Sony'" href="#">Sony</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Fujifilm'" href="#">Fujifilm</a>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="evil-lens" role="tabpanel" aria-labelledby="list-settings-list">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Sony'" href="#">Sony</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="brand = 'Fujifilm'" href="#">Fujifilm</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 <!-- 卡片項目 -->
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-5" v-for="item in products" :key="item.id">
+        <div class="col-lg-4 col-md-6 mb-5" v-for="item in filterData" :key="item.id">
           <div class="card h-100 shadow">
             <div class="card-body">
               <img :src="item.imageUrl" class="card-img-top" alt="product-image">
@@ -55,7 +131,7 @@
       </div>
     </div>
 
-    <Pagination :child-paginations="pagination" @changePage="getProducts"></Pagination>
+    <!-- <Pagination :child-paginations="pagination" @changePage="getProducts"></Pagination> -->
   </div>
 </template>
 
@@ -65,21 +141,56 @@ export default {
   data () {
     return {
       products:[],
-      pagination:{},
+      //pagination:{},
+      category:'',
+      brand:'',
     }
   },
   methods:{
-    getProducts(page = 1){
+    getProducts(){
       const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       this.$http.get(api).then((re) => {
         vm.products = re.data.products;
-        vm.pagination = re.data.pagination;
+        //vm.pagination = re.data.pagination;
         // console.log(re.data.products);
       })
     },
     productDetail(id){
       this.$router.push(`products/product/${id}`);
+    },
+  },
+  computed:{
+//要優化
+    filterData(){
+      const vm = this;
+      // 1
+      // if(vm.category == ''){
+      //   return vm.products;
+      // }else if(vm.category !== '' && vm.brand == ''){
+      //   let filtered = vm.products.filter((item) => {
+      //     return item.category == vm.category;
+      //   });
+      //   return filtered;
+      // }else if(vm.category !== '' && vm.brand !== ''){
+      //   let filtered = vm.products.filter((item) => {
+      //     return item.category == vm.category && item.title.indexOf(vm.brand) != -1;
+      //   });
+      //   return filtered;
+      // }
+      
+      // 2
+      if(vm.category == ''){
+        return vm.products;
+      }
+      let filtered = vm.products.filter((item) => {
+        if(vm.brand == ''){
+          return item.category == vm.category;
+        }else{
+          return item.category == vm.category && item.title.indexOf(vm.brand) != -1;
+        } 
+      });
+      return filtered;
     }
   },
   created(){
