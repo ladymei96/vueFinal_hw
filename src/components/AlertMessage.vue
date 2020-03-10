@@ -21,14 +21,13 @@
     },
     methods:{
       updateMessage(message, status){
-        const vm = this;
         const timestamp = Math.floor(new Date()/1000);
-        vm.messages.push({
+        this.messages.push({
           message,
           status,
           timestamp,
         })
-        vm.removeMessageWithTiming(timestamp);
+        this.removeMessageWithTiming(timestamp);
       },
       removeMessageWithTiming(timestamp){
         const vm = this;

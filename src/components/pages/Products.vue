@@ -1,6 +1,7 @@
 <template>
   <div>
 <!-- 輪播 -->
+    <loading :active.sync="isLoading"></loading>
     <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -24,20 +25,25 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-
 <!-- 產品分類-選單 -->
     <div class="container text-center mb-5">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action active" @click.prevent="category = '', brand = ''"  data-toggle="list" href="#products" role="tab">全部商品</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">DSLR單反相機</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反鏡頭', brand = ''" data-toggle="list" href="#dslr-lens" role="tab" aria-controls="dslr-lens">DSLR單反鏡頭</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反相機', brand = ''" data-toggle="list" href="#evil-body" role="tab" aria-controls="evil-body">EVIL無反相機</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">EVIL無反鏡頭</a>
       </div>
       <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="products">
+          <ul class="nav justify-content-center nav-option option-opacity">
+            <li class="nav-item"><a class="nav-link" href="#">all</a></li>
+          </ul>
+        </div>
         <div class="tab-pane fade" id="dslr-body" role="tabpanel" aria-labelledby="list-home-list">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
-              <a class="nav-link" href="#" @click.prevent="brand = 'Canon'">Canon</a><!-- active-->
+              <a class="nav-link" href="#" @click.prevent="brand = 'Canon'">Canon</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" @click.prevent="brand = 'Nikon'">Nikon</a>
@@ -114,9 +120,8 @@
                 <p>{{item.description}}</p>
               </div>
               <div class="card-footer d-flex flex-column">
-                <!-- <router-link class="text-white align-self-end h3" to="/products/product">more_</router-link> -->
                 <a href="#" @click.prevent="productDetail(item.id)" class="text-white align-self-end h3">more_</a>
-                <a href="#" class="align-self-start"><img src="@/assets/image/plus_white.png" width="50px"></a>
+                <a href="#" class="align-self-start" @click.prevent="addtoCart(item.id)"><img src="@/assets/image/plus_white.png" width="50px"></a>
               </div>
             </div>
           </div>
@@ -130,12 +135,16 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
   name: 'Products',
   data () {
     return {
       products:[],
+      cart:{},
       //pagination:{},
+      isLoading:false,
       category:'',
       brand:'',
     }
@@ -153,9 +162,33 @@ export default {
     productDetail(id){
       this.$router.push(`products/product/${id}`);
     },
+    addtoCart(id, qty = 1){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const vm = this;
+      const cart = {
+        product_id:id,
+        qty,
+      };
+      this.isLoading = true;
+      this.$http.post(api, {data:cart}).then((re) => {
+        if(re.data.success){
+          this.$parent.$emit('callFa:getCart');
+          vm.isLoading = false;
+          // vm.getCart();
+        }
+      })
+    },
+    // getCart(){
+    //   const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+    //   const vm = this;
+    //   this.$http.get(api).then((re) => {
+    //     console.log('購物車列表', re.data);
+    //     vm.cart = re.data.data;
+    //     this.$bus.$emit('cart-list', re.data.data.carts);
+    //   });
+    // }
   },
   computed:{
-//要優化
     filterData(){
       const vm = this;
       if(vm.category == ''){
@@ -172,8 +205,8 @@ export default {
     }
   },
   created(){
-    //this.$bus.$emit('addCount');
     this.getProducts();
+    // this.getCart();
   }
 }
 </script>
@@ -240,5 +273,9 @@ export default {
   content:'/';
   position:absolute;
   left:0;
+}
+.option-opacity{
+  opacity: 0;
+  pointer-events: none;
 }
 </style>

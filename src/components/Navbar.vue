@@ -30,7 +30,7 @@
         <li class="nav-tiem">
           <a href="#" class="nav-link text-dark btn-cart logo-size mb-0">
             <i class="fas fa-shopping-bag fa-lg"></i>
-            <span v-if="count >= 1" class="badge badge-danger rounded-circle">{{count}}</span>
+            <span v-if="cartList.length != 0" class="badge badge-danger rounded-circle">{{cartList.length}}</span>
           </a>
         </li>
       </ul>
@@ -65,20 +65,20 @@
 <script>
 export default {
   name: 'Navbar',
+  props:['cartList'],
   data () {
     return {
-      count:5,
+      // carts:[],
     }
   },
   methods:{
-    //暫時，事件名稱與方法還會修改
-    countAdd(num){
-      this.count++;
-    },
+
   },
   created(){
-    const vm = this;
-    this.$bus.$on('addCount', vm.countAdd);
+    // const vm = this;
+    // this.$bus.$on('cart-list', (carts) => {
+    //   vm.carts = carts;
+    // });
   }
 }
 </script>

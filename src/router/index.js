@@ -14,6 +14,7 @@ import ProductsBackEnd from '../components/pages/backEnd_Products';
 import OrdersBackEnd from '../components/pages/backEnd_Orders';
 import CouponsBackEnd from '../components/pages/backEnd_Coupons';
 import CustomOrdersBackEnd from '../components/pages/backEnd_CustomOrders';
+import CustomerCheckOrderBackEnd from '../components/pages/backEnd_CustomerCheckOrder';
 //自定義頁面元件
 
 Vue.use(VueRouter);
@@ -90,6 +91,11 @@ export default new VueRouter({
           name:'模擬訂單',
           component:CustomOrdersBackEnd,
         },
+        {
+          path:'customer-order-checkout/:orderId',
+          name:'模擬訂單結帳頁面',
+          component:CustomerCheckOrderBackEnd,
+        }
       ]
     }
     // {

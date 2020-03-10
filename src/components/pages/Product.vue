@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <div class="container">
       <div>
         <div class="text-center mb-4">
@@ -15,34 +16,14 @@
             <span class="h5 text-muted"><del>{{product.origin_price  | currency}}</del></span>
             <div class="input-group">
               <div class="input-group-prepend">
-                <button class="btn btn-secondary px-5" type="button" id="button-addon1">-</button>
+                <button class="btn btn-outline-secondary px-5" type="button" @click.prevent="nomoreZero">-</button>
               </div>
-              <input type="text" class="form-control text-center" v-model.number="product.num" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+              <input type="number" class="form-control text-center border-1px" v-model.number="productNum" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
               <div class="input-group-append" id="button-addon4">
-                <button class="btn btn-secondary px-5" type="button">+</button>
-                <button class="btn btn-outline-secondary font-weight-bolder" type="button">加到購物車</button>
+                <button class="btn btn-outline-secondary px-5" type="button" @click.prevent="productNum++">+</button>
+                <button class="btn btn-secondary font-weight-bolder" type="button" @click.prevent="addtoCart(productNum)">加到購物車</button>
               </div>
             </div>   
-
-            <!-- <div class="row">
-              <div class="col-lg-5">
-                <span class="h3 font-weight-bolder">{{product.price | currency}}</span>
-                <span class="h5 text-muted"><del>{{product.origin_price  | currency}}</del></span>
-              </div>
-              <div class="col-lg-7">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
-                  </div>
-                  <input type="text" class="form-control" v-model.number="product.num" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
-                  <div class="input-group-append" id="button-addon4">
-                    <button class="btn btn-outline-secondary" type="button">+</button>
-                    <button class="btn btn-outline-secondary" type="button">加到購物車</button>
-                  </div>
-                </div>            
-              </div>
-            </div> -->
-
           </div>
         </div>
       </div>
@@ -93,6 +74,8 @@ export default {
     return {
       productId:'',
       product:{},
+      productNum: 1,
+      isLoading:false,
     }
   },
   methods:{
@@ -100,9 +83,31 @@ export default {
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
       this.$http.get(api).then((re) => {
-        console.log(re);
+        // console.log(re);
         vm.product = re.data.product;
       })
+    },
+    addtoCart(qty){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const vm = this;
+      const cart = {
+        product_id:vm.productId,
+        qty,
+      };
+      this.isLoading = true;
+      this.$http.post(api, {data:cart}).then((re) => {
+        if(re.data.success){
+          this.$parent.$emit('callFa:getCart');
+          vm.isLoading = false;
+        }
+      })
+    },
+    nomoreZero(){
+      if(this.productNum < 2){
+        this.productNum = 1;
+      }else{
+        this.productNum-=1;
+      }
     }
   },
   created(){
@@ -132,11 +137,10 @@ export default {
 .title-border-bottom{
   border-bottom: 3px solid #000;
 }
-.form-control{
-  border:1px solid #10161e;
-  background-color: #10161e;
-  color:#fff;
+.border-1px{
+  border: 1px solid #000;
 }
+
 /* .btn:hover{
   background-color: rgb(90, 90, 90);
 } */
