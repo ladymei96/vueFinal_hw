@@ -14,7 +14,7 @@
       <button class="btn btn-lg btn-primary btn-block mb-5" type="submit">Sign in</button>
       <div class="d-flex justify-content-between">
         <a href="#" @click.prevent="goHome">回到首頁</a>
-        <p class="text-muted">&copy; 2020僅供學習使用</p>
+        <p class="text-muted">&copy; 2020 by mei 僅供學習使用</p>
       </div>
     </form>
   </div>

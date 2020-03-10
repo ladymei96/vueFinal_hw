@@ -25,23 +25,17 @@
       </a>
     </div>
 
-    <div class="container text-center">
-      <h2>測試區</h2>
-      <div>{{category}}</div>
-      <div>{{brand}}</div>
-    </div>
-
 <!-- 產品分類-選單 -->
     <div class="container text-center mb-5">
-      <div class="list-group list-group-horizontal-sm" id="list-tab" role="tablist">
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">單反相機</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反鏡頭', brand = ''" data-toggle="list" href="#dslr-lens" role="tab" aria-controls="dslr-lens">單反鏡頭</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反相機', brand = ''" data-toggle="list" href="#evil-body" role="tab" aria-controls="evil-body">無反相機</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">無反鏡頭</a>
+      <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">DSLR單反相機</a>
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反鏡頭', brand = ''" data-toggle="list" href="#dslr-lens" role="tab" aria-controls="dslr-lens">DSLR單反鏡頭</a>
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反相機', brand = ''" data-toggle="list" href="#evil-body" role="tab" aria-controls="evil-body">EVIL無反相機</a>
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">EVIL無反鏡頭</a>
       </div>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade" id="dslr-body" role="tabpanel" aria-labelledby="list-home-list">
-          <ul class="nav justify-content-center">
+          <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" href="#" @click.prevent="brand = 'Canon'">Canon</a><!-- active-->
             </li>
@@ -51,7 +45,7 @@
           </ul>
         </div>
         <div class="tab-pane fade" id="dslr-lens" role="tabpanel" aria-labelledby="list-profile-list">
-          <ul class="nav justify-content-center">
+          <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
             </li>
@@ -67,7 +61,7 @@
           </ul>
         </div>
         <div class="tab-pane fade" id="evil-body" role="tabpanel" aria-labelledby="list-messages-list">
-          <ul class="nav justify-content-center">
+          <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#" >Canon</a><!-- active-->
             </li>
@@ -83,7 +77,7 @@
           </ul>
         </div>
         <div class="tab-pane fade" id="evil-lens" role="tabpanel" aria-labelledby="list-settings-list">
-          <ul class="nav justify-content-center">
+          <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
             </li>
@@ -164,22 +158,6 @@ export default {
 //要優化
     filterData(){
       const vm = this;
-      // 1
-      // if(vm.category == ''){
-      //   return vm.products;
-      // }else if(vm.category !== '' && vm.brand == ''){
-      //   let filtered = vm.products.filter((item) => {
-      //     return item.category == vm.category;
-      //   });
-      //   return filtered;
-      // }else if(vm.category !== '' && vm.brand !== ''){
-      //   let filtered = vm.products.filter((item) => {
-      //     return item.category == vm.category && item.title.indexOf(vm.brand) != -1;
-      //   });
-      //   return filtered;
-      // }
-      
-      // 2
       if(vm.category == ''){
         return vm.products;
       }
@@ -242,5 +220,25 @@ export default {
 }
 .card:hover .card-content{
   opacity: 1;
+}
+.nav-option li{
+  position: relative;
+}
+
+.list-group>a{
+  color:#10161e
+}
+/*整合到scss內，用變數寫*/ 
+.nav-option li a{
+  color:#575b61;
+  font-size: 1.3rem;
+}
+.nav-option li:hover a{
+  color:#10161e;
+}
+.nav-option li + li ::before{
+  content:'/';
+  position:absolute;
+  left:0;
 }
 </style>

@@ -54,6 +54,7 @@
           vm.orders = response.data.orders;
           vm.pagination = response.data.pagination;
           vm.orders.forEach((item) => {
+        //購買時間格式，由timestamp轉為易閱讀格式
             item.create_at = `${(new Date(item.create_at *1000)).getFullYear()}/${(new Date(item.create_at *1000)).getMonth()+1}/${(new Date(item.create_at *1000)).getDate()}`;
           });
         })                                  

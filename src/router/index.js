@@ -13,6 +13,7 @@ import Dashboard from '../components/Dashboard';
 import ProductsBackEnd from '../components/pages/backEnd_Products';
 import OrdersBackEnd from '../components/pages/backEnd_Orders';
 import CouponsBackEnd from '../components/pages/backEnd_Coupons';
+import CustomOrdersBackEnd from '../components/pages/backEnd_CustomOrders';
 //自定義頁面元件
 
 Vue.use(VueRouter);
@@ -79,6 +80,18 @@ export default new VueRouter({
         }
       ],
     },
+    {
+      path:'/simulation',
+      name:'後台模擬功能',
+      component:Dashboard,
+      children:[
+        {
+          path:'custom-order',
+          name:'模擬訂單',
+          component:CustomOrdersBackEnd,
+        },
+      ]
+    }
     // {
     //   name:'Coupons',
     //   path:'coupons',
