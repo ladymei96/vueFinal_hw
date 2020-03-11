@@ -86,35 +86,48 @@
       </div>
     </div>
 <!-- createOrder -->
-    <div class="my-5 row justify-content-center">
+    <!-- <div class="my-5 row justify-content-center"> -->
+    <ValidationObserver tag="div" ref="form" class="my-5 row justify-content-center">
       <form class="col-md-6" @submit.prevent="createOrder">
-        <div class="form-group">
+        <!-- <div class="form-group"> -->
+        <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="email" rules="required">
           <label for="useremail">Email</label>
-          <input type="email" class="form-control" name="email" id="useremail"
-            v-model="form.user.email" placeholder="請輸入 Email" required>
+          <input type="email" class="form-control" :class="{'is-invalid': failed}" name="email" id="useremail"
+            v-model="form.user.email" placeholder="請輸入 Email">
+          <span v-if="failed" class="text-danger">{{errors[0]}}</span>
           <!-- <span class="text-danger" v-if="errors.has('email')">{{errors.first('email')}}</span> -->
-        </div>
+        </ValidationProvider>
+        <!-- </div> -->
       
-        <div class="form-group">
+        <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="姓名" rules="required">
+        <!-- <div class="form-group"> -->
           <label for="username">收件人姓名</label>
-          <input type="text" class="form-control" name="name" id="username"
-            v-model="form.user.name" placeholder="輸入姓名" required>
+          <input type="text" class="form-control" :class="{'is-invalid': failed}" name="name" id="username"
+            v-model="form.user.name" placeholder="輸入姓名">
+            <span v-if="failed" class="text-danger">{{errors[0]}}</span>
           <!-- <span class="text-danger" v-if="errors.has('name')">姓名欄位不得為空</span> -->
-        </div>
+        <!-- </div> -->
+        </ValidationProvider>
       
-        <div class="form-group">
+        <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="電話" rules="required">
+        <!-- <div class="form-group"> -->
           <label for="usertel">收件人電話</label>
-          <input type="tel" class="form-control" name="tel" id="usertel" v-model="form.user.tel"
-          placeholder="請輸入電話" required>
+          <input type="tel" class="form-control" :class="{'is-invalid': failed}" name="tel" id="usertel" v-model="form.user.tel"
+          placeholder="請輸入電話">
+          <span v-if="failed" class="text-danger">{{errors[0]}}</span>
           <!-- <span class="text-danger" v-if="errors.has('tel')">電話欄位不得為空</span> -->
-        </div>
-      
+        <!-- </div> -->
+        </ValidationProvider>
+
+        <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="地址" rules="required">
         <div class="form-group">
           <label for="useraddress">收件人地址</label>
-          <input type="text" class="form-control" name="address" id="useraddress"
-           v-model="form.user.address" placeholder="請輸入地址" required>
+          <input type="text" class="form-control" :class="{'is-invalid': failed}" name="address" id="useraddress"
+          v-model="form.user.address" placeholder="請輸入地址">
+          <span v-if="failed" class="text-danger">{{errors[0]}}</span>
           <!-- <span class="text-danger" v-if="errors.has('address')">地址欄位不得留空</span> -->
         </div>
+        </ValidationProvider>
       
         <div class="form-group">
           <label for="comment">留言</label>
@@ -124,7 +137,8 @@
           <button class="btn btn-danger">送出訂單</button>
         </div>
       </form>
-    </div>
+    </ValidationObserver>
+    <!-- </div> -->
 <!-- productModal -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -170,6 +184,7 @@
 
 <script>
 import $ from 'jquery';
+import {ValidationObserver, ValidationProvider} from 'vee-validate';
 
 export default {
   name: 'CustomOrders_backEnd',
@@ -195,6 +210,10 @@ export default {
         message:'',
       },
     }
+  },
+  components:{
+    ValidationObserver,
+    ValidationProvider,
   },
   methods:{
     getProducts(page = 1){
@@ -271,15 +290,20 @@ export default {
     createOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
       const vm = this;
-//先不做驗證，直接送單
-      this.$http.post(api, {data:vm.form}).then((re) => {
-        if(re.data.success){
-      //訂單成功送出，進行跳頁
-          console.log(re.data.orderId);
-          this.$router.push(`/simulation/customer-order-checkout/${re.data.orderId}`);
+    //表單submit前，進行驗證
+      this.$refs.form.validate().then((success) => {
+        if(success){//驗證成功後，進行AJAX行為
+          this.$http.post(api, {data:vm.form}).then((re) => {
+            if(re.data.success){
+          //訂單成功送出，進行跳頁
+              console.log(re.data.orderId);
+              this.$router.push(`/simulation/customer-order-checkout/${re.data.orderId}`);
+            }else{
+              this.$bus.$emit('message:push', re.data.message, 'danger'); 
+            }
+          })
         }else{
-          //-M22LRegNIoZL-uVNiFU
-          this.$bus.$emit('message:push', re.data.message, 'danger'); 
+          this.$bus.$emit('message:push', '請完整填寫收件人資料', 'danger'); 
         }
       })
     }

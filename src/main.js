@@ -6,6 +6,10 @@ import VueAxios from 'vue-axios';
 import 'bootstrap';//運用到BS內互動元件時，需載入(會跳提示要安裝jq與popper.js)
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+        //表單驗證
+import {extend, localize} from 'vee-validate';
+import {required, email} from 'vee-validate/dist/rules';
+import TW from 'vee-validate/dist/locale/zh_TW';
 //套件內容
 
 import App from './App';
@@ -21,6 +25,9 @@ Vue.use(VueAxios, axios);
 Vue.component('Loading', Loading);
 Vue.component('Pagination', Pagination);
 Vue.filter('currency', CurrencyFilter);
+extend('required', required);
+extend('email', email);
+localize('zh_TW', TW);
 //啟用區
 
 
