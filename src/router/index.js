@@ -15,6 +15,7 @@ import OrdersBackEnd from '../components/pages/backEnd_Orders';
 import CouponsBackEnd from '../components/pages/backEnd_Coupons';
 import CustomOrdersBackEnd from '../components/pages/backEnd_CustomOrders';
 import CustomerCheckOrderBackEnd from '../components/pages/backEnd_CustomerCheckOrder';
+import CustomerOrder from '../components/pages/CustomerOrder';
 //自定義頁面元件
 
 Vue.use(VueRouter);
@@ -48,6 +49,11 @@ export default new VueRouter({
           name:'單一產品頁',
           path:'product/:id',
           component:Product,
+        },
+        {
+          name:'購物車列表',
+          path:'customer-order',
+          component:CustomerOrder,
         }
       ],
     },

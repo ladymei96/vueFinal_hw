@@ -27,11 +27,31 @@
             <i class="fas fa-heart fa-lg"></i>
           </a>
         </li>
-        <li class="nav-tiem">
-          <a href="#" class="nav-link text-dark btn-cart logo-size mb-0">
+        <li class="nav-tiem dropdown">
+          <a href="#" class="nav-link text-dark btn-cart logo-size mb-0" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cartList.length != 0" class="badge badge-danger rounded-circle">{{cartList.length}}</span>
           </a>
+          <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 400px" data-offset="400">
+            <h6>已選擇商品</h6>
+            <table class="table table-sm">
+              <tbody>
+                <tr v-for="item in cartList" :key="item.id">
+                  <td class="align-middle text-center">
+                    <a href="#" class="text-muted">
+                      <i class="fa fa-trash-o"></i>
+                    </a>
+                  </td>
+                  <td width="200px" class="align-middle">{{item.product.title}}</td>
+                  <td class="align-middle">{{item.qty}}{{item.product.unit}}</td>
+                  <td width="80px" class="align-middle text-right">{{item.total | currency}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <router-link class="btn btn-primary btn-block" to="/products/customer-order">
+              <i class="fa fa-cart-plus" aria-hidden="true"></i> 結帳去
+            </router-link>
+          </div>
         </li>
       </ul>
 
@@ -68,17 +88,14 @@ export default {
   props:['cartList'],
   data () {
     return {
-      // carts:[],
+
     }
   },
   methods:{
 
   },
   created(){
-    // const vm = this;
-    // this.$bus.$on('cart-list', (carts) => {
-    //   vm.carts = carts;
-    // });
+
   }
 }
 </script>
