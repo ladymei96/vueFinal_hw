@@ -28,7 +28,7 @@
         </div>
       </div>
       
-  <router-link to="/products" class="h3">back</router-link>
+      <a class="h3" href="#" @click.prevent="goBack">back</a>
 
       <div class="row mb-3">
         <div class="col-md-6 p-3">
@@ -82,8 +82,10 @@ export default {
     getProduct(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
+      this.isLoading = true;
       this.$http.get(api).then((re) => {
         // console.log(re);
+        vm.isLoading = false;
         vm.product = re.data.product;
       })
     },
@@ -108,6 +110,9 @@ export default {
       }else{
         this.productNum-=1;
       }
+    },
+    goBack(){
+      this.$router.go(-1);
     }
   },
   created(){

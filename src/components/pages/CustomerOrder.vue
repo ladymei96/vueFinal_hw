@@ -7,10 +7,12 @@
         <p class="text-center h2" v-if="cart.carts.length == 0">清單內已無商品</p>
         <table class="table" v-if="cart.carts.length > 0">
           <thead>
-            <th></th>
-            <th>品名</th>
-            <th>數量</th>
-            <th width="150">總價</th>
+            <tr>
+              <th></th>
+              <th>品名</th>
+              <th>數量</th>
+              <th width="150">總價</th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="item in cart.carts" :key="item.id">
@@ -83,11 +85,12 @@
             <textarea type="message" class="form-control" id="comment" cols="30" rows="10" v-model="form.message"></textarea>
           </div>
           <div class="text-right">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">建立訂單</button>
           </div>
         </form>
       </ValidationObserver>
 
+      <button class="btn btn-primary" type="button" @click.prevent="goBack">繼續購物</button>
     </div>
   </div>
 </template>
@@ -96,7 +99,7 @@
 import {ValidationObserver, ValidationProvider} from 'vee-validate';
 
 export default {
-  name: 'Navbar',
+  name: 'CustomerOrder',
   data () {
     return {
       isLoading:false,
@@ -161,22 +164,31 @@ export default {
       })
     },
     createOrder(){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
+      const vm = this;
       this.$refs.form.validate().then((success) => {
         if(success){
-          console.log('驗證成功');
-          //轉頁
+          this.$http.post(api, {data:vm.form}).then((re) => {
+            if(re.data.success){
+              //通知navbar更新購物車資訊
+              this.$router.push(`/products/customer-order-checkout/${re.data.orderId}`);
+            }else{
+        //失敗跳訊息
+              console.log(re.data.message || re.data.messages);
+            }
+          })
+
         }else{
           console.log('驗證失敗');
         }
       })
+    },
+    goBack(){
+      this.$router.push('/products');
     }
   },
   created(){
     this.getCart();
-    // const vm = this;
-    // this.$bus.$on('cartList:get', (cart) => {
-    //   vm.cart = cart;
-    // })
   }
 }
 </script>

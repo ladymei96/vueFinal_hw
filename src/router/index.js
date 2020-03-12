@@ -14,8 +14,9 @@ import ProductsBackEnd from '../components/pages/backEnd_Products';
 import OrdersBackEnd from '../components/pages/backEnd_Orders';
 import CouponsBackEnd from '../components/pages/backEnd_Coupons';
 import CustomOrdersBackEnd from '../components/pages/backEnd_CustomOrders';
-import CustomerCheckOrderBackEnd from '../components/pages/backEnd_CustomerCheckOrder';
+import CustomerOrderCheckBackEnd from '../components/pages/backEnd_CustomerOrderCheck';
 import CustomerOrder from '../components/pages/CustomerOrder';
+import CustomerOrderCheckout from '../components/pages/CustomerOrderCheckout';
 //自定義頁面元件
 
 Vue.use(VueRouter);
@@ -54,7 +55,12 @@ export default new VueRouter({
           name:'購物車列表',
           path:'customer-order',
           component:CustomerOrder,
-        }
+        },
+        {
+          name:'訂單資訊頁',
+          path:'customer-order-checkout/:orderId',
+          component:CustomerOrderCheckout,
+        },
       ],
     },
     {
@@ -100,7 +106,7 @@ export default new VueRouter({
         {
           path:'customer-order-checkout/:orderId',
           name:'模擬訂單結帳頁面',
-          component:CustomerCheckOrderBackEnd,
+          component:CustomerOrderCheckBackEnd,
         }
       ]
     }
