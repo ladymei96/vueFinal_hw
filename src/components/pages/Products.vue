@@ -172,7 +172,7 @@ export default {
       this.isLoading = true;
       this.$http.post(api, {data:cart}).then((re) => {
         if(re.data.success){
-          this.$parent.$emit('callFa:getCart');
+          this.$bus.$emit('updateCart');
           vm.isLoading = false;
           // vm.getCart();
         }

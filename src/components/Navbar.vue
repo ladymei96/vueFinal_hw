@@ -30,13 +30,13 @@
         <li class="nav-tiem dropdown">
           <a href="#" class="nav-link text-dark btn-cart logo-size mb-0" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
-            <span v-if="cartList.length != 0" class="badge badge-danger rounded-circle">{{cartList.length}}</span>
+            <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 400px" data-offset="400">
             <h6>已選擇商品</h6>
             <table class="table table-sm">
               <tbody>
-                <tr v-for="item in cartList" :key="item.id">
+                <tr v-for="item in cart.carts" :key="item.id">
                   <td class="align-middle text-center">
                     <a href="#" class="text-muted">
                       <i class="fa fa-trash-o"></i>
@@ -85,17 +85,27 @@
 <script>
 export default {
   name: 'Navbar',
-  props:['cartList'],
   data () {
     return {
-
+      cart:{
+        carts:[],
+        },
     }
   },
   methods:{
-
+    getCart(){
+      const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const vm = this;
+      this.$http.get(api).then((re) => {
+        console.log('Navbar取得購物車列表', re.data);
+        vm.cart = re.data.data;
+        this.$bus.$emit('cartList:get', re.data.data);
+      });
+    }
   },
   created(){
-
+    this.getCart();//畫面初始，取得購物車列表
+    this.$bus.$on('updateCart', this.getCart);
   }
 }
 </script>

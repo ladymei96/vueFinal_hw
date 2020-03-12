@@ -16,7 +16,7 @@
             <span class="h5 text-muted"><del>{{product.origin_price  | currency}}</del></span>
             <div class="input-group">
               <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary px-5" type="button" @click.prevent="nomoreZero">-</button>
+                <button class="btn btn-outline-secondary px-5" type="button" @click.prevent="minNum">-</button>
               </div>
               <input type="number" class="form-control text-center border-1px" v-model.number="productNum" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
               <div class="input-group-append" id="button-addon4">
@@ -97,12 +97,12 @@ export default {
       this.isLoading = true;
       this.$http.post(api, {data:cart}).then((re) => {
         if(re.data.success){
-          this.$parent.$emit('callFa:getCart');
+          this.$bus.$emit('updateCart');
           vm.isLoading = false;
         }
       })
     },
-    nomoreZero(){
+    minNum(){
       if(this.productNum < 2){
         this.productNum = 1;
       }else{
