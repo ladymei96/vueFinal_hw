@@ -14,7 +14,7 @@ export default {
   name: 'PageFram',
   data () {
     return {
-      // carts:[],
+
     }
   },
   components:{
@@ -22,18 +22,10 @@ export default {
     Footer,
   },
   methods:{
-    // getCart(){
-    //   const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-    //   const vm = this;
-    //   this.$http.get(api).then((re) => {
-    //     console.log('fram取得購物車列表', re.data);
-    //     vm.carts = re.data.data.carts;
-    //   });
-    // }
+
   },
   created(){
-    // this.getCart();
-    // this.$on('callFa:getCart', this.getCart);
+
   }
 
 }

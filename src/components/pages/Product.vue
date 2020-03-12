@@ -97,7 +97,7 @@ export default {
       this.isLoading = true;
       this.$http.post(api, {data:cart}).then((re) => {
         if(re.data.success){
-          this.$bus.$emit('updateCart');
+          this.$bus.$emit('Navbar:updateCart');
           vm.isLoading = false;
         }
       })

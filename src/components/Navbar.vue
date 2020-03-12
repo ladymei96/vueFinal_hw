@@ -99,13 +99,13 @@ export default {
       this.$http.get(api).then((re) => {
         console.log('Navbar取得購物車列表', re.data);
         vm.cart = re.data.data;
-        this.$bus.$emit('cartList:get', re.data.data);
+        // this.$bus.$emit('cartList:get', re.data.data);
       });
     }
   },
   created(){
     this.getCart();//畫面初始，取得購物車列表
-    this.$bus.$on('updateCart', this.getCart);
+    this.$bus.$on('Navbar:updateCart', this.getCart);
   }
 }
 </script>

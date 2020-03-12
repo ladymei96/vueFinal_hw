@@ -4,7 +4,8 @@
     <div class="container mb-5">
       <div>
         <h2>MY BAG</h2>
-        <table class="table">
+        <p class="text-center h2" v-if="cart.carts.length == 0">清單內已無商品</p>
+        <table class="table" v-if="cart.carts.length > 0">
           <thead>
             <th></th>
             <th>品名</th>
@@ -39,7 +40,16 @@
             </tr>
           </tfoot>
         </table>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="請輸入優惠碼" v-model="coupon_code">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" @click.prevent="addCouponCode">
+              套用優惠碼
+            </button>
+          </div>
+        </div>
       </div>
+
       
       <ValidationObserver tag="div" ref="form">  
         <h2>INFORMATION</h2>
@@ -90,7 +100,9 @@ export default {
   data () {
     return {
       isLoading:false,
-      cart:{},
+      cart:{
+        carts:[],
+      },
       coupon_code:'',
       form:{
         user:{
@@ -108,7 +120,46 @@ export default {
     ValidationProvider,
   },
   methods:{
-    removeCartItem(){},
+    getCart(){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const vm = this;
+      this.isLoading = true;
+      this.$http.get(api).then((re) => {
+        vm.isLoading = false;
+        console.log('購物車列表取得資料', re.data);
+        vm.cart = re.data.data;
+      })
+    },
+    removeCartItem(id){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      const vm = this;
+      this.isLoading = true;
+      this.$http.delete(api).then((re) => {
+        this.isLoading = false;
+        vm.getCart();
+        this.$bus.$emit('Navbar:updateCart');
+      })
+    },
+    addCouponCode(){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
+      const vm = this;
+      const value = this.coupon_code.trim();
+      const coupon = {
+        code:value,
+        };
+      if(!value){
+        return;
+      }
+      this.isLoading = true;
+      this.$http.post(api, {data:coupon}).then((re) => {
+        this.isLoading = false;
+        if(re.data.success){
+          vm.getCart();
+        }else{
+          console.log(re.data.message);
+        }
+      })
+    },
     createOrder(){
       this.$refs.form.validate().then((success) => {
         if(success){
@@ -121,10 +172,11 @@ export default {
     }
   },
   created(){
-    const vm = this;
-    this.$bus.$on('cartList:get', (cart) => {
-      vm.cart = cart;
-    })
+    this.getCart();
+    // const vm = this;
+    // this.$bus.$on('cartList:get', (cart) => {
+    //   vm.cart = cart;
+    // })
   }
 }
 </script>

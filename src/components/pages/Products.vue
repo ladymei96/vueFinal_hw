@@ -142,7 +142,6 @@ export default {
   data () {
     return {
       products:[],
-      cart:{},
       //pagination:{},
       isLoading:false,
       category:'',
@@ -172,21 +171,11 @@ export default {
       this.isLoading = true;
       this.$http.post(api, {data:cart}).then((re) => {
         if(re.data.success){
-          this.$bus.$emit('updateCart');
+          this.$bus.$emit('Navbar:updateCart');
           vm.isLoading = false;
-          // vm.getCart();
         }
       })
     },
-    // getCart(){
-    //   const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-    //   const vm = this;
-    //   this.$http.get(api).then((re) => {
-    //     console.log('購物車列表', re.data);
-    //     vm.cart = re.data.data;
-    //     this.$bus.$emit('cart-list', re.data.data.carts);
-    //   });
-    // }
   },
   computed:{
     filterData(){
@@ -206,7 +195,6 @@ export default {
   },
   created(){
     this.getProducts();
-    // this.getCart();
   }
 }
 </script>
