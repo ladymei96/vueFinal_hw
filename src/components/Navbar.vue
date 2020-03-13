@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-sm-5">
       <div class="d-flex">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,8 +13,7 @@
       </div>
 
       <router-link class="navbar-brand" to="/">
-        <img class="d-none d-lg-block" src="../assets/image/logo_black.png" width="100px" alt="webLogo">
-        <img class="d-block d-lg-none" src="../assets/image/logo_black.png" width="80px" alt="webLogo">
+        <img class="logo-lg-width logo-width" src="../assets/image/logo_black.png" alt="webLogo">
       </router-link>
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
@@ -32,13 +32,14 @@
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 400px" data-offset="400">
+          <div class="dropdown-menu dropdown-menu-right p-3 position-absolute" style="min-width: 400px" data-offset="400">
             <h6>已選擇商品</h6>
+            <p class="empty" v-if="cart.carts.length == 0">清單內已無商品</p>
             <table class="table table-sm">
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
                   <td class="align-middle text-center">
-                    <a href="#" class="text-muted">
+                    <a href="#" class="text-muted" @click.prevent="removeCartItem(item.id)">
                       <i class="fa fa-trash-o"></i>
                     </a>
                   </td>
@@ -89,18 +90,29 @@ export default {
     return {
       cart:{
         carts:[],
-        },
+      },
+      isLoading:false,
     }
   },
   methods:{
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
+
       this.$http.get(api).then((re) => {
         console.log('Navbar取得購物車列表', re.data);
         vm.cart = re.data.data;
-        // this.$bus.$emit('cartList:get', re.data.data);
+
       });
+    },
+    removeCartItem(id){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      const vm = this;
+      this.isLoading = true;
+      this.$http.delete(api).then((re) => {
+        vm.getCart();
+        vm.isLoading = false;
+      })
     }
   },
   created(){
@@ -110,6 +122,19 @@ export default {
 }
 </script>
 <style>
-
+.empty{
+  padding:.3rem;
+  margin-bottom: 0;
+  border-top:1px solid #dee2e6;
+  text-align: center;
+}
+.logo-width{
+  width: 80px;
+}
+@media (min-width:992px){
+  .logo-lg-width{
+    width:100px;
+  }
+}
 </style>
 

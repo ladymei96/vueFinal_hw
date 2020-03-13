@@ -26,7 +26,7 @@
       </a>
     </div>
 <!-- 產品分類-選單 -->
-    <div class="container text-center mb-5">
+    <div class="container text-center mb-md-5 mb-3">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
         <a class="list-group-item list-group-item-action active" @click.prevent="category = '', brand = ''"  data-toggle="list" href="#products" role="tab">全部商品</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">DSLR單反相機</a>
@@ -172,7 +172,7 @@ export default {
       this.$http.post(api, {data:cart}).then((re) => {
         if(re.data.success){
           this.$bus.$emit('Navbar:updateCart');
-          vm.isLoading = false;
+          this.isLoading = false;
         }
       })
     },

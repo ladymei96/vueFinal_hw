@@ -80,13 +80,16 @@ export default {
     getOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order/${this.orderId}`;
       const vm = this;
+      this.isLoading = true;
       this.$http.get(api).then((re) => {
+        vm.isLoading = false;
         vm.order = re.data.order;
       })
     },
     payOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/pay/${this.orderId}`;
       const vm = this;
+      this.isLoading = true;
       this.$http.post(api).then((re) => {
         if(re.data.success){
           vm.getOrder();
@@ -101,7 +104,7 @@ export default {
     // -M2CbVv7W8yV-jYUyfkG
     this.orderId = this.$route.params.orderId;
     this.getOrder();
-    // this.$bus.$emit('Navbar:updateCart');測試路由換頁時`,nav有沒有自己created
+    this.$bus.$emit('Navbar:updateCart');
   }
 }
 </script>

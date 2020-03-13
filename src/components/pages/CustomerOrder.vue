@@ -11,7 +11,7 @@
               <th></th>
               <th>品名</th>
               <th>數量</th>
-              <th width="150">總價</th>
+              <th width="150" class="d-none d-md-table-cell">總價</th>
             </tr>
           </thead>
           <tbody>
@@ -28,20 +28,25 @@
                 </div>
               </td>
               <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-              <td class="align-middle text-right">{{ item.total | currency}}</td>
+              <td class="align-middle text-right d-none d-md-table-cell">{{ item.total | currency}}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="3" class="text-right">總計</td>
-              <td class="text-right">{{ cart.total | currency }}</td>
+              <td></td>
+              <td></td>
+              <td class="text-right">總計</td> <!-- colspan="3" -->
+              <td class="text-right  d-none d-md-table-cell">{{ cart.total | currency }}</td>
             </tr>
             <tr v-if="cart.final_total != cart.total">
-              <td colspan="3" class="text-right text-success">折扣價</td>
+              <td></td>
+              <td></td>
+              <td class="text-right text-success">折扣價</td>
               <td class="text-right text-success">{{ cart.final_total | currency}}</td>
             </tr>
           </tfoot>
         </table>
+
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="請輸入優惠碼" v-model="coupon_code">
           <div class="input-group-append">
@@ -170,7 +175,6 @@ export default {
         if(success){
           this.$http.post(api, {data:vm.form}).then((re) => {
             if(re.data.success){
-              //通知navbar更新購物車資訊
               this.$router.push(`/products/customer-order-checkout/${re.data.orderId}`);
             }else{
         //失敗跳訊息
@@ -193,6 +197,10 @@ export default {
 }
 </script>
 <style>
-
+@media (max-width: 575px){
+  .td-xs-none{
+    display: none;
+  }
+}
 </style>
 
