@@ -17,17 +17,17 @@
       </router-link>
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
-        <li class="nav-tiem d-none d-lg-inline">
+        <li class="nav-item d-none d-lg-inline">
           <router-link to="/login" class="nav-link text-dark logo-size mb-0">
             <i class="fas fa-user-circle fa-lg"></i>
           </router-link>
         </li>
-        <li class="nav-tiem">
+        <li class="nav-item">
           <a href="#" class="nav-link text-dark logo-size mb-0">
             <i class="fas fa-heart fa-lg"></i>
           </a>
         </li>
-        <li class="nav-tiem dropdown">
+        <li class="nav-item dropdown">
           <a href="#" class="nav-link text-dark btn-cart logo-size mb-0" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
@@ -49,7 +49,7 @@
                 </tr>
               </tbody>
             </table>
-            <router-link class="btn btn-primary btn-block" to="/products/customer-order">
+            <router-link class="btn btn-primary btn-block" to="/client/customer-order">
               <i class="fa fa-cart-plus" aria-hidden="true"></i> 結帳去
             </router-link>
           </div>
@@ -61,11 +61,12 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/">Home<span class="sr-only">(current)</span></router-link>
           </li>
-          <li class="nav-item dropdown active"><!--active-->
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <li class="nav-item dropdown active d-flex"><!--active-->
+            <router-link to="/client/products" class="nav-link" role="button" aria-haspopup="true">
               Products
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            </router-link>
+            <a href="#" class="dropdown-toggle align-self-center pr-2" id="navbarDropdown" data-toggle="dropdown"></a>
+            <div class="dropdown-menu">
               <a class="dropdown-item" href="#">單反相機</a>
               <a class="dropdown-item" href="#">單反鏡頭</a>
               <a class="dropdown-item" href="#">無反相機</a>
@@ -73,7 +74,8 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Coupons</a>
+            <!-- <a class="nav-link" href="#">Coupons</a> -->
+            <router-link class="nav-link" to="/coupons">Coupons</router-link>
           </li>
         </ul>
       </div>
@@ -113,11 +115,10 @@ export default {
         vm.getCart();
         vm.isLoading = false;
       })
-    }
+    },
   },
   created(){
     this.getCart();//畫面初始，取得購物車列表
-    this.$bus.$on('Navbar:updateCart', this.getCart);
   }
 }
 </script>

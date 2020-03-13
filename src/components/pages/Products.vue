@@ -159,7 +159,7 @@ export default {
       })
     },
     productDetail(id){
-      this.$router.push(`products/product/${id}`);
+      this.$router.push(`/client/product/${id}`);
     },
     addtoCart(id, qty = 1){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;

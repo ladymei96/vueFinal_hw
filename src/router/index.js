@@ -7,7 +7,7 @@ import Home from'../components/Home';
 import pageFram from '../components/PageFram';
 import Products from'../components/pages/Products';
 import Product from'../components/pages/Product';
-// import Coupons from'../components/Coupons';
+import Coupons from'../components/pages/Coupons';
 import Login from '../components/Login';
 import Dashboard from '../components/Dashboard';
 import ProductsBackEnd from '../components/pages/backEnd_Products';
@@ -17,6 +17,7 @@ import CustomOrdersBackEnd from '../components/pages/backEnd_CustomOrders';
 import CustomerOrderCheckBackEnd from '../components/pages/backEnd_CustomerOrderCheck';
 import CustomerOrder from '../components/pages/CustomerOrder';
 import CustomerOrderCheckout from '../components/pages/CustomerOrderCheckout';
+import Test from '../components/pages/Swiper';
 //自定義頁面元件
 
 Vue.use(VueRouter);
@@ -37,13 +38,13 @@ export default new VueRouter({
       component:Home,
     },
     {
-      //name:'產品頁',
-      path:'/products',
+      name:'產品頁',
+      path:'/client',
       component:pageFram,
       children:[
         {
-          name:'產品頁',
-          path:'',
+          name:'產品列表',
+          path:'products',
           component:Products,
         },
         {
@@ -61,6 +62,23 @@ export default new VueRouter({
           path:'customer-order-checkout/:orderId',
           component:CustomerOrderCheckout,
         },
+      ],
+    },
+    {
+      path:'/test',
+      name:'測試頁',
+      component:Test,
+    },    
+    {
+      // name:'優惠券',
+      path:'/coupons',
+      component:pageFram,
+      children:[
+        {
+          name:'優惠券',
+          path:'',
+          component:Coupons,
+        }
       ],
     },
     {
@@ -109,11 +127,6 @@ export default new VueRouter({
           component:CustomerOrderCheckBackEnd,
         }
       ]
-    }
-    // {
-    //   name:'Coupons',
-    //   path:'coupons',
-    //   component:Coupons,
-    // },
+    },
   ]
 });

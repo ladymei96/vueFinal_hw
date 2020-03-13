@@ -10,37 +10,39 @@
             <tr>
               <th></th>
               <th>品名</th>
-              <th>數量</th>
-              <th width="150" class="d-none d-md-table-cell">總價</th>
+              <th class="d-none d-md-table-cell">數量</th>
+              <th width="100" class="d-none d-sm-table-cell">總價</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in cart.carts" :key="item.id">
               <td class="align-middle">
-                <button type="button" class="btn btn-outline-danger btn-sm" @click="removeCartItem(item.id)">
-                  <i class="far fa-trash-alt"></i>
+                <button type="button" class="btn btn-sm" @click="removeCartItem(item.id)">
+                  <i class="fas fa-times"></i>
                 </button>
               </td>
               <td class="align-middle">
-                {{ item.product.title }}
+                <a href="#" @click.prevent="goProductPage(item.product.id)">
+                  {{ item.product.title }}
+                </a>
                 <div class="text-success" v-if="item.coupon">
                   已套用優惠券
                 </div>
               </td>
-              <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-              <td class="align-middle text-right d-none d-md-table-cell">{{ item.total | currency}}</td>
+              <td class="align-middle d-none d-md-table-cell">{{ item.qty }}/{{ item.product.unit }}</td>
+              <td class="align-middle text-right d-none d-sm-table-cell">{{ item.total | currency}}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td></td>
-              <td></td>
+              <td class="d-none d-sm-table-cell"></td>
+              <td class="d-none d-md-table-cell"></td>
               <td class="text-right">總計</td> <!-- colspan="3" -->
-              <td class="text-right  d-none d-md-table-cell">{{ cart.total | currency }}</td>
+              <td class="text-right">{{ cart.total | currency }}</td>
             </tr>
             <tr v-if="cart.final_total != cart.total">
-              <td></td>
-              <td></td>
+              <td class="d-none d-sm-table-cell"></td>
+              <td class="d-none d-md-table-cell"></td>
               <td class="text-right text-success">折扣價</td>
               <td class="text-right text-success">{{ cart.final_total | currency}}</td>
             </tr>
@@ -175,7 +177,7 @@ export default {
         if(success){
           this.$http.post(api, {data:vm.form}).then((re) => {
             if(re.data.success){
-              this.$router.push(`/products/customer-order-checkout/${re.data.orderId}`);
+              this.$router.push(`/client/customer-order-checkout/${re.data.orderId}`);
             }else{
         //失敗跳訊息
               console.log(re.data.message || re.data.messages);
@@ -188,8 +190,11 @@ export default {
       })
     },
     goBack(){
-      this.$router.push('/products');
-    }
+      this.$router.push('/client/products');
+    },
+    goProductPage(productId){
+      this.$router.push(`/client/product/${productId}`);      
+    },
   },
   created(){
     this.getCart();

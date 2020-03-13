@@ -10,6 +10,8 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import {extend, localize} from 'vee-validate';
 import {required, email} from 'vee-validate/dist/rules';
 import TW from 'vee-validate/dist/locale/zh_TW';
+// import VueAwesomeSwiper from 'vue-awesome-swiper';
+// import 'swiper/dist/css/swiper.css';
 //套件內容
 
 import App from './App';
@@ -28,6 +30,7 @@ Vue.filter('currency', CurrencyFilter);
 extend('required', required);
 extend('email', email);
 localize('zh_TW', TW);
+// Vue.use(VueAwesomeSwiper);
 //啟用區
 
 
