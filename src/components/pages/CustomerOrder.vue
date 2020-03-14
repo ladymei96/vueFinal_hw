@@ -50,7 +50,7 @@
         </table>
 
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="請輸入優惠碼" v-model="coupon_code">
+          <input type="text" class="form-control" placeholder="請輸入優惠碼" v-model.trim="coupon_code">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button" @click.prevent="addCouponCode">
               套用優惠碼
@@ -153,11 +153,10 @@ export default {
     addCouponCode(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
       const vm = this;
-      const value = this.coupon_code.trim();
       const coupon = {
-        code:value,
+        code:this.coupon_code,
         };
-      if(!value){
+      if(!this.coupon_code){
         return;
       }
       this.isLoading = true;

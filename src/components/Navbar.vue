@@ -67,10 +67,10 @@
             </router-link>
             <a href="#" class="dropdown-toggle align-self-center pr-2" id="navbarDropdown" data-toggle="dropdown"></a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">單反相機</a>
-              <a class="dropdown-item" href="#">單反鏡頭</a>
-              <a class="dropdown-item" href="#">無反相機</a>
-              <a class="dropdown-item" href="#">無反鏡頭</a>
+              <a class="dropdown-item" href="#" @click.prevent="filterData(1)">單反相機</a>
+              <a class="dropdown-item" href="#" @click.prevent="filterData(2)">單反鏡頭</a>
+              <a class="dropdown-item" href="#" @click.prevent="filterData(3)">無反相機</a>
+              <a class="dropdown-item" href="#" @click.prevent="filterData(4)">無反鏡頭</a>
             </div>
           </li>
           <li class="nav-item">
@@ -94,6 +94,7 @@ export default {
         carts:[],
       },
       isLoading:false,
+      // categoryIndex:0,
     }
   },
   methods:{
@@ -116,10 +117,21 @@ export default {
         vm.isLoading = false;
       })
     },
+    filterData(index){
+      //在別頁的寫法
+      // this.categoryIndex = index;
+      // this.$router.push('/client/products');
+      //在當前頁面的寫法
+      this.$bus.$emit('filterData:postIndex', index);
+      //要再思考nav與products的配合
+    },
   },
   created(){
     this.getCart();//畫面初始，取得購物車列表
-  }
+  },
+  // beforeDestroy(){
+  //   this.$bus.$emit('filterData:postIndex', this.categoryIndex);
+  // },
 }
 </script>
 <style>

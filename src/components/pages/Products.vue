@@ -28,19 +28,20 @@
 <!-- 產品分類-選單 -->
     <div class="container text-center mb-md-5 mb-3">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
-        <a class="list-group-item list-group-item-action active" @click.prevent="category = '', brand = ''"  data-toggle="list" href="#products" role="tab">全部商品</a>
+        <a v-for="(listItem, index) in categoryTest" :key="index" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == valueTest}" href="#">{{listItem}}</a>
+        <!-- <a class="list-group-item list-group-item-action active" @click.prevent="category = '', brand = ''"  data-toggle="list" href="#products" role="tab">全部商品</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">DSLR單反相機</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反鏡頭', brand = ''" data-toggle="list" href="#dslr-lens" role="tab" aria-controls="dslr-lens">DSLR單反鏡頭</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反相機', brand = ''" data-toggle="list" href="#evil-body" role="tab" aria-controls="evil-body">EVIL無反相機</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">EVIL無反鏡頭</a>
+        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">EVIL無反鏡頭</a> -->
       </div>
       <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="products">
+        <div class="tab-pane fade" :class="{'active': valueTest == 0, 'show': valueTest == 0}">
           <ul class="nav justify-content-center nav-option option-opacity">
             <li class="nav-item"><a class="nav-link" href="#">all</a></li>
           </ul>
         </div>
-        <div class="tab-pane fade" id="dslr-body" role="tabpanel" aria-labelledby="list-home-list">
+        <div class="tab-pane fade" :class="{'active': valueTest == 1, 'show': valueTest == 1}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" href="#" @click.prevent="brand = 'Canon'">Canon</a>
@@ -50,7 +51,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade" id="dslr-lens" role="tabpanel" aria-labelledby="list-profile-list">
+        <div class="tab-pane fade" :class="{'active': valueTest == 2, 'show': valueTest == 2}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
@@ -66,7 +67,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade" id="evil-body" role="tabpanel" aria-labelledby="list-messages-list">
+        <div class="tab-pane fade" :class="{'active': valueTest == 3, 'show': valueTest == 3}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#" >Canon</a><!-- active-->
@@ -82,7 +83,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade" id="evil-lens" role="tabpanel" aria-labelledby="list-settings-list">
+        <div class="tab-pane fade" :class="{'active': valueTest == 4, 'show': valueTest == 4}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
@@ -144,8 +145,10 @@ export default {
       products:[],
       //pagination:{},
       isLoading:false,
-      category:'',
+      category:'全部商品',
       brand:'',
+      categoryTest:['全部商品', 'DSLR單反相機', 'DSLR單反鏡頭', 'EVIL無反相機', 'EVIL無反鏡頭'],
+      valueTest:0,
     }
   },
   methods:{
@@ -176,11 +179,16 @@ export default {
         }
       })
     },
+    selectCategory(index){
+      this.valueTest = index;
+      this.category = this.categoryTest[index];
+      this.brand = '';
+    },
   },
   computed:{
     filterData(){
       const vm = this;
-      if(vm.category == ''){
+      if(vm.category == '全部商品'){
         return vm.products;
       }
       let filtered = vm.products.filter((item) => {
@@ -194,7 +202,11 @@ export default {
     }
   },
   created(){
+    const vm = this;
     this.getProducts();
+    this.$bus.$on('filterData:postIndex', (index) => {
+      vm.addClass(index);
+    })
   }
 }
 </script>
