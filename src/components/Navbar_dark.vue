@@ -61,11 +61,11 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
-          <li class="nav-item dropdown active d-flex">
+          <li class="nav-item dropdown d-flex">
             <router-link to="/products" class="nav-link" role="button" aria-haspopup="true">
-              Products<span class="sr-only">(current)</span>
+              Products
             </router-link>
-            <a href="#" class="dropdown-toggle align-self-center pr-2" id="navbarDropdown" data-toggle="dropdown"></a>
+            <a href="#" class="dropdown-toggle align-self-center nav-link pl-0 toggle--underline" id="navbarDropdown" data-toggle="dropdown"></a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#" @click.prevent="filterData(1)">單反相機</a>
               <a class="dropdown-item" href="#" @click.prevent="filterData(2)">單反鏡頭</a>

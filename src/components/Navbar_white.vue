@@ -60,14 +60,14 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent"><!--這裡放的是會被收闔的內容-->     
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item"><!--active-->
             <router-link class="nav-link" to="/">Home<span class="sr-only">(current)</span></router-link><!--current也要配合當前頁面-->
           </li>
-          <li class="nav-item dropdown d-flex"><!--active-->
+          <li class="nav-item dropdown d-flex">
             <router-link to="/products" class="nav-link" role="button" aria-haspopup="true">
               Products
             </router-link>
-            <a href="#" class="dropdown-toggle align-self-center pr-2" id="navbarDropdown" data-toggle="dropdown"></a>
+            <a href="#" class="dropdown-toggle align-self-center nav-link pl-0" id="navbarDropdown" data-toggle="dropdown"></a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#" @click.prevent="filterData(1)">單反相機</a>
               <a class="dropdown-item" href="#" @click.prevent="filterData(2)">單反鏡頭</a>

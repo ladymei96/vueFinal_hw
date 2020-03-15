@@ -1,11 +1,21 @@
-.bg-cover{
-  background-position: center center;
-  background-size:cover;
+//路由-active
+.navbar-light .navbar-nav .nav-link.router-link-exact-active{
+  color:#000;
 }
+.navbar-dark .navbar-nav .nav-link.router-link-exact-active{
+  color:#fff;
+}
+
+
+
 
 //背景圖片區
 .jumbotron-bg-image{
   background-image: url(~@/assets/image/index_banner.jpg);
+}
+.bg-cover{
+  background-position: center center;
+  background-size:cover;
 }
 //單一產品頁
 .description-bg-1{
