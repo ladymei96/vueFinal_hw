@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 //官方元件
 
 
-import Home from'../components/Home';
+import Home from'../components/pages/Home';
 import pageFram from '../components/PageFram';
 import Products from'../components/pages/Products';
 import Product from'../components/pages/Product';

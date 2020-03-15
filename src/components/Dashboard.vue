@@ -26,6 +26,7 @@ export default {
       
     }
   },
+  //元件區域註冊
   components:{
     NavbarBackEnd,
     SidebarBackEnd,

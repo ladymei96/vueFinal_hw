@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Navbar 先寫，再分成元件-->
-      <nav class="navbar navbar-expand-lg navbar-dark py-0 px-5 fixed-top"><!--py-0取消Navbar預設padding-->
+      <!-- <nav class="navbar navbar-expand-lg navbar-dark py-0 px-5 fixed-top">
         <router-link class="navbar-brand" to="/">
           <img src="../assets/image/logo_white.png" width="100px" alt="webLogo">
         </router-link>
@@ -32,9 +32,6 @@
           </ul>
           <ul class="navbar-nav">
             <li class="nav-tiem">
-              <!-- <a href="#" class="nav-link text-dark">
-                <i class="fas fa-user-circle fa-lg"></i>
-              </a> -->
               <router-link to="/login" class="nav-link text-dark">
                 <i class="fas fa-user-circle fa-lg"></i>
               </router-link>
@@ -51,8 +48,8 @@
             </li>
           </ul>
         </div>
-      </nav>
-
+      </nav> -->
+    <Navbar></Navbar>
     <section class="container-fluid position-relative">
       <div class="row">
         <div class="col-10 jumbotron-bg-image bg-cover w-100 vh-100">
@@ -69,12 +66,16 @@
 </template>
 
 <script>
+import Navbar from '../Home_Navbar';
 export default {
   name: 'Home',
   data () {
     return {
       
     }
+  },
+  components:{
+    Navbar,
   }
 }
 </script>
@@ -87,7 +88,7 @@ export default {
 .block-bg{
   width: 135px;
   height: 180px;
-  background-image: url(../assets/image/index_section.jpg);
+  background-image: url(../../assets/image/index_section.jpg);
   position: fixed;
   bottom:50px;
   right:12%;

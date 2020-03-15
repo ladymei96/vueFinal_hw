@@ -1,7 +1,7 @@
 <template>
   <div>
-<!-- 輪播 -->
     <loading :active.sync="isLoading"></loading>
+<!-- 輪播 -->
     <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>

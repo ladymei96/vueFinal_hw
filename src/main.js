@@ -24,6 +24,7 @@ import Pagination from './components/Pagination';
 axios.defaults.withCredentials = true;
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+  //元件全域註冊
 Vue.component('Loading', Loading);
 Vue.component('Pagination', Pagination);
 Vue.filter('currency', CurrencyFilter);
