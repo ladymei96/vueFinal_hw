@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -18,7 +16,10 @@ import App from './App';
 import router from './router';
 import CurrencyFilter from './filters/currency';
 import './bus';
-import Pagination from './components/Pagination';
+import NavbarWhite from './components/Navbar_white';
+import NavbarDark from './components/Navbar_dark';
+import Footer from './components/Footer';
+import Pagination from './components/backEnd_Pagination';
 //自定義內容
 
 axios.defaults.withCredentials = true;
@@ -26,6 +27,9 @@ Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
   //元件全域註冊
 Vue.component('Loading', Loading);
+Vue.component('NavbarWhite', NavbarWhite);
+Vue.component('NavbarDark', NavbarDark);
+Vue.component('Footer', Footer);
 Vue.component('Pagination', Pagination);
 Vue.filter('currency', CurrencyFilter);
 extend('required', required);

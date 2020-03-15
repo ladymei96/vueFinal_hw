@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div class="alert alert-danger" role="alert">
+    <NavbarWhite></NavbarWhite>
+    <div class="pt-5 bg-primary" style="height:500px;">
+    <div class="alert alert-danger mt-5" role="alert">
       優惠券
     </div>
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 

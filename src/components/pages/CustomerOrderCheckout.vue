@@ -104,7 +104,7 @@ export default {
     // -M2CbVv7W8yV-jYUyfkG
     this.orderId = this.$route.params.orderId;
     this.getOrder();
-    this.$bus.$emit('Navbar:updateCart');
+    this.$bus.$emit('Navbar:updateCart');//訂單建立，購物車會清空
   }
 }
 </script>

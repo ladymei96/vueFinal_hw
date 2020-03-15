@@ -176,7 +176,7 @@ export default {
         if(success){
           this.$http.post(api, {data:vm.form}).then((re) => {
             if(re.data.success){
-              this.$router.push(`/client/customer-order-checkout/${re.data.orderId}`);
+              this.$router.push(`/customer-order/${re.data.orderId}`);
             }else{
         //失敗跳訊息
               console.log(re.data.message || re.data.messages);
@@ -189,10 +189,10 @@ export default {
       })
     },
     goBack(){
-      this.$router.push('/client/products');
+      this.$router.push('/products');
     },
     goProductPage(productId){
-      this.$router.push(`/client/product/${productId}`);      
+      this.$router.push(`/product/${productId}`);      
     },
   },
   created(){

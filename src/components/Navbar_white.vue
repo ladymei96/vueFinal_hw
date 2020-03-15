@@ -1,19 +1,21 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
-    <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-sm-5">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-0 px-sm-5">
       <div class="d-flex">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         
-        <a href="#" class="nav-link text-dark d-lg-none navbar--icon-size mb-0">
+        <!-- <a href="#" class="nav-link text-white d-lg-none navbar--icon-size mb-0">
           <i class="fas fa-user-circle fa-lg"></i>
-        </a>
+        </a> -->
+        <router-link to="/login" class="nav-link text-white d-lg-none navbar--icon-size mb-0">
+            <i class="fas fa-user-circle fa-lg"></i>
+        </router-link>
       </div>
 
       <router-link class="navbar-brand" to="/">
-        <img class="logo-lg-width logo-width" src="../assets/image/logo_black.png" alt="webLogo">
+        <img class="logo-lg-width logo-width" src="../assets/image/logo_white.png" alt="webLogo">
       </router-link>
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
@@ -49,7 +51,7 @@
                 </tr>
               </tbody>
             </table>
-            <router-link class="btn btn-primary btn-block" to="/client/customer-order">
+            <router-link class="btn btn-primary btn-block" to="/customer-order">
               <i class="fa fa-cart-plus" aria-hidden="true"></i> 結帳去
             </router-link>
           </div>
@@ -58,11 +60,11 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent"><!--這裡放的是會被收闔的內容-->     
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/">Home<span class="sr-only">(current)</span></router-link>
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/">Home<span class="sr-only">(current)</span></router-link><!--current也要配合當前頁面-->
           </li>
-          <li class="nav-item dropdown active d-flex"><!--active-->
-            <router-link to="/client/products" class="nav-link" role="button" aria-haspopup="true">
+          <li class="nav-item dropdown d-flex"><!--active-->
+            <router-link to="/products" class="nav-link" role="button" aria-haspopup="true">
               Products
             </router-link>
             <a href="#" class="dropdown-toggle align-self-center pr-2" id="navbarDropdown" data-toggle="dropdown"></a>
@@ -74,7 +76,6 @@
             </div>
           </li>
           <li class="nav-item">
-            <!-- <a class="nav-link" href="#">Coupons</a> -->
             <router-link class="nav-link" to="/coupons">Coupons</router-link>
           </li>
         </ul>
@@ -87,25 +88,23 @@
 
 <script>
 export default {
-  name: 'Navbar',
+  name: 'Navbar_white',
   data () {
     return {
       cart:{
         carts:[],
       },
       isLoading:false,
-      // categoryIndex:0,
+      categoryIndex:0,
     }
   },
   methods:{
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
-
       this.$http.get(api).then((re) => {
         console.log('Navbar取得購物車列表', re.data);
         vm.cart = re.data.data;
-
       });
     },
     removeCartItem(id){
@@ -118,23 +117,20 @@ export default {
       })
     },
     filterData(index){
-      //在別頁的寫法
-      // this.categoryIndex = index;
-      // this.$router.push('/client/products');
-      //在當前頁面的寫法
-      this.$bus.$emit('filterData:postIndex', index);
-      //要再思考nav與products的配合
+    //   在別頁的寫法
+      this.categoryIndex = index;
+      this.$router.push('/products');
     },
   },
   created(){
     this.getCart();//畫面初始，取得購物車列表
   },
-  // beforeDestroy(){
-  //   this.$bus.$emit('filterData:postIndex', this.categoryIndex);
-  // },
+  beforeDestroy(){
+    this.$bus.$emit('filterData:postIndex', this.categoryIndex);
+  },
 }
 </script>
-<style>
+<style scoped>
 .empty{
   padding:.3rem;
   margin-bottom: 0;

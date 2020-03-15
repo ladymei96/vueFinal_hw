@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavbarDark></NavbarDark>
     <loading :active.sync="isLoading"></loading>
     <div class="container">
       <div>
@@ -63,7 +64,7 @@
       </div>
 
     </div><!--container-->
- 
+    <Footer></Footer>
   </div>
 </template>
 
@@ -112,11 +113,11 @@ export default {
       }
     },
     goBack(){
-      this.$router.push('/client/products');
+      this.$router.push('/products');
     }
   },
   created(){
-    this.productId = this.$route.params.id;
+    this.productId = this.$route.params.productId;
     this.getProduct();
   },
 }

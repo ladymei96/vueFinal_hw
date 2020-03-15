@@ -2,22 +2,21 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 //官方元件
 
-
 import Home from'../components/pages/Home';
-import pageFram from '../components/PageFram';
 import Products from'../components/pages/Products';
 import Product from'../components/pages/Product';
 import Coupons from'../components/pages/Coupons';
-import Login from '../components/Login';
+import CreateOrder from '../components/CreateOrder';
+import CustomerOrder from '../components/pages/CustomerOrder';
+import CustomerOrderCheckout from '../components/pages/CustomerOrderCheckout';
+//import Test from '../components/pages/Swiper';//整合進coupons
+import Login from '../components/pages/Login';
 import Dashboard from '../components/Dashboard';
 import ProductsBackEnd from '../components/pages/backEnd_Products';
 import OrdersBackEnd from '../components/pages/backEnd_Orders';
 import CouponsBackEnd from '../components/pages/backEnd_Coupons';
 import CustomOrdersBackEnd from '../components/pages/backEnd_CustomOrders';
 import CustomerOrderCheckBackEnd from '../components/pages/backEnd_CustomerOrderCheck';
-import CustomerOrder from '../components/pages/CustomerOrder';
-import CustomerOrderCheckout from '../components/pages/CustomerOrderCheckout';
-import Test from '../components/pages/Swiper';
 //自定義頁面元件
 
 Vue.use(VueRouter);
@@ -38,48 +37,35 @@ export default new VueRouter({
       component:Home,
     },
     {
-      name:'產品頁',
-      path:'/client',
-      component:pageFram,
+      name:'產品列表',
+      path:'/products',
+      component:Products,
+    },
+    {
+      name:'單一產品頁',
+      path:'/product/:productId',
+      component:Product,
+    },
+    {
+      path:'/customer-order',
+      component:CreateOrder,
       children:[
         {
-          name:'產品列表',
-          path:'products',
-          component:Products,
-        },
-        {
-          name:'單一產品頁',
-          path:'product/:id',
-          component:Product,
-        },
-        {
-          name:'購物車列表',
-          path:'customer-order',
+          name:'購物車清單',
+          path:'',
           component:CustomerOrder,
         },
         {
           name:'訂單資訊頁',
-          path:'customer-order-checkout/:orderId',
+          path:':orderId',
           component:CustomerOrderCheckout,
         },
-      ],
+      ]
     },
     {
-      path:'/test',
-      name:'測試頁',
-      component:Test,
-    },    
-    {
-      // name:'優惠券',
+      name:'優惠券',
       path:'/coupons',
-      component:pageFram,
-      children:[
-        {
-          name:'優惠券',
-          path:'',
-          component:Coupons,
-        }
-      ],
+      component:Coupons,
     },
     {
       path:'/login',

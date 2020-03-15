@@ -1,6 +1,7 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
+    <NavbarDark :current-page="isProductsPage"></NavbarDark>
 <!-- 輪播 -->
     <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel">
       <ol class="carousel-indicators">
@@ -28,7 +29,7 @@
 <!-- 產品分類-選單 -->
     <div class="container text-center mb-md-5 mb-3">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
-        <a v-for="(listItem, index) in categoryTest" :key="index" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == valueTest}" href="#">{{listItem}}</a>
+        <a v-for="(listItem, index) in category" :key="index" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{listItem}}</a>
         <!-- <a class="list-group-item list-group-item-action active" @click.prevent="category = '', brand = ''"  data-toggle="list" href="#products" role="tab">全部商品</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">DSLR單反相機</a>
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反鏡頭', brand = ''" data-toggle="list" href="#dslr-lens" role="tab" aria-controls="dslr-lens">DSLR單反鏡頭</a>
@@ -36,12 +37,12 @@
         <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">EVIL無反鏡頭</a> -->
       </div>
       <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade" :class="{'active': valueTest == 0, 'show': valueTest == 0}">
+        <div class="tab-pane fade" :class="{'active': categoryIndex == 0, 'show': categoryIndex == 0}">
           <ul class="nav justify-content-center nav-option option-opacity">
             <li class="nav-item"><a class="nav-link" href="#">all</a></li>
           </ul>
         </div>
-        <div class="tab-pane fade" :class="{'active': valueTest == 1, 'show': valueTest == 1}">
+        <div class="tab-pane fade" :class="{'active': categoryIndex == 1, 'show': categoryIndex == 1}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" href="#" @click.prevent="brand = 'Canon'">Canon</a>
@@ -51,7 +52,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade" :class="{'active': valueTest == 2, 'show': valueTest == 2}">
+        <div class="tab-pane fade" :class="{'active': categoryIndex == 2, 'show': categoryIndex == 2}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
@@ -67,7 +68,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade" :class="{'active': valueTest == 3, 'show': valueTest == 3}">
+        <div class="tab-pane fade" :class="{'active': categoryIndex == 3, 'show': categoryIndex == 3}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#" >Canon</a><!-- active-->
@@ -83,7 +84,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab-pane fade" :class="{'active': valueTest == 4, 'show': valueTest == 4}">
+        <div class="tab-pane fade" :class="{'active': categoryIndex == 4, 'show': categoryIndex == 4}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
               <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
@@ -132,6 +133,7 @@
     </div>
 
     <!-- <Pagination :child-paginations="pagination" @changePage="getProducts"></Pagination> -->
+    <Footer></Footer>
   </div>
 </template>
 
@@ -145,10 +147,11 @@ export default {
       products:[],
       //pagination:{},
       isLoading:false,
-      category:'全部商品',
+      currentCategory:'全部商品',
       brand:'',
-      categoryTest:['全部商品', 'DSLR單反相機', 'DSLR單反鏡頭', 'EVIL無反相機', 'EVIL無反鏡頭'],
-      valueTest:0,
+      category:['全部商品', 'DSLR單反相機', 'DSLR單反鏡頭', 'EVIL無反相機', 'EVIL無反鏡頭'],
+      categoryIndex:0,
+      isProductsPage:true,
     }
   },
   methods:{
@@ -162,7 +165,7 @@ export default {
       })
     },
     productDetail(id){
-      this.$router.push(`/client/product/${id}`);
+      this.$router.push(`/product/${id}`);
     },
     addtoCart(id, qty = 1){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
@@ -180,22 +183,21 @@ export default {
       })
     },
     selectCategory(index){
-      this.valueTest = index;
-      this.category = this.categoryTest[index];
+      this.categoryIndex = index;
+      this.currentCategory = this.category[index];
       this.brand = '';
     },
   },
   computed:{
     filterData(){
-      const vm = this;
-      if(vm.category == '全部商品'){
-        return vm.products;
+      if(this.currentCategory == '全部商品'){
+        return this.products;
       }
-      let filtered = vm.products.filter((item) => {
-        if(vm.brand == ''){
-          return item.category == vm.category;
+      let filtered = this.products.filter((item) => {
+        if(this.brand == ''){
+          return item.category == this.currentCategory;
         }else{
-          return item.category == vm.category && item.title.indexOf(vm.brand) != -1;
+          return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
         } 
       });
       return filtered;
@@ -205,9 +207,9 @@ export default {
     const vm = this;
     this.getProducts();
     this.$bus.$on('filterData:postIndex', (index) => {
-      vm.addClass(index);
+      vm.selectCategory(index);
     })
-  }
+  },
 }
 </script>
 
