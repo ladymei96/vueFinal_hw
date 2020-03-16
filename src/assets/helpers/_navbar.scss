@@ -1,7 +1,7 @@
-.btn-cart{
+.navbar-icon-badge{
   position: relative;
 }
-.btn-cart .badge{
+.navbar-icon-badge .badge{
     position: absolute;
     bottom:-1px;
     right:-2px;
@@ -13,7 +13,7 @@
   padding-right:.5rem;
   padding-left:.5rem;
 }
-.navbar--icon-size{
+.navbar-icon-size{
   font-size:1rem;
 }
 .dropdown-item:hover{

@@ -22,13 +22,30 @@
             <i class="fas fa-user-circle fa-lg"></i>
           </router-link>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link text-dark navbar--icon-size mb-0">
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link text-dark navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown">
             <i class="fas fa-heart fa-lg"></i>
+            <span v-if="favoriteData.length != 0" class="badge badge-danger rounded-circle">{{favoriteData.length}}</span>
           </a>
+          <div class="dropdown-menu dropdown-menu-right p-3 position-absolute" style="min-width: 280px" data-offset="400">
+            <h6>最愛商品列表</h6>
+            <p class="empty" v-if="favoriteData.length == 0">清單內已無商品</p>
+            <table class="table table-sm">
+              <tbody>
+                <tr v-for="item in favoriteData" :key="item.id">
+                  <td class="align-middle text-center">
+                    <a href="#" class="text-muted" @click.prevent="removeFavoriteItem(item.id)">
+                      <i class="fa fa-trash-o"></i>
+                    </a>
+                  </td>
+                  <td width="200px" class="align-middle">{{item.title}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </li>
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link text-dark btn-cart navbar--icon-size mb-0" data-toggle="dropdown" data-flip="false">
+          <a href="#" class="nav-link text-dark navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
@@ -96,6 +113,8 @@ export default {
       isLoading:false,
       categoryIndex:0,
       isProductsPage:this.currentPage,
+      favoriteData:JSON.parse(localStorage.getItem('favoriteData')) || [],//存放我的最愛產品資訊
+      products:[],
     }
   },
   props:['currentPage'],
@@ -128,10 +147,44 @@ export default {
         this.$router.push('/products');
       }
     },
+    updateFavorite(){
+      this.favoriteData = JSON.parse(localStorage.getItem('favoriteData'));
+    },
+    removeFavoriteItem(id){
+      const vm = this;
+      const favoriteItem = JSON.parse(localStorage.getItem('favoriteItemId'));
+
+      favoriteItem.forEach(function(item, index){
+        if(item == id){
+          favoriteItem.splice(index, 1);
+        }
+      })
+      //刪完，更新localStorage內的favoriteItem
+      localStorage.setItem('favoriteItemId', JSON.stringify(favoriteItem));
+      //再由更新過的favoriteItem換取favoriteData
+      let filtered = this.products.filter(function(item){
+        return favoriteItem.indexOf(item.id) != -1
+      })
+      //寫入
+      localStorage.setItem('favoriteData', JSON.stringify(filtered));
+      //再更新自己
+      this.favoriteData = JSON.parse(localStorage.getItem('favoriteData'));
+      //通知product更新favoriteItem
+      this.$bus.$emit('Product:updateFavoriteItem');
+    },
+    getProducts(){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
+      this.$http.get(api).then((re) => {
+        vm.products = re.data.products;
+      })
+    },
   },
   created(){
     this.getCart();//畫面初始，取得購物車列表
     this.$bus.$on('Navbar:updateCart', this.getCart);
+    this.$bus.$on('Navbar:updateFavorite', this.updateFavorite);
+    this.getProducts();
   },
   beforeDestroy(){
     this.$bus.$emit('filterData:postIndex', this.categoryIndex);

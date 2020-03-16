@@ -2,27 +2,34 @@
   <div>
     <NavbarWhite></NavbarWhite>
     <div class="bg-coupon bg-cover overflow-hidden">
-      <div class="container mt-5"> <!--父層吃子層的margin-->
+      <div class="container swipper-margin"> <!--父層吃子層的margin-->
         <swiper :options="swiperOption" ref="mySwiper">
           <!-- slides -->
-          <swiper-slide>
-            <img src="https://picsum.photos/450/450?random=1" alt="">
+          <swiper-slide class="swiper-slide-bg">
+            <div class="card text-center h-100 bg-transparent p-5">
+              <div class="card-body text-white">
+                <p class="card-text">Shoot everyday</p>
+                <h5 class="card-title">會帶出門才是好相機</h5>
+                <p class="card-text">周末限定</p>
+                <div class="bg-secondary py-2 rotate-15deg">
+                  <p class="card-text h1">50% OFF</p>
+                </div>
+              </div>
+              <div class="py-2 text-dark bg-white">
+                lucky777
+              </div>
+            </div>
           </swiper-slide>
-          <swiper-slide>
-            <img src="https://picsum.photos/450/450?random=2" alt="">
+
+          <swiper-slide class="swiper-slide-bg">
           </swiper-slide>
-          <swiper-slide>
-            <img src="https://picsum.photos/450/450?random=3" alt="">
+          <swiper-slide class="swiper-slide-bg">
           </swiper-slide>
           <!-- Optional controls -->
-          <!-- 標示碼 -->
-          <div class="swiper-pagination"  slot="pagination"></div>
           <!-- 上一頁 -->
           <div class="swiper-button-prev" slot="button-prev"></div>
           <!-- 下一頁 -->
           <div class="swiper-button-next" slot="button-next"></div>
-          <!-- 滾動條 -->
-          <!-- <div class="swiper-scrollbar"   slot="scrollbar"></div> -->
         </swiper>
       </div>
     </div>
@@ -40,12 +47,12 @@ export default {
     return {
       swiperOption: {
         // direction: 'horizontal',
-        autoplay:true,//自行滑動
+        autoplay:false,//自行滑動
         loop:true,
         speed:1000,
         // effect:'slide',
-        slidesPerView: 3,
-        spaceBetween: 200,
+        slidesPerView: 2,
+        spaceBetween: 20,
         centeredSlides: true,
         mousewheel: true,//鼠標滾輪控制swiper
         navigation:{
@@ -62,7 +69,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
   .bg-coupon{
     background-image: url(../../assets/image/coupons_bg.jpg);
     width: 100%;
@@ -74,17 +81,6 @@ export default {
     z-index: 2;
     width: 100%;
   }
-  /* html, body {
-    position: relative;
-    height: 100%;
-  } */
-  /* body {
-    background: #000;
-    font-size: 14px;
-    color:#000;
-    margin: 0;
-    padding: 0;
-  } */
   .swiper-container {
     width: 100%;
     height: 100%;
@@ -92,16 +88,28 @@ export default {
   .swiper-slide {
     text-align: center;
     font-size: 18px;
-    background: #fff;
+    background: rgb(121, 34, 34);
 
     /* Center slide text vertically */
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     transition: 300ms;
     transform: scale(0.8);
   }
   .swiper-slide-active,.swiper-slide-duplicate-active{
       transform: scale(1);
+  }
+  .swipper-margin{
+    margin-top:5%;
+  }
+  .swiper-slide-bg{
+    background-image: url(../../assets/image/coupon_card.jpg);
+    height: 450px;
+    background-position: center center;
+    background-size:cover;
+  }
+  .rotate-15deg{
+    transform: rotate(-5deg);
   }
 </style>
