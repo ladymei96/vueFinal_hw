@@ -11,8 +11,8 @@
                 <p class="card-text">Shoot everyday</p>
                 <h5 class="card-title">會帶出門才是好相機</h5>
                 <p class="card-text">周末限定</p>
-                <div class="bg-secondary py-2 rotate-15deg">
-                  <p class="card-text h1">50% OFF</p>
+                <div class="percent">
+                  <p class="card-text display-3">50% OFF</p>
                 </div>
               </div>
               <div class="py-2 text-dark bg-white">
@@ -109,7 +109,18 @@ export default {
     background-position: center center;
     background-size:cover;
   }
-  .rotate-15deg{
+  .percent p{
+    position: relative;
+  }
+  .percent p:after{
+    content:'';
+    display:block;
+    background-color:#10161e;/*整合時記得改*/
+    height: 60px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    z-index: -1;
     transform: rotate(-5deg);
   }
 </style>
