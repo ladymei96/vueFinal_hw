@@ -9,7 +9,7 @@
         </div>
         <div class="row">
           <div class="col-lg-6 text-center">
-            <a href="#" @click.prevent="addFavorite"><i class="fa-heart fa-2x position-absolute" :class="heartIcon"></i></a>
+            <a href="#" @click.prevent="judgeFavorite"><i class="fa-heart fa-2x position-absolute" :class="heartIcon"></i></a>
             <img :src="product.imageUrl" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6">
@@ -76,8 +76,7 @@ export default {
     return {
       productId:'',
       product:{},
-      products:[],
-      favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],//存放id
+      favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
       productNum: 1,
       isLoading:false,
     }
@@ -91,13 +90,6 @@ export default {
         // console.log(re);
         vm.isLoading = false;
         vm.product = re.data.product;
-      })
-    },
-    getProducts(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
-      this.$http.get(api).then((re) => {
-        vm.products = re.data.products;
       })
     },
     addtoCart(qty){
@@ -115,34 +107,22 @@ export default {
         }
       })
     },
+    judgeFavorite(){
+      const vm = this;
+      if(this.favoriteItem.indexOf(this.productId) == -1){
+        this.favoriteItem.push(this.productId);
+      }else{
+        this.favoriteItem.splice(this.favoriteItem.indexOf(this.productId), 1);
+      }
+      localStorage.setItem('favoriteItemId', JSON.stringify(this.favoriteItem));
+      this.$bus.$emit('Navbar:updateFavoriteItem', this.favoriteItem);
+    },
     minNum(){
       if(this.productNum < 2){
         this.productNum = 1;
       }else{
         this.productNum-=1;
       }
-    },
-    addFavorite(){
-      const vm = this;
-      //比對是否在我的最愛內，是的話移除，否的話就加入
-      if(this.favoriteItem.indexOf(this.productId) == -1){
-        this.favoriteItem.push(this.productId);
-      }else{
-        this.favoriteItem.splice(this.favoriteItem.indexOf(this.productId), 1);
-      }
-      //用來比對與呈現愛心樣式(+like與否)
-      localStorage.setItem('favoriteItemId', JSON.stringify(this.favoriteItem));
-
-      //利用更新過的id獲取產品資訊
-      let filtered = this.products.filter(function(item){
-        return vm.favoriteItem.indexOf(item.id) != -1
-      })
-      //將被+like的產品資訊存入localStorage內供Navbar取用
-      localStorage.setItem('favoriteData', JSON.stringify(filtered));
-      this.$bus.$emit('Navbar:updateFavorite');
-    },
-    updateFavoriteItem(){
-      this.favoriteItem = JSON.parse(localStorage.getItem('favoriteItemId'));
     },
     goBack(){
       this.$router.push('/products');
@@ -154,10 +134,12 @@ export default {
     },
   },
   created(){
+    const vm = this;
     this.productId = this.$route.params.productId;
     this.getProduct();
-    this.getProducts();
-    this.$bus.$on('Product:updateFavoriteItem', this.updateFavoriteItem);
+    this.$bus.$on('Product:updateFavoriteItem',(newFavoriteItem)=>{
+      vm.favoriteItem = newFavoriteItem;
+    })
   },
 }
 </script>
