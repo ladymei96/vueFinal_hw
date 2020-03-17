@@ -7,9 +7,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         
-        <a href="#" class="nav-link text-dark d-lg-none navbar--icon-size mb-0">
+        <router-link to="/login" class="nav-link text-dark d-lg-none navbar--icon-size mb-0">
           <i class="fas fa-user-circle fa-lg"></i>
-        </a>
+        </router-link>
       </div>
 
       <router-link class="navbar-brand" to="/">
@@ -146,6 +146,7 @@ export default {
         vm.getCart();
         vm.isLoading = false;
       })
+      this.$bus.$emit('customerOrder:getCart');
     },
     removeFavoriteItem(itemId){
       this.favoriteItem.splice(this.favoriteItem.indexOf(itemId), 1);
@@ -155,10 +156,10 @@ export default {
       this.$bus.$emit('Product:updateFavoriteItem', this.favoriteItem);
     },
     filterData(index){
-      //判斷在哪頁
+      //判斷在哪頁，product頁
       if(this.isProductsPage){
         this.$bus.$emit('filterData:postIndex', index);
-      }else{
+      }else{//在別頁
         this.categoryIndex = index;
         this.$router.push('/products');
       }

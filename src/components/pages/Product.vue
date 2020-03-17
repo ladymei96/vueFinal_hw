@@ -114,6 +114,7 @@ export default {
       }else{
         this.favoriteItem.splice(this.favoriteItem.indexOf(this.productId), 1);
       }
+      //將更新過的favoriteItem存到localStorage內，並傳給navbar
       localStorage.setItem('favoriteItemId', JSON.stringify(this.favoriteItem));
       this.$bus.$emit('Navbar:updateFavoriteItem', this.favoriteItem);
     },
