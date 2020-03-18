@@ -1,39 +1,73 @@
 <template>
-  <div>
-    <NavbarWhite></NavbarWhite>
-    <div class="bg-coupon bg-cover overflow-hidden">
-      <div class="container swipper-margin"> <!--父層吃子層的margin-->
-        <swiper :options="swiperOption" ref="mySwiper">
-          <!-- slides -->
-          <swiper-slide class="swiper-slide-bg">
-            <div class="card text-center h-100 bg-transparent p-5">
-              <div class="card-body text-white">
-                <p class="card-text">Shoot everyday</p>
-                <h5 class="card-title">會帶出門才是好相機</h5>
-                <p class="card-text">周末限定</p>
-                <div class="percent">
-                  <p class="card-text display-3">50% OFF</p>
-                </div>
-              </div>
-              <div class="py-2 text-dark bg-white">
-                lucky777
-              </div>
-            </div>
-          </swiper-slide>
+  <div class="bg-coupon bg-cover d-flex flex-column">
+    <NavbarWhite class="coupon-nav"></NavbarWhite>
 
-          <swiper-slide class="swiper-slide-bg">
-          </swiper-slide>
-          <swiper-slide class="swiper-slide-bg">
-          </swiper-slide>
-          <!-- Optional controls -->
-          <!-- 上一頁 -->
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <!-- 下一頁 -->
-          <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
+    <div class="container border coupon-main d-flex flex-column justify-content-center">
+      <swiper :options="swiperOption" ref="mySwiper" class="mb-4">
+        <!-- slides -->
+        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3">
+          <div class="slide-item-title h-100">
+            <p>Shoot everyday</p>
+            <h2>會帶出門才是好相機</h2>
+            <p>周末限定</p>
+          </div>
+          <div class="slide-item-discount align-self-center">
+            <p><strong>50%</strong> OFF</p>
+          </div>
+          <div class="slide-item-coupon align-self-center bg-white text-dark w-50">
+              <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':weekend}">
+                NOT TODAY
+              </p>
+              <p class="mb-0">周末限定</p>
+          </div>
+        </swiper-slide>
+
+        <swiper-slide class="swiper-slide-bg text-white p-3">
+          <div class="d-flex flex-column p-3">
+            <div class="slide-item-title border">
+              <h2>培養攝影眼</h2>
+              <p>專屬星期一</p>
+            </div>
+            <div class="slide-item-discount align-self-center">
+              <p><strong>30%</strong> OFF</p>
+            </div>
+            <div class="slide-item-coupon align-self-center bg-white text-dark w-50">
+              <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':OnlyMonday}">
+                NOT TODAY
+              </p>
+              <p class="mb-0">攝影眼</p>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3">
+          <div class="d-flex flex-column p-3 slide-border">
+            <div class="slide-item-title">
+              <h2>一日一構圖</h2>
+              <p>常態性優惠</p>
+            </div>
+            <div class="slide-item-discount align-self-center">
+              <p><strong>20%</strong> OFF</p>
+            </div>
+            <div class="slide-item-coupon align-self-center bg-white text-dark w-50">
+              <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':normal}">
+                NOT TODAY
+              </p>
+              <p class="mb-0">常態性優惠</p>
+            </div>
+          </div>
+        </swiper-slide>
+        <!-- Optional controls -->
+        <!-- 上一頁 -->
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <!-- 下一頁 -->
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
+      <div class="text-center">
+        <button class="btn btn-primary">SHOP NOW</button>
       </div>
     </div>
-    <Footer class="footer"></Footer>
+
+    <Footer class="coupon-footer"></Footer>
   </div>
 </template>
 
@@ -50,9 +84,9 @@ export default {
         autoplay:false,//自行滑動
         loop:true,
         speed:1000,
-        // effect:'slide',
-        slidesPerView: 2,
-        spaceBetween: 20,
+        slidesPerView: 3,
+        // spaceBetween: 10,
+        // loopedSlides :6,
         centeredSlides: true,
         mousewheel: true,//鼠標滾輪控制swiper
         navigation:{
@@ -60,11 +94,49 @@ export default {
           prevEl:'.swiper-button-prev',
         },
       },
+      coupons:[],
+      fullWidth:0,
+      today : new Date().getDay(),
+      weekend:false,
+      normal:false,
+      OnlyMonday:false,
     }
   },
   components: {
     swiper,
     swiperSlide
+  },
+  methods:{
+    getCoupons(){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupons`;
+      this.$http.get(api).then((re) => {
+        console.log(re);
+          vm.coupons = re.data.coupons;
+      });
+    },
+    judgeDay(){
+      if(this.today == 1){
+        this.OnlyMonday = true;
+      }else if([0, 6].indexOf(this.today) != -1){
+        this.weekend = true;
+      }else{
+        this.normal = true;
+      }
+    }
+  },
+  watch:{
+    fullWidth(){
+      const vm = this;
+      window.onresize = () => {
+        vm.fullWidth = window.innerWidth;
+      }
+    },
+  },
+  created(){
+    this.getCoupons();
+    this.judgeDay();
+    this.fullWidth = window.innerWidth;
   },
 }
 </script>
@@ -75,52 +147,68 @@ export default {
     width: 100%;
     height: 100vh;
   }
-  .footer{
-    position: fixed;
-    bottom: 0;
-    z-index: 2;
-    width: 100%;
+  .coupon-nav{
+    flex:0 0 auto;
+  }
+  .coupon-main{
+    flex:1 0 auto;
   }
   .swiper-container {
     width: 100%;
-    height: 100%;
   }
   .swiper-slide {
     text-align: center;
-    font-size: 18px;
-    background: rgb(121, 34, 34);
-
-    /* Center slide text vertically */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    transition: 300ms;
+    font-size: 20px;
+    transition:transform 300ms;
     transform: scale(0.8);
   }
   .swiper-slide-active,.swiper-slide-duplicate-active{
-      transform: scale(1);
+    transform: scale(1);
   }
-  .swipper-margin{
-    margin-top:5%;
-  }
+
   .swiper-slide-bg{
     background-image: url(../../assets/image/coupon_card.jpg);
-    height: 450px;
     background-position: center center;
     background-size:cover;
   }
-  .percent p{
-    position: relative;
+  .slide-item-discount p{
+    font-size: 42px;
+    position: relative;/*偽元素使用*/
   }
-  .percent p:after{
+  .slide-item-discount p strong{
+    font-size: 50px;
+  }
+/*折扣碼旋轉色塊*/
+  .slide-item-discount p:after{
     content:'';
     display:block;
-    background-color:#10161e;/*整合時記得改*/
-    height: 60px;
+    background-color:#10161e;/*整合時記得改主色變數*/
+    height: 40px;
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 20%;
     z-index: -1;
-    transform: rotate(-5deg);
+    transform: rotate(-8deg);
+  }
+  .slide-border{
+    border:3px solid #fff;
+    box-shadow:inset 2px 5px 15px #000;
+  }
+  .slide-item-coupon{
+    position: relative;
+  }
+  .slide-item-coupon-use{
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: #fff;
+    width: 100%;
+  }
+  .slide-item-coupon-opacity{
+    opacity: 0;
+  }
+
+  .coupon-footer{
+    flex: 0 0 auto;
   }
 </style>

@@ -7,7 +7,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         
-        <router-link to="/login" class="nav-link text-dark d-lg-none navbar--icon-size mb-0">
+        <router-link to="/login" class="nav-link text-dark d-lg-none navbar-icon-size mb-0">
           <i class="fas fa-user-circle fa-lg"></i>
         </router-link>
       </div>
@@ -18,7 +18,7 @@
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
         <li class="nav-item d-none d-lg-inline">
-          <router-link to="/login" class="nav-link text-dark navbar--icon-size mb-0">
+          <router-link to="/login" class="nav-link text-dark navbar-icon-size mb-0">
             <i class="fas fa-user-circle fa-lg"></i>
           </router-link>
         </li>

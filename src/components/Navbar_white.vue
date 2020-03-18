@@ -1,12 +1,12 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-0 px-sm-5">
+    <nav class="navbar navbar-expand-lg navbar-dark py-0 px-sm-5">
       <div class="d-flex">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         
-        <router-link to="/login" class="nav-link text-white d-lg-none navbar--icon-size mb-0">
+        <router-link to="/login" class="nav-link text-white d-lg-none navbar-icon-size mb-0">
             <i class="fas fa-user-circle fa-lg"></i>
         </router-link>
       </div>
@@ -17,7 +17,7 @@
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
         <li class="nav-item d-none d-lg-inline">
-          <router-link to="/login" class="nav-link text-dark navbar--icon-size mb-0">
+          <router-link to="/login" class="nav-link text-dark navbar-icon-size mb-0">
             <i class="fas fa-user-circle fa-lg"></i>
           </router-link>
         </li>

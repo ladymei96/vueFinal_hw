@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-secondary p-4 text-center">
+  <div class="bg-primary p-4 text-center">
     <div class="mb-4">
       <a href="#" class="mr-1"><img src="../assets/image/icon_twitter.png" alt="twitter" width="40px" height="40px"></a>
       <a href="#" class="mr-1"><img src="../assets/image/icon_fb.png" alt="facebook" width="40px" height="40px"></a>
