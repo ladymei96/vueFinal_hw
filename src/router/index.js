@@ -9,7 +9,6 @@ import Coupons from'../components/pages/Coupons';
 import CreateOrder from '../components/CreateOrder';
 import CustomerOrder from '../components/pages/CustomerOrder';
 import CustomerOrderCheckout from '../components/pages/CustomerOrderCheckout';
-//import Test from '../components/pages/Swiper';//整合進coupons
 import Login from '../components/pages/Login';
 import Dashboard from '../components/Dashboard';
 import ProductsBackEnd from '../components/pages/backEnd_Products';

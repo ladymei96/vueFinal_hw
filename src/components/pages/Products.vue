@@ -105,7 +105,7 @@
 <!-- 卡片項目 -->
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-5" v-for="item in filterData" :key="item.id">
+        <div class="col-lg-4 col-md-6 mb-5" v-for="item in pageData" :key="item.id">
           <div class="card h-100 shadow">
             <div class="card-body">
               <img :src="item.imageUrl" class="card-img-top" alt="product-image">
@@ -133,6 +133,24 @@
     </div>
 
     <!-- <Pagination :child-paginations="pagination" @changePage="getProducts"></Pagination> -->
+    <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item changePageIcon" :class="{'disabled':!has_pre}">
+          <a class="page-link" href="#" aria-label="Previous" @click.prevent="pagination(currentPage-2)">
+            <span aria-hidden="true">&laquo;</span><!--上一頁-->
+          </a>
+        </li>
+        <li class="page-item" v-for="(page, index) in newData.length" :key="page" :class="{'active': currentPage == page}">
+          <a class="page-link" @click.prevent="pagination(index)" href="#">{{page}}</a>
+        </li>
+        <li class="page-item changePageIcon" :class="{'disabled':!has_next}">
+          <a class="page-link" href="#" aria-label="Next" @click.prevent="pagination(currentPage)">
+            <span aria-hidden="true">&raquo;</span><!--下一頁-->
+          </a>
+        </li>
+      </ul>
+    </nav>
+
     <Footer></Footer>
   </div>
 </template>
@@ -145,13 +163,18 @@ export default {
   data () {
     return {
       products:[],
-      //pagination:{},
       isLoading:false,
       currentCategory:'全部商品',
       brand:'',
       category:['全部商品', 'DSLR單反相機', 'DSLR單反鏡頭', 'EVIL無反相機', 'EVIL無反鏡頭'],
       categoryIndex:0,
       isProductsPage:true,
+
+      newData:[],
+      pageData:[],
+      currentPage:1,
+      has_pre:false,
+      has_next:true,
     }
   },
   methods:{
@@ -160,8 +183,6 @@ export default {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       this.$http.get(api).then((re) => {
         vm.products = re.data.products;
-        //vm.pagination = re.data.pagination;
-        // console.log(re.data.products);
       })
     },
     productDetail(id){
@@ -187,20 +208,61 @@ export default {
       this.currentCategory = this.category[index];
       this.brand = '';
     },
+    pagination(index = 0){
+      this.pageData = this.newData[index];
+      this.currentPage = index + 1;
+    }
   },
   computed:{
-    filterData(){
-      if(this.currentCategory == '全部商品'){
-        return this.products;
+    filterData:{
+      get(){
+        if(this.currentCategory == '全部商品'){
+          return this.products;
+        }
+        let pageContent = this.products.filter((item) => {
+          if(this.brand == ''){
+            return item.category == this.currentCategory;
+          }else{
+            return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
+          } 
+        });
+        return pageContent;
+      },
+      set(newValue){
+        console.log(newValue.length);
       }
-      let filtered = this.products.filter((item) => {
-        if(this.brand == ''){
-          return item.category == this.currentCategory;
-        }else{
-          return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
-        } 
-      });
-      return filtered;
+    }
+  },
+  watch:{
+    filterData(){
+      const pageContent = [];
+      this.filterData.forEach(function(item, i){
+      //有幾頁
+        if(i % 10 === 0){
+          pageContent.push([])
+        }
+      //每頁資料內容  
+        const page = parseInt(i/10)
+        pageContent[page].push(item);
+      })
+      this.newData = pageContent;//全部分頁內容
+      //取出特定頁內容
+      this.pagination();
+    },
+    currentPage(){//再優化
+      if(this.currentPage == 1 && this.newData.length>1){
+        this.has_pre = false;
+        this.has_next = true;
+      }else if(this.currentPage>1 && this.currentPage< this.newData.length){
+        this.has_pre = true;
+        this.has_next = true;
+      }else if(this.currentPage == 1 && this.newData.length == 1){
+        this.has_pre = false;
+        this.has_next = false;
+      }else{
+        this.has_pre = true;
+        this.has_next = false;
+      }
     }
   },
   created(){
@@ -208,7 +270,7 @@ export default {
     this.getProducts();
     this.$bus.$on('filterData:postIndex', (index) => {
       vm.selectCategory(index);
-    })
+    });
   },
 }
 </script>

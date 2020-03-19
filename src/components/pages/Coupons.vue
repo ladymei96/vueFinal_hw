@@ -2,7 +2,7 @@
   <div class="bg-coupon bg-cover d-flex flex-column">
     <NavbarWhite class="coupon-nav"></NavbarWhite>
 
-    <div class="container border coupon-main d-flex flex-column justify-content-center">
+    <div class="container coupon-main d-flex flex-column justify-content-center">
       <swiper :options="swiperOption" ref="mySwiper" class="mb-4">
         <!-- slides -->
         <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3">
@@ -18,7 +18,7 @@
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':weekend}">
                 NOT TODAY
               </p>
-              <p class="mb-0">周末限定</p>
+              <p class="mb-0">shoot_everyday</p>
           </div>
         </swiper-slide>
 
@@ -35,7 +35,7 @@
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':OnlyMonday}">
                 NOT TODAY
               </p>
-              <p class="mb-0">攝影眼</p>
+              <p class="mb-0">niceEye</p>
             </div>
           </div>
         </swiper-slide>
@@ -52,7 +52,7 @@
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':normal}">
                 NOT TODAY
               </p>
-              <p class="mb-0">常態性優惠</p>
+              <p class="mb-0">dayday1</p>
             </div>
           </div>
         </swiper-slide>
@@ -63,7 +63,7 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
       <div class="text-center">
-        <button class="btn btn-primary">SHOP NOW</button>
+        <router-link class="btn btn-primary" to="/products">SHOP NOW</router-link>>
       </div>
     </div>
 
@@ -94,7 +94,6 @@ export default {
           prevEl:'.swiper-button-prev',
         },
       },
-      coupons:[],
       fullWidth:0,
       today : new Date().getDay(),
       weekend:false,
@@ -107,14 +106,6 @@ export default {
     swiperSlide
   },
   methods:{
-    getCoupons(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupons`;
-      this.$http.get(api).then((re) => {
-        console.log(re);
-          vm.coupons = re.data.coupons;
-      });
-    },
     judgeDay(){
       if(this.today == 1){
         this.OnlyMonday = true;
@@ -134,7 +125,6 @@ export default {
     },
   },
   created(){
-    this.getCoupons();
     this.judgeDay();
     this.fullWidth = window.innerWidth;
   },
