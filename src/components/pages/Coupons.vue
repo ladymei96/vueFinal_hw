@@ -2,13 +2,13 @@
   <div class="bg-coupon bg-cover d-flex flex-column">
     <NavbarWhite class="coupon-nav"></NavbarWhite>
 
-    <div class="container coupon-main d-flex flex-column justify-content-center">
+    <div class="container my-5 coupon-main d-flex flex-column justify-content-center">
       <swiper :options="swiperOption" ref="mySwiper" class="mb-4">
         <!-- slides -->
         <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3 col-lg-4 col-md-6">
           <div class="slide-item-title">
             <p>Shoot everyday</p>
-            <h2>會帶出門才是好相機</h2>
+            <h2>帶出門才是好相機</h2>
             <p>周末限定</p>
           </div>
           <div class="slide-item-discount align-self-center">
@@ -63,7 +63,7 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
       <div class="text-center">
-        <router-link class="btn btn-primary mb-5" to="/products">SHOP NOW</router-link>
+        <router-link class="btn btn-primary" to="/products">SHOP NOW</router-link>
       </div>
     </div>
 
@@ -124,6 +124,11 @@ export default {
     background-image: url(../../assets/image/coupons_bg.jpg);
     width: 100%;
     height: 100vh;
+  }
+  @media (width: 320px){
+    .bg-coupon{
+      height: 100%;
+    }
   }
   .coupon-nav{
     flex:0 0 auto;

@@ -107,14 +107,16 @@
       <div class="row">
         <div class="col-lg-4 col-md-6 mb-5" v-for="item in pageData" :key="item.id">
           <div class="card h-100 shadow">
-            <div class="card-body">
+            <div class="card-body pb-0">
               <img :src="item.imageUrl" class="card-img-top" alt="product-image">
               <h5 class="card-title">{{item.title}}</h5>
+            </div>
+            <div class="card-footer pt-0 pb-4">
               <p class="text-right text-muted mb-0"><del>{{item.origin_price | currency}}</del></p>
-              <p class="h5 text-right mb-0">{{item.price | currency}}</p>
+              <p class="h5 text-right mb-0">{{item.price | currency}}</p>              
             </div>
 
-            <div class="card h-100 position-absolute card-content bg-primary text-white">
+            <div class="card card-content bg-primary text-white">
               <div class="card-header h-25 pt-4">
                 <h5 class="card-title">{{item.title}}</h5>
               </div>
@@ -312,6 +314,11 @@ export default {
   border:none;
 }
 .card-content{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right:0;
   opacity: 0;
   transition: opacity .3s;
 }
