@@ -44,8 +44,8 @@
         </div>
         <div class="tab-pane fade" :class="{'active': categoryIndex == 1, 'show': categoryIndex == 1}">
           <ul class="nav justify-content-center nav-option">
-            <li class="nav-item">
-              <a class="nav-link" href="#" @click.prevent="brand = 'Canon'">Canon</a>
+            <li class="nav-item"><!--想想如何優化active-->
+              <a class="nav-link" href="#" :class="{'active':brand == 'Canon'}" @click.prevent="brand = 'Canon'">Canon</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" @click.prevent="brand = 'Nikon'">Nikon</a>
@@ -238,11 +238,11 @@ export default {
       const pageContent = [];
       this.filterData.forEach(function(item, i){
       //有幾頁
-        if(i % 10 === 0){
+        if(i % 9 === 0){
           pageContent.push([])
         }
       //每頁資料內容  
-        const page = parseInt(i/10)
+        const page = parseInt(i/9)
         pageContent[page].push(item);
       })
       this.newData = pageContent;//全部分頁內容

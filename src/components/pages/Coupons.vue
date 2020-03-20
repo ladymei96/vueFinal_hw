@@ -5,8 +5,8 @@
     <div class="container coupon-main d-flex flex-column justify-content-center">
       <swiper :options="swiperOption" ref="mySwiper" class="mb-4">
         <!-- slides -->
-        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3">
-          <div class="slide-item-title h-100">
+        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3 col-lg-4 col-md-6">
+          <div class="slide-item-title">
             <p>Shoot everyday</p>
             <h2>會帶出門才是好相機</h2>
             <p>周末限定</p>
@@ -14,7 +14,7 @@
           <div class="slide-item-discount align-self-center">
             <p><strong>50%</strong> OFF</p>
           </div>
-          <div class="slide-item-coupon align-self-center bg-white text-dark w-50">
+          <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':weekend}">
                 NOT TODAY
               </p>
@@ -22,7 +22,7 @@
           </div>
         </swiper-slide>
 
-        <swiper-slide class="swiper-slide-bg text-white p-3">
+        <swiper-slide class="swiper-slide-bg text-white p-3 col-lg-4 col-md-6">
           <div class="d-flex flex-column p-3">
             <div class="slide-item-title border">
               <h2>培養攝影眼</h2>
@@ -31,7 +31,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>30%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon align-self-center bg-white text-dark w-50">
+            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':OnlyMonday}">
                 NOT TODAY
               </p>
@@ -39,7 +39,7 @@
             </div>
           </div>
         </swiper-slide>
-        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3">
+        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3 col-lg-4 col-md-6">
           <div class="d-flex flex-column p-3 slide-border">
             <div class="slide-item-title">
               <h2>一日一構圖</h2>
@@ -48,7 +48,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>20%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon align-self-center bg-white text-dark w-50">
+            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':normal}">
                 NOT TODAY
               </p>
@@ -63,7 +63,7 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
       <div class="text-center">
-        <router-link class="btn btn-primary" to="/products">SHOP NOW</router-link>>
+        <router-link class="btn btn-primary mb-5" to="/products">SHOP NOW</router-link>
       </div>
     </div>
 
@@ -80,13 +80,11 @@ export default {
   data () {
     return {
       swiperOption: {
-        // direction: 'horizontal',
         autoplay:false,//自行滑動
         loop:true,
         speed:1000,
-        slidesPerView: 3,
-        // spaceBetween: 10,
-        // loopedSlides :6,
+        slidesPerView: 'auto',
+        loopedSlides :3,
         centeredSlides: true,
         mousewheel: true,//鼠標滾輪控制swiper
         navigation:{
@@ -94,7 +92,6 @@ export default {
           prevEl:'.swiper-button-prev',
         },
       },
-      fullWidth:0,
       today : new Date().getDay(),
       weekend:false,
       normal:false,
@@ -116,17 +113,8 @@ export default {
       }
     }
   },
-  watch:{
-    fullWidth(){
-      const vm = this;
-      window.onresize = () => {
-        vm.fullWidth = window.innerWidth;
-      }
-    },
-  },
   created(){
     this.judgeDay();
-    this.fullWidth = window.innerWidth;
   },
 }
 </script>
