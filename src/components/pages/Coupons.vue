@@ -8,7 +8,7 @@
         <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3 col-lg-4 col-md-6">
           <div class="slide-item-title">
             <p>Shoot everyday</p>
-            <h2>帶出門才是好相機</h2>
+            <h2>璀璨世界由心發現</h2>
             <p>周末限定</p>
           </div>
           <div class="slide-item-discount align-self-center">

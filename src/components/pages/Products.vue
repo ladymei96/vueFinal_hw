@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <NavbarDark :current-page="isProductsPage"></NavbarDark>
 <!-- 輪播 -->
-    <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel" data-pause="false" data-interval="3500">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -30,11 +30,6 @@
     <div class="container text-center mb-md-5 mb-3">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
         <a v-for="(listItem, index) in category" :key="index" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{listItem}}</a>
-        <!-- <a class="list-group-item list-group-item-action active" @click.prevent="category = '', brand = ''"  data-toggle="list" href="#products" role="tab">全部商品</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反相機', brand = ''" data-toggle="list" href="#dslr-body" role="tab" aria-controls="dslr-body">DSLR單反相機</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'DSLR單反鏡頭', brand = ''" data-toggle="list" href="#dslr-lens" role="tab" aria-controls="dslr-lens">DSLR單反鏡頭</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反相機', brand = ''" data-toggle="list" href="#evil-body" role="tab" aria-controls="evil-body">EVIL無反相機</a>
-        <a class="list-group-item list-group-item-action" @click.prevent="category = 'EVIL無反鏡頭', brand = ''" data-toggle="list" href="#evil-lens" role="tab" aria-controls="evil-lens">EVIL無反鏡頭</a> -->
       </div>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade" :class="{'active': categoryIndex == 0, 'show': categoryIndex == 0}">
@@ -278,11 +273,9 @@ export default {
 </script>
 
 <style>
-/* 先智障寫法，再優化 */
 .carousel-item-height{
-  height: 200px;
-  
-  /* transition: height .5s .3s;會影響輪播效果 */
+  height: 200px;  
+  transition: .5s;
 }
 @media (min-width: 576px) { 
   .carousel-item-height{

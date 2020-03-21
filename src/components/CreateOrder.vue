@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <Navbar class="sticky-top"></Navbar> -->
     <NavbarDark class="sticky-top"></NavbarDark>
     <router-view></router-view>
     <Footer></Footer>

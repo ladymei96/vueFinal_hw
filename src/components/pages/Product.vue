@@ -4,7 +4,7 @@
     <loading :active.sync="isLoading"></loading>
     <div class="container">
       <div>
-        <div class="text-center mb-4">
+        <div class="text-center mb-4"><!--標題-->
           <h1 class="h2 title-border-bottom d-inline-block pb-2">{{product.title}}</h1>
         </div>
         <div class="row">
@@ -12,25 +12,34 @@
             <a href="#" @click.prevent="judgeFavorite"><i class="fa-heart fa-2x position-absolute" :class="heartIcon"></i></a>
             <img :src="product.imageUrl" class="img-fluid" alt="">
           </div>
-          <div class="col-lg-6">
-            <p>{{product.description}}</p>
-            <span class="h3 font-weight-bolder">{{product.price | currency}}</span>
-            <span class="h5 text-muted"><del>{{product.origin_price  | currency}}</del></span>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary px-5" type="button" @click.prevent="minNum">-</button>
+          <div class="col-lg-6 product-item">
+            <div class="product-text">
+              <p>{{product.description}}</p>
+            </div>
+            
+            <div class="product-price">
+              <div class="text-right mb-3">
+                <span class="h3 font-weight-bolder">{{product.price | currency}}</span>
+                <span class="h5 text-muted ml-2"><del>{{product.origin_price  | currency}}</del></span>
               </div>
-              <input type="number" class="form-control text-center border-1px" v-model.number="productNum" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
-              <div class="input-group-append" id="button-addon4">
-                <button class="btn btn-outline-secondary px-5" type="button" @click.prevent="productNum++">+</button>
-                <button class="btn btn-secondary font-weight-bolder" type="button" @click.prevent="addtoCart(productNum)">加到購物車</button>
-              </div>
-            </div>   
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="minNum">-</button>
+                </div>
+                <input type="number" class="form-control text-center border-1px" v-model.number="productNum" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+                <div class="input-group-append" id="button-addon4">
+                  <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="productNum++">+</button>
+                  <button class="btn btn-secondary font-weight-bolder" type="button" @click.prevent="addtoCart(productNum)">加到購物車</button>
+                </div>
+              </div>  
+            </div>
+
           </div>
         </div>
       </div>
       
-      <a class="h3" href="#" @click.prevent="goBack">back</a>
+      <a class="h3 d-inline-block" href="#" @click.prevent="goBack">back</a>
 
       <div class="row mb-3">
         <div class="col-md-6 p-3">
@@ -40,8 +49,8 @@
         <div class="col-md-6">
           <div class="h-md-100 h-260 description-bg-1 bg-cover" ></div>
         </div>
-
       </div>
+
       <div class="description-bg-2 bg-cover text-white mb-5">
           <div class="row h-100 align-items-center">
             <div class="col-lg-5 col-md-6 mx-3">
@@ -169,6 +178,25 @@ export default {
   border: 1px solid #000;
 }
 
+.product-item{
+  display: flex;
+  flex-direction: column;
+}
+.product-text{
+  flex:1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.product-text p{
+  font-size: 20px;
+  text-indent:2em;
+  text-align: justify;
+  line-height: 2rem;
+}
+.product-price{
+  flex:0 0 auto;
+}
 /* .btn:hover{
   background-color: rgb(90, 90, 90);
 } */

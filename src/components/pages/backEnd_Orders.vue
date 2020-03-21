@@ -11,7 +11,7 @@
 			</thead>
 				<tbody>
 					<tr v-for="item in orders" :key="item.id">
-						<td>{{item.create_at}}</td>
+						<td>{{item.create_at | date}}</td>
 						<td>{{item.user.email}}</td>
 						<td>
               <p v-for="productItem in item.products" :key="productItem.id">{{productItem.product.title}} 數量: {{productItem.qty}} {{productItem.product.unit}}</p>
@@ -53,10 +53,10 @@
           vm.isLoading = false;
           vm.orders = response.data.orders;
           vm.pagination = response.data.pagination;
-          vm.orders.forEach((item) => {
-        //購買時間格式，由timestamp轉為易閱讀格式
-            item.create_at = `${(new Date(item.create_at *1000)).getFullYear()}/${(new Date(item.create_at *1000)).getMonth()+1}/${(new Date(item.create_at *1000)).getDate()}`;
-          });
+        //   vm.orders.forEach((item) => {
+        // //購買時間格式，由timestamp轉為易閱讀格式(改為filter形式)
+        //     item.create_at = `${(new Date(item.create_at *1000)).getFullYear()}/${(new Date(item.create_at *1000)).getMonth()+1}/${(new Date(item.create_at *1000)).getDate()}`;
+        //   });
         })                                  
       },
     },
