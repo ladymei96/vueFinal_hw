@@ -14,7 +14,7 @@
           <div class="slide-item-discount align-self-center">
             <p><strong>50%</strong> OFF</p>
           </div>
-          <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
+          <div class="slide-item-coupon bg-white text-dark">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':weekend}">
                 NOT TODAY
               </p>
@@ -31,7 +31,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>30%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
+            <div class="slide-item-coupon bg-white text-dark">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':OnlyMonday}">
                 NOT TODAY
               </p>
@@ -48,7 +48,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>20%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
+            <div class="slide-item-coupon bg-white text-dark"><!-- align-self-center w-50-->
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':normal}">
                 NOT TODAY
               </p>
@@ -123,9 +123,10 @@ export default {
   .bg-coupon{
     background-image: url(../../assets/image/coupons_bg.jpg);
     width: 100%;
-    height: 100vh;
+    height:100vh;
   }
-  @media (width: 320px){
+  /*排除滿版背景圖下方留白問題*/
+  @media (max-height: 736px){
     .bg-coupon{
       height: 100%;
     }
