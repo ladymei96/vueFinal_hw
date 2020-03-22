@@ -3,7 +3,7 @@
     <NavbarWhite class="fixed-top"></NavbarWhite>
     <section class="container-fluid position-relative">
       <div class="row">
-        <div class="col-lg-10 jumbotron-bg-image bg-cover w-100 vh-100">
+        <div class="col-lg-10 home-bg bg-cover w-100 vh-100">
           <div class="txt text-white" :class="{'txt-move':delaySec}">
             SHOOT 
             <br>
@@ -39,18 +39,7 @@ export default {
 </script>
 
 <style>
-/* 背景圖片寫在style內暫時無解 */
-/* .jumbotron-bg-image{
-  background-image: url(../assets/image/index_banner.jpg);
-} */
-.block-bg{
-  width: 135px;
-  height: 180px;
-  background-image: url(../../assets/image/index_section.jpg);
-  position: fixed;
-  bottom:50px;
-  right:12%;
-}
+
 /*再決定+不+*/
 .txt{
   font-size: 80px;

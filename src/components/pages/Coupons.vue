@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-coupon bg-cover d-flex flex-column">
+  <div class="coupon-bg bg-cover d-flex flex-column">
     <NavbarWhite class="coupon-nav"></NavbarWhite>
 
     <div class="container my-5 coupon-main d-flex flex-column justify-content-center">
       <swiper :options="swiperOption" ref="mySwiper" class="mb-4">
         <!-- slides -->
-        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3 col-lg-4 col-md-6">
+        <swiper-slide class="swiper-slide-bg bg-cover d-flex flex-column text-white p-3 col-lg-4 col-md-6">
           <div class="slide-item-title">
             <p>Shoot everyday</p>
             <h2>璀璨世界由心發現</h2>
@@ -22,7 +22,7 @@
           </div>
         </swiper-slide>
 
-        <swiper-slide class="swiper-slide-bg text-white p-3 col-lg-4 col-md-6">
+        <swiper-slide class="swiper-slide-bg bg-cover text-white p-3 col-lg-4 col-md-6">
           <div class="d-flex flex-column p-3">
             <div class="slide-item-title border">
               <h2>培養攝影眼</h2>
@@ -39,7 +39,7 @@
             </div>
           </div>
         </swiper-slide>
-        <swiper-slide class="swiper-slide-bg d-flex flex-column text-white p-3 col-lg-4 col-md-6">
+        <swiper-slide class="swiper-slide-bg bg-cover d-flex flex-column text-white p-3 col-lg-4 col-md-6">
           <div class="d-flex flex-column p-3 slide-border">
             <div class="slide-item-title">
               <h2>一日一構圖</h2>
@@ -80,9 +80,9 @@ export default {
   data () {
     return {
       swiperOption: {
-        autoplay:false,//自行滑動
+        autoplay:true,//自行滑動
         loop:true,
-        speed:1000,
+        speed:1500,
         slidesPerView: 'auto',
         loopedSlides :3,
         centeredSlides: true,
@@ -120,22 +120,14 @@ export default {
 </script>
 
 <style>
-  .bg-coupon{
-    background-image: url(../../assets/image/coupons_bg.jpg);
-    width: 100%;
-    height:100vh;
-  }
-  /*排除滿版背景圖下方留白問題*/
-  @media (max-height: 736px){
-    .bg-coupon{
-      height: 100%;
-    }
-  }
   .coupon-nav{
     flex:0 0 auto;
   }
   .coupon-main{
     flex:1 0 auto;
+  }
+  .coupon-footer{
+    flex: 0 0 auto;
   }
   .swiper-container {
     width: 100%;
@@ -149,12 +141,6 @@ export default {
   .swiper-slide-active,.swiper-slide-duplicate-active{
     transform: scale(1);
   }
-
-  .swiper-slide-bg{
-    background-image: url(../../assets/image/coupon_card.jpg);
-    background-position: center center;
-    background-size:cover;
-  }
   .slide-item-discount p{
     font-size: 42px;
     position: relative;/*偽元素使用*/
@@ -166,7 +152,7 @@ export default {
   .slide-item-discount p:after{
     content:'';
     display:block;
-    background-color:#10161e;/*整合時記得改主色變數*/
+    background-color:#10161e;
     height: 40px;
     position: absolute;
     width: 100%;
@@ -192,7 +178,4 @@ export default {
     opacity: 0;
   }
 
-  .coupon-footer{
-    flex: 0 0 auto;
-  }
 </style>

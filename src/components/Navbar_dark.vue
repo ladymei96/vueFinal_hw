@@ -22,16 +22,16 @@
             <i class="fas fa-user-circle fa-lg"></i>
           </router-link>
         </li>
-
+<!-- 我的最愛 -->
         <li class="nav-item dropdown">
           <a href="#" class="nav-link text-dark navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown">
             <i class="fas fa-heart fa-lg"></i>
             <span class="badge badge-danger rounded-circle" v-if="favoriteData.length != 0">{{favoriteData.length}}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right p-3 position-absolute" style="min-width: 280px" data-offset="400">
+          <div class="dropdown-menu favorite-dropdown-menu-right dropdown-menu-scroll p-3 position-absolute" style="min-width: 280px" data-offset="400">
             <h6>最愛商品列表</h6>
             <p class="empty" v-if="favoriteData.length == 0">清單內已無商品</p>
-            <table class="table table-sm">
+            <table class="table table-sm mb-0">
               <tbody>
                 <tr v-for="item in favoriteData" :key="item.id">
                   <td class="align-middle text-center">
@@ -39,19 +39,19 @@
                       <i class="fa fa-trash-o"></i>
                     </a>
                   </td>
-                  <td width="200px" class="align-middle">{{item.title}}</td>
+                  <td width="200" class="align-middle">{{item.title}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </li>
-
+<!-- 購物車 -->
         <li class="nav-item dropdown">
           <a href="#" class="nav-link text-dark navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right p-3 position-absolute" style="min-width: 400px" data-offset="400">
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-scroll position-absolute p-3" style="width:300px" data-offset="400">
             <h6>已選擇商品</h6>
             <p class="empty" v-if="cart.carts.length == 0">清單內已無商品</p>
             <table class="table table-sm">
@@ -62,9 +62,9 @@
                       <i class="fa fa-trash-o"></i>
                     </a>
                   </td>
-                  <td width="200px" class="align-middle">{{item.product.title}}</td>
-                  <td class="align-middle">{{item.qty}}{{item.product.unit}}</td>
-                  <td width="80px" class="align-middle text-right">{{item.total | currency}}</td>
+                  <td class="align-middle">{{item.product.title}}</td>
+                  <td width="40" class="align-middle">{{item.qty}}{{item.product.unit}}</td>
+                  <td class="align-middle text-right">{{item.total | currency}}</td>
                 </tr>
               </tbody>
             </table>
@@ -74,8 +74,7 @@
           </div>
         </li>
       </ul>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent"><!--這裡放的是會被收闔的內容-->     
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <li class="nav-item">
             <router-link class="nav-link" to="/">Home</router-link>
@@ -93,7 +92,6 @@
             </div>
           </li>
           <li class="nav-item">
-            <!-- <a class="nav-link" href="#">Coupons</a> -->
             <router-link class="nav-link" to="/coupons">Coupons</router-link>
           </li>
         </ul>
@@ -189,19 +187,6 @@ export default {
 }
 </script>
 <style>
-.empty{
-  padding:.3rem;
-  margin-bottom: 0;
-  border-top:1px solid #dee2e6;
-  text-align: center;
-}
-.logo-width{
-  width: 80px;
-}
-@media (min-width:992px){
-  .logo-lg-width{
-    width:100px;
-  }
-}
+
 </style>
 

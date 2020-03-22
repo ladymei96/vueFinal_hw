@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <NavbarDark :current-page="isProductsPage"></NavbarDark>
 <!-- 輪播 -->
-    <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel" data-pause="false" data-interval="3500">
+    <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel" data-pause="false" data-interval="2500">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -43,55 +43,55 @@
               <a class="nav-link" href="#" :class="{'active':brand == 'Canon'}" @click.prevent="brand = 'Canon'">Canon</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" @click.prevent="brand = 'Nikon'">Nikon</a>
+              <a class="nav-link" href="#" :class="{'active':brand == 'Nikon'}" @click.prevent="brand = 'Nikon'">Nikon</a>
             </li>
           </ul>
         </div>
         <div class="tab-pane fade" :class="{'active': categoryIndex == 2, 'show': categoryIndex == 2}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
+              <a class="nav-link" :class="{'active':brand == 'Canon'}" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
+              <a class="nav-link" :class="{'active':brand == 'Nikon'}" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Tamron'" href="#">Tamron</a>
+              <a class="nav-link" :class="{'active':brand == 'Tamron'}" @click.prevent="brand = 'Tamron'" href="#">Tamron</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Sigma'" href="#">Sigma</a>
+              <a class="nav-link" :class="{'active':brand == 'Sigma'}" @click.prevent="brand = 'Sigma'" href="#">Sigma</a>
             </li>
           </ul>
         </div>
         <div class="tab-pane fade" :class="{'active': categoryIndex == 3, 'show': categoryIndex == 3}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Canon'" href="#" >Canon</a><!-- active-->
+              <a class="nav-link" :class="{'active':brand == 'Canon'}" @click.prevent="brand = 'Canon'" href="#" >Canon</a><!-- active-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
+              <a class="nav-link" :class="{'active':brand == 'Nikon'}" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Sony'" href="#">Sony</a>
+              <a class="nav-link" :class="{'active':brand == 'Sony'}" @click.prevent="brand = 'Sony'" href="#">Sony</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Fujifilm'" href="#">Fujifilm</a>
+              <a class="nav-link" :class="{'active':brand == 'Fujifilm'}" @click.prevent="brand = 'Fujifilm'" href="#">Fujifilm</a>
             </li>
           </ul>
         </div>
         <div class="tab-pane fade" :class="{'active': categoryIndex == 4, 'show': categoryIndex == 4}">
           <ul class="nav justify-content-center nav-option">
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
+              <a class="nav-link" :class="{'active':brand == 'Canon'}" @click.prevent="brand = 'Canon'" href="#">Canon</a><!-- active-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
+              <a class="nav-link" :class="{'active':brand == 'Nikon'}" @click.prevent="brand = 'Nikon'" href="#">Nikon</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Sony'" href="#">Sony</a>
+              <a class="nav-link" :class="{'active':brand == 'Sony'}" @click.prevent="brand = 'Sony'" href="#">Sony</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click.prevent="brand = 'Fujifilm'" href="#">Fujifilm</a>
+              <a class="nav-link" :class="{'active':brand == 'Fujifilm'}" @click.prevent="brand = 'Fujifilm'" href="#">Fujifilm</a>
             </li>
           </ul>
         </div>
@@ -246,17 +246,17 @@ export default {
       //取出特定頁內容
       this.pagination();
     },
-    currentPage(){//再優化
-      if(this.currentPage == 1 && this.newData.length>1){
+    currentPage(){//修
+      if(this.currentPage == 1 && this.newData.length > 1){
         this.has_pre = false;
         this.has_next = true;
       }else if(this.currentPage>1 && this.currentPage< this.newData.length){
         this.has_pre = true;
         this.has_next = true;
-      }else if(this.currentPage == 1 && this.newData.length == 1){
+      }else if(this.newData.length == 1){
         this.has_pre = false;
         this.has_next = false;
-      }else{
+      }else if(this.currentPage == this.newData.length){
         this.has_pre = true;
         this.has_next = false;
       }
@@ -293,15 +293,7 @@ export default {
   }
 }
 /*vue back寫在template上-未解決*/
-.carousel-bg-1{
-  background-image: url(../../assets/image/products_carousel_1.jpg);
-}
-.carousel-bg-2{
-  background-image: url(../../assets/image/products_carousel_2.jpg);
-}
-.carousel-bg-3{
-  background-image: url(../../assets/image/products_carousel_3.jpg);
-}
+
 .card-header,.card-footer{
   background-color:transparent;
   border:none;
@@ -325,7 +317,7 @@ export default {
 .list-group>a{
   color:#10161e
 }
-/*整合到scss內，用變數寫*/ 
+
 .nav-option li a{
   color:#575b61;
   font-size: 1.3rem;
@@ -335,6 +327,8 @@ export default {
 }
 .nav-option li + li ::before{
   content:'/';
+  color:#575b61;
+  font-weight: 100;
   position:absolute;
   left:0;
 }

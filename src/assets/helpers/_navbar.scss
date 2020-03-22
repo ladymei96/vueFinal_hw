@@ -1,21 +1,45 @@
 .navbar-icon-badge{
   position: relative;
-}
-.navbar-icon-badge .badge{
+  .badge{
     position: absolute;
     bottom:-1px;
     right:-2px;
+  }
 }
 .navbar-nav-row{
   flex-direction: row;
-}
-.navbar-nav-row .nav-link{
-  padding-right:.5rem;
-  padding-left:.5rem;
+  .nav-link{
+    padding-right:.5rem;
+    padding-left:.5rem;
+  }
 }
 .navbar-icon-size{
   font-size:1rem;
 }
 .dropdown-item:hover{
   background-color: $gray-400;
+}
+.empty{
+  padding:.3rem;
+  margin-bottom: 0;
+  border-top:1px solid #dee2e6;
+  text-align: center;
+}
+.logo-width{
+  width: 80px;
+}
+@media (min-width:992px){
+  .logo-lg-width{
+    width:100px;
+  }
+}
+.favorite-dropdown-menu-right{
+  right:-20px;
+  left:auto;
+}
+@media (max-width: 767px){
+  .dropdown-menu-scroll{
+    overflow-y:scroll;
+    height: 200px;
+  }
 }

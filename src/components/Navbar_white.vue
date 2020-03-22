@@ -27,7 +27,7 @@
             <i class="fas fa-heart fa-lg"></i>
             <span class="badge badge-danger rounded-circle" v-if="favoriteData.length != 0">{{favoriteData.length}}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right p-3 position-absolute" style="min-width: 280px" data-offset="400">
+          <div class="dropdown-menu favorite-dropdown-menu-right dropdown-menu-scroll dropdown-menu-right p-3 position-absolute" style="min-width: 280px" data-offset="400">
             <h6>最愛商品列表</h6>
             <p class="empty" v-if="favoriteData.length == 0">清單內已無商品</p>
             <table class="table table-sm">
@@ -50,7 +50,7 @@
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right p-3 position-absolute" style="min-width: 400px" data-offset="400">
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-scroll position-absolute p-3" style="min-width: 300px" data-offset="400">
             <h6>已選擇商品</h6>
             <p class="empty" v-if="cart.carts.length == 0">清單內已無商品</p>
             <table class="table table-sm">
@@ -61,9 +61,9 @@
                       <i class="fa fa-trash-o"></i>
                     </a>
                   </td>
-                  <td width="200px" class="align-middle">{{item.product.title}}</td>
+                  <td class="align-middle">{{item.product.title}}</td>
                   <td class="align-middle">{{item.qty}}{{item.product.unit}}</td>
-                  <td width="80px" class="align-middle text-right">{{item.total | currency}}</td>
+                  <td width="40" class="align-middle text-right">{{item.total | currency}}</td>
                 </tr>
               </tbody>
             </table>
@@ -77,7 +77,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent"><!--這裡放的是會被收闔的內容-->     
         <ul class="navbar-nav">
           <li class="nav-item"><!--active-->
-            <router-link class="nav-link" to="/">Home<span class="sr-only">(current)</span></router-link><!--current也要配合當前頁面-->
+            <router-link class="nav-link" to="/">Home</router-link>
           </li>
           <li class="nav-item dropdown d-flex">
             <router-link to="/products" class="nav-link" role="button" aria-haspopup="true">
@@ -174,20 +174,8 @@ export default {
   },
 }
 </script>
-<style scoped>
-.empty{
-  padding:.3rem;
-  margin-bottom: 0;
-  border-top:1px solid #dee2e6;
-  text-align: center;
-}
-.logo-width{
-  width: 80px;
-}
-@media (min-width:992px){
-  .logo-lg-width{
-    width:100px;
-  }
-}
+<style>
+
+
 </style>
 

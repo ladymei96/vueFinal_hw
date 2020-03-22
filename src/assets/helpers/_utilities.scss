@@ -1,4 +1,10 @@
-//路由-active
+$base-spacing:10px;
+
+@function spacing($count:1){
+  @return $count * $base-spacing;
+}
+
+//router-link-active
 .navbar-light .navbar-nav .nav-link.router-link-exact-active{
   color:#000;
 }
@@ -6,39 +12,19 @@
   color:#fff;
 }
 .nav .nav-link.active{
-  color:red;
+  color:$primary;
+  font-weight: 800;
 }
 
-//背景圖片區
-.jumbotron-bg-image{
-  background-image: url(~@/assets/image/index_banner.jpg);
-}
-.bg-cover{
-  background-position: center center;
-  background-size:cover;
-}
-//單一產品頁
-.description-bg-1{
-  background-image: url(~@/assets/image/product_content_1.jpg);
-}
-.description-bg-2{
-  background-image: url(~@/assets/image/product_content_2.jpg);
-  height:400px;
-}
-.description-bg-3{
-  background-image: url(~@/assets/image/product_content_3.jpg);
-  height:400px;
-}
-// text
+// 文字設定
 *{
   font-family: 'Ubuntu', 'Noto Sans TC', ;
 }
-
 .text-vertical{
   writing-mode: vertical-rl;
 }
 
-// spacing
+//間距
 .mt-80{
-  margin-top:80px;
+  margin-top: spacing(8);
 }

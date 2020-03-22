@@ -1,0 +1,53 @@
+.bg-cover{
+  background-position: center center;
+  background-size:cover;
+}
+//首頁背景圖
+.home-bg{
+  background-image: url(~@/assets/image/index_banner.jpg);
+}
+.block-bg{
+  width: 135px;
+  height: 180px;
+  background-image: url(~@/assets/image/index_section.jpg);
+  position: fixed;
+  bottom:50px;
+  right:12%;
+}
+//產品列表輪播圖
+.carousel-bg-1{
+  background-image: url(~@/assets/image/products_carousel_1.jpg);
+}
+.carousel-bg-2{
+  background-image: url(~@/assets/image/products_carousel_2.jpg);
+}
+.carousel-bg-3{
+  background-image: url(~@/assets/image/products_carousel_3.jpg);
+}
+//單一產品介紹頁
+.description-bg-1{
+  background-image: url(~@/assets/image/product_content_1.jpg);
+}
+.description-bg-2{
+  background-image: url(~@/assets/image/product_content_2.jpg);
+  height:400px;
+}
+.description-bg-3{
+  background-image: url(~@/assets/image/product_content_3.jpg);
+  height:400px;
+}
+// 優惠券
+.coupon-bg{
+  background-image: url(~@/assets/image/coupons_bg.jpg);
+  width: 100%;
+  height:100vh;
+}
+  //滿版背景圖下方留白問題
+@media (max-height: 736px){
+  .coupon-bg{
+    height: 100%;
+  }
+}
+.swiper-slide-bg{
+  background-image: url(~@/assets/image/coupon_card.jpg);
+}
