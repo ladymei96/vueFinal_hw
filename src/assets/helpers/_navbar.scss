@@ -16,6 +16,17 @@
 .navbar-icon-size{
   font-size:1rem;
 }
+.navbar-dark {
+  .navbar-nav{
+    .nav-link.icon-color{
+      color:#fff;
+      @media (min-width:992px){
+        color:$primary;
+      }
+    }
+  }
+}
+
 .dropdown-item:hover{
   background-color: $gray-400;
 }

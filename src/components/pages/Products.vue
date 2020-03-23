@@ -205,48 +205,43 @@ export default {
       this.currentCategory = this.category[index];
       this.brand = '';
     },
-    pagination(index = 0){
+    pagination(index = 0){//預設取出第一頁內容(陣列索引為0的資料內容)
       this.pageData = this.newData[index];
       this.currentPage = index + 1;
     }
   },
   computed:{
-    filterData:{
-      get(){
-        if(this.currentCategory == '全部商品'){
-          return this.products;
-        }
-        let pageContent = this.products.filter((item) => {
-          if(this.brand == ''){
-            return item.category == this.currentCategory;
-          }else{
-            return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
-          } 
-        });
-        return pageContent;
-      },
-      set(newValue){
-        console.log(newValue.length);
+    filterData(){
+      if(this.currentCategory == '全部商品'){
+        return this.products;
       }
+      let filtered = this.products.filter((item) => {
+        if(this.brand == ''){
+          return item.category == this.currentCategory;
+        }else{
+          return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
+        } 
+      });
+      return filtered;
     }
   },
   watch:{
     filterData(){
       const pageContent = [];
       this.filterData.forEach(function(item, i){
-      //有幾頁
+      //每頁9筆資料，總共幾頁
         if(i % 9 === 0){
           pageContent.push([])
         }
       //每頁資料內容  
-        const page = parseInt(i/9)
+        const page = parseInt(i/9)//第幾筆資料歸屬於第幾頁
         pageContent[page].push(item);
       })
       this.newData = pageContent;//全部分頁內容
       //取出特定頁內容
       this.pagination();
     },
-    currentPage(){//修
+    pageData(){
       if(this.currentPage == 1 && this.newData.length > 1){
         this.has_pre = false;
         this.has_next = true;

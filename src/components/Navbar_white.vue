@@ -17,13 +17,13 @@
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
         <li class="nav-item d-none d-lg-inline">
-          <router-link to="/login" class="nav-link text-dark navbar-icon-size mb-0">
+          <router-link to="/login" class="nav-link text-primary navbar-icon-size mb-0">
             <i class="fas fa-user-circle fa-lg"></i>
           </router-link>
         </li>
 
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link text-dark navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown">
+          <a href="#" class="nav-link navbar-icon-badge navbar-icon-size icon-color mb-0" data-toggle="dropdown">
             <i class="fas fa-heart fa-lg"></i>
             <span class="badge badge-danger rounded-circle" v-if="favoriteData.length != 0">{{favoriteData.length}}</span>
           </a>
@@ -46,7 +46,7 @@
         </li>
 
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link text-dark btn-cart navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown" data-flip="false">
+          <a href="#" class="nav-link btn-cart navbar-icon-badge navbar-icon-size icon-color mb-0" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
