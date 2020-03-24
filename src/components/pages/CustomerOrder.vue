@@ -199,6 +199,9 @@ export default {
   created(){
     this.getCart();
     this.$bus.$on('customerOrder:getCart', this.getCart);
+  },
+  beforeDestroy(){
+    this.$bus.$off('customerOrder:getCart');
   }
 }
 </script>

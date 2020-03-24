@@ -100,7 +100,7 @@
 <!-- 卡片項目 -->
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-5" v-for="item in pageData" :key="item.id">
+        <div class="col-lg-4 col-md-6 mb-5" v-for="item in singlePageData" :key="item.id">
           <div class="card h-100 shadow">
             <div class="card-body pb-0">
               <img :src="item.imageUrl" class="card-img-top" alt="product-image">
@@ -128,26 +128,24 @@
 
       </div>
     </div>
-
-    <!-- <Pagination :child-paginations="pagination" @changePage="getProducts"></Pagination> -->
+<!-- pagination -->
     <nav class="d-flex justify-content-center" aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item changePageIcon" :class="{'disabled':!has_pre}">
           <a class="page-link" href="#" aria-label="Previous" @click.prevent="pagination(currentPage-2)">
-            <span aria-hidden="true">&laquo;</span><!--上一頁-->
+            <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item" v-for="(page, index) in newData.length" :key="page" :class="{'active': currentPage == page}">
+        <li class="page-item" v-for="(page, index) in totalPageData.length" :key="page" :class="{'active': currentPage == page}">
           <a class="page-link" @click.prevent="pagination(index)" href="#">{{page}}</a>
         </li>
         <li class="page-item changePageIcon" :class="{'disabled':!has_next}">
           <a class="page-link" href="#" aria-label="Next" @click.prevent="pagination(currentPage)">
-            <span aria-hidden="true">&raquo;</span><!--下一頁-->
+            <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
       </ul>
     </nav>
-
     <Footer></Footer>
   </div>
 </template>
@@ -166,9 +164,8 @@ export default {
       category:['全部商品', 'DSLR單反相機', 'DSLR單反鏡頭', 'EVIL無反相機', 'EVIL無反鏡頭'],
       categoryIndex:0,
       isProductsPage:true,
-
-      newData:[],
-      pageData:[],
+      totalPageData:[],
+      singlePageData:[],
       currentPage:1,
       has_pre:false,
       has_next:true,
@@ -206,7 +203,7 @@ export default {
       this.brand = '';
     },
     pagination(index = 0){//預設取出第一頁內容(陣列索引為0的資料內容)
-      this.pageData = this.newData[index];
+      this.singlePageData = this.totalPageData[index];
       this.currentPage = index + 1;
     }
   },
@@ -237,21 +234,21 @@ export default {
         const page = parseInt(i/9)//第幾筆資料歸屬於第幾頁
         pageContent[page].push(item);
       })
-      this.newData = pageContent;//全部分頁內容
+      this.totalPageData = pageContent;//全部分頁內容
       //取出特定頁內容
       this.pagination();
     },
-    pageData(){
-      if(this.currentPage == 1 && this.newData.length > 1){
+    singlePageData(){
+      if(this.currentPage == 1 && this.totalPageData.length > 1){
         this.has_pre = false;
         this.has_next = true;
-      }else if(this.currentPage>1 && this.currentPage< this.newData.length){
+      }else if(this.currentPage>1 && this.currentPage< this.totalPageData.length){
         this.has_pre = true;
         this.has_next = true;
-      }else if(this.newData.length == 1){
+      }else if(this.totalPageData.length == 1){
         this.has_pre = false;
         this.has_next = false;
-      }else if(this.currentPage == this.newData.length){
+      }else if(this.currentPage == this.totalPageData.length){
         this.has_pre = true;
         this.has_next = false;
       }
@@ -260,10 +257,14 @@ export default {
   created(){
     const vm = this;
     this.getProducts();
+  //註冊事件：點擊下拉選單項目，跳轉產品列表頁並顯示對應選項
     this.$bus.$on('filterData:postIndex', (index) => {
       vm.selectCategory(index);
     });
   },
+  beforeDestroy(){
+    this.$bus.$off('filterData:postIndex');
+  }
 }
 </script>
 
@@ -287,8 +288,6 @@ export default {
     height: 400px;
   }
 }
-/*vue back寫在template上-未解決*/
-
 .card-header,.card-footer{
   background-color:transparent;
   border:none;

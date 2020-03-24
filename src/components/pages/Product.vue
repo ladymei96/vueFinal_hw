@@ -151,6 +151,9 @@ export default {
       vm.favoriteItem = newFavoriteItem;
     })
   },
+  beforeDestroy(){
+    this.$bus.$off('Product:updateFavoriteItem');
+  }
 }
 </script>
 

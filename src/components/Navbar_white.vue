@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <nav class="navbar navbar-expand-lg navbar-dark py-0 px-sm-5">
       <div class="d-flex">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,17 +139,19 @@ export default {
         vm.getCart();
         vm.isLoading = false;
       })
-      this.$bus.$emit('customerOrder:getCart');
+//白色nav不會在這頁      // //在CustomerOrder頁時，同步資料
+      // this.$bus.$emit('customerOrder:getCart');
     },
     removeFavoriteItem(itemId){
       this.favoriteItem.splice(this.favoriteItem.indexOf(itemId), 1);
       //更新localStorage的favoriteItem資料
       localStorage.setItem('favoriteItemId', JSON.stringify(this.favoriteItem));
       //更新product的favoriteItem資料
-      this.$bus.$emit('Product:updateFavoriteItem', this.favoriteItem);
+//白色nav不會在這頁       this.$bus.$emit('Product:updateFavoriteItem', this.favoriteItem);
     },
     filterData(index){
-    //   在別頁的寫法
+    //在產品列表頁以外，點擊下拉選單選項，可直接到產品列表頁並顯示該分類內容
+    //跨元件傳遞資料，$emit前必須存在$on，先把資料存放於data內
       this.categoryIndex = index;
       this.$router.push('/products');
     },
@@ -163,13 +166,15 @@ export default {
     }
   },
   created(){
-    this.getCart();//畫面初始，取得購物車列表
+    //元件建立，負責取得資料，呈現在購物車和最愛Icon數字
+    this.getCart();
     this.getProducts();
-    this.$bus.$on('Navbar:updateFavoriteItem',(newFavoriteItem) =>{
-      vm.favoriteItem = newFavoriteItem;
-    });
+    // this.$bus.$on('Navbar:updateFavoriteItem',(newFavoriteItem) =>{
+    //   vm.favoriteItem = newFavoriteItem;
+    // });
   },
   beforeDestroy(){
+    //傳資料給Products元件
     this.$bus.$emit('filterData:postIndex', this.categoryIndex);
   },
 }

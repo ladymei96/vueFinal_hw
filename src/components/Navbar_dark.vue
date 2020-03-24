@@ -122,11 +122,9 @@ export default {
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
-
       this.$http.get(api).then((re) => {
         console.log('Navbar取得購物車列表', re.data);
         vm.cart = re.data.data;
-
       });
     },
     getProducts(){
@@ -143,8 +141,8 @@ export default {
       this.$http.delete(api).then((re) => {
         vm.getCart();
         vm.isLoading = false;
+        this.$bus.$emit('customerOrder:getCart');//同步資料
       })
-      this.$bus.$emit('customerOrder:getCart');
     },
     removeFavoriteItem(itemId){
       this.favoriteItem.splice(this.favoriteItem.indexOf(itemId), 1);
@@ -162,6 +160,10 @@ export default {
         this.$router.push('/products');
       }
     },
+    offEventBus(){//銷毀監聽事件
+      this.$bus.$off('Navbar:updateCart');
+      this.$bus.$off('Navbar:updateFavoriteItem');
+    }
   },
   computed:{
     favoriteData(){
@@ -173,16 +175,21 @@ export default {
     }
   },
   created(){
-    const vm = this;
-    this.getCart();//畫面初始，取得購物車列表
+    //元件建立，負責取得資料，呈現在購物車和最愛Icon數字
+    this.getCart();
     this.getProducts();
+  },
+  mounted(){
+    //等舊元件銷毀才註冊
+    const vm = this;
     this.$bus.$on('Navbar:updateCart', this.getCart);
-    this.$bus.$on('Navbar:updateFavoriteItem',(newFavoriteItem) =>{
+    this.$bus.$on('Navbar:updateFavoriteItem',(newFavoriteItem) => {
       vm.favoriteItem = newFavoriteItem;
-    });
+    });    
   },
   beforeDestroy(){
     this.$bus.$emit('filterData:postIndex', this.categoryIndex);
+    this.offEventBus();
   },
 }
 </script>
