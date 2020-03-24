@@ -79,7 +79,7 @@ export default {
   data () {
     return {
       swiperOption: {
-        autoplay:false,//自行滑動
+        autoplay:true,//自行滑動
         loop:true,
         speed:1500,
         slidesPerView: 'auto',

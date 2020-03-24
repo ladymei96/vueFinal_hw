@@ -10,7 +10,7 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="carousel-item active carousel-bg-1 carousel-item-height bg-cover">
+        <div class="carousel-item carousel-bg-1 carousel-item-height bg-cover active ">
         </div>
         <div class="carousel-item carousel-bg-2 carousel-item-height bg-cover">
         </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="tab-pane fade" :class="{'active': categoryIndex == 1, 'show': categoryIndex == 1}">
           <ul class="nav justify-content-center nav-option">
-            <li class="nav-item"><!--想想如何優化active-->
+            <li class="nav-item">
               <a class="nav-link" href="#" :class="{'active':brand == 'Canon'}" @click.prevent="brand = 'Canon'">Canon</a>
             </li>
             <li class="nav-item">

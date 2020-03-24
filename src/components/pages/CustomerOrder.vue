@@ -57,6 +57,7 @@
             </button>
           </div>
         </div>
+        <p class="text-danger mb-0" v-if="coupon_message != ''">{{coupon_message}}</p>
       </div>
 
       <ValidationObserver tag="div" ref="form" >
@@ -124,6 +125,7 @@ export default {
         },
         message:'',
       },
+      coupon_message:'',
     }
   },
   components:{
@@ -165,8 +167,11 @@ export default {
         this.isLoading = false;
         if(re.data.success){
           vm.getCart();
+          vm.coupon_message = '';
+          vm.coupon_code = '';
         }else{
-          console.log(re.data.message);
+          // console.log(re.data.message);
+          vm.coupon_message = re.data.message;
         }
       })
     },
