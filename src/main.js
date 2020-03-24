@@ -21,6 +21,7 @@ import NavbarWhite from './components/Navbar_white';
 import NavbarDark from './components/Navbar_dark';
 import Footer from './components/Footer';
 import Pagination from './components/backEnd_Pagination';
+import Gotop from './components/Gotop';
 //自定義內容
 
 axios.defaults.withCredentials = true;
@@ -32,6 +33,7 @@ Vue.component('NavbarWhite', NavbarWhite);
 Vue.component('NavbarDark', NavbarDark);
 Vue.component('Footer', Footer);
 Vue.component('Pagination', Pagination);
+Vue.component('Gotop', Gotop);
 Vue.filter('currency', CurrencyFilter);
 Vue.filter('date', DateFilter);
 extend('required', required);

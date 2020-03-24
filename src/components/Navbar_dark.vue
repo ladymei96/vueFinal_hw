@@ -28,7 +28,7 @@
             <i class="fas fa-heart fa-lg"></i>
             <span class="badge badge-danger rounded-circle" v-if="favoriteData.length != 0">{{favoriteData.length}}</span>
           </a>
-          <div class="dropdown-menu favorite-dropdown-menu-right dropdown-menu-scroll p-3 position-absolute" style="min-width: 280px" data-offset="400">
+          <div class="dropdown-menu favorite-dropdown-menu-right p-3 position-absolute" :class="{'dropdown-menu-scroll':favoriteData.length > 3}" style="min-width: 280px" data-offset="400">
             <h6>最愛商品列表</h6>
             <p class="empty" v-if="favoriteData.length == 0">清單內已無商品</p>
             <table class="table table-sm mb-0">
@@ -51,7 +51,7 @@
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right dropdown-menu-scroll position-absolute p-3" style="width:300px" data-offset="400">
+          <div class="dropdown-menu dropdown-menu-right position-absolute p-3" :class="{'dropdown-menu-scroll':cart.carts.length > 1}" style="width:300px" data-offset="400">
             <h6>已選擇商品</h6>
             <p class="empty" v-if="cart.carts.length == 0">清單內已無商品</p>
             <table class="table table-sm">
@@ -193,7 +193,4 @@ export default {
   },
 }
 </script>
-<style>
-
-</style>
 

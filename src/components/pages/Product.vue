@@ -4,7 +4,7 @@
     <loading :active.sync="isLoading"></loading>
     <div class="container">
       <div>
-        <div class="text-center mb-4"><!--標題-->
+        <div class="text-center mb-4">
           <h1 class="h2 title-border-bottom d-inline-block pb-2">{{product.title}}</h1>
         </div>
         <div class="row">
@@ -74,6 +74,7 @@
       </div>
 
     </div><!--container-->
+    <Gotop />
     <Footer></Footer>
   </div>
 </template>

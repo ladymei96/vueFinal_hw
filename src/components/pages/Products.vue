@@ -146,6 +146,7 @@
         </li>
       </ul>
     </nav>
+    <Gotop />
     <Footer></Footer>
   </div>
 </template>

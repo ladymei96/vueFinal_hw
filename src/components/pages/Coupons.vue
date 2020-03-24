@@ -14,14 +14,13 @@
           <div class="slide-item-discount align-self-center">
             <p><strong>50%</strong> OFF</p>
           </div>
-          <div class="slide-item-coupon bg-white text-dark">
+          <div class="slide-item-coupon bg-white text-dark align-self-center px-2">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':weekend}">
                 NOT TODAY
               </p>
               <p class="mb-0">shoot_everyday</p>
           </div>
         </swiper-slide>
-
         <swiper-slide class="swiper-slide-bg bg-cover text-white p-3 col-lg-4 col-md-6">
           <div class="d-flex flex-column p-3">
             <div class="slide-item-title border">
@@ -31,7 +30,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>30%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon bg-white text-dark">
+            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':OnlyMonday}">
                 NOT TODAY
               </p>
@@ -39,7 +38,7 @@
             </div>
           </div>
         </swiper-slide>
-        <swiper-slide class="swiper-slide-bg bg-cover d-flex flex-column text-white p-3 col-lg-4 col-md-6">
+        <swiper-slide class="swiper-slide-bg bg-cover text-white p-3 col-lg-4 col-md-6">
           <div class="d-flex flex-column p-3 slide-border">
             <div class="slide-item-title">
               <h2>一日一構圖</h2>
@@ -48,7 +47,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>20%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon bg-white text-dark"><!-- align-self-center w-50-->
+            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':normal}">
                 NOT TODAY
               </p>
@@ -80,7 +79,7 @@ export default {
   data () {
     return {
       swiperOption: {
-        autoplay:true,//自行滑動
+        autoplay:false,//自行滑動
         loop:true,
         speed:1500,
         slidesPerView: 'auto',

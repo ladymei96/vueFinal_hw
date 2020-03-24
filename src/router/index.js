@@ -16,7 +16,6 @@ import OrdersBackEnd from '../components/pages/backEnd_Orders';
 import CouponsBackEnd from '../components/pages/backEnd_Coupons';
 import CustomOrdersBackEnd from '../components/pages/backEnd_CustomOrders';
 import CustomerOrderCheckBackEnd from '../components/pages/backEnd_CustomerOrderCheck';
-import Test from '../components/test.vue';//測試輪播用
 //自定義頁面元件
 
 Vue.use(VueRouter);
@@ -30,11 +29,6 @@ export default new VueRouter({
     {
       path:'*',
       redirect:'/',
-    },
-    {
-      path:'/test',
-      component:Test,
-      name:'測試'
     },
     {
       name:'首頁',

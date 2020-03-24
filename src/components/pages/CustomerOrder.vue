@@ -10,8 +10,8 @@
             <tr>
               <th></th>
               <th>品名</th>
-              <th width="15%">數量</th><!-- class="d-none d-md-table-cell"-->
-              <th width="15%">總價</th><!-- class="d-none d-sm-table-cell"-->
+              <th width="15%">數量</th>
+              <th width="15%">總價</th>
             </tr>
           </thead>
           <tbody>
