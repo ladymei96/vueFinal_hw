@@ -63,8 +63,8 @@
                     </a>
                   </td>
                   <td class="align-middle">{{item.product.title}}</td>
-                  <td class="align-middle">{{item.qty}}{{item.product.unit}}</td>
-                  <td width="40" class="align-middle text-right">{{item.total | currency}}</td>
+                  <td width="40" class="align-middle">{{item.qty}}{{item.product.unit}}</td>
+                  <td class="align-middle text-right">{{item.total | currency}}</td>
                 </tr>
               </tbody>
             </table>
