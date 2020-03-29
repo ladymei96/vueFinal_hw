@@ -111,7 +111,7 @@
               <p class="h5 text-right mb-0">{{item.price | currency}}</p>              
             </div>
 
-            <div class="card card-content bg-primary text-white">
+            <div class="card card-content card-fadeIn bg-primary text-white">
               <div class="card-header h-25 pt-4">
                 <h5 class="card-title">{{item.title}}</h5>
               </div>
@@ -146,7 +146,7 @@
         </li>
       </ul>
     </nav>
-    <Gotop />
+    <Gotop :window-scroll="scrollPos" />
     <Footer></Footer>
   </div>
 </template>
@@ -170,14 +170,17 @@ export default {
       currentPage:1,
       has_pre:false,
       has_next:true,
+      scrollPos:0,
     }
   },
   methods:{
     getProducts(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
+      this.isLoading = true;
       this.$http.get(api).then((re) => {
         vm.products = re.data.products;
+        this.isLoading = false;
       })
     },
     productDetail(id){
@@ -253,7 +256,7 @@ export default {
         this.has_pre = true;
         this.has_next = false;
       }
-    }
+    },
   },
   created(){
     const vm = this;
@@ -263,8 +266,16 @@ export default {
       vm.selectCategory(index);
     });
   },
+  mounted(){
+    const vm = this;
+    $(window).scroll(function(){
+      let scrollPos = $(window).scrollTop();
+      vm.scrollPos = scrollPos;
+    })
+  },
   beforeDestroy(){
     this.$bus.$off('filterData:postIndex');
+    $(window).unbind('scroll');
   }
 }
 </script>
@@ -289,22 +300,7 @@ export default {
     height: 400px;
   }
 }
-.card-header,.card-footer{
-  background-color:transparent;
-  border:none;
-}
-.card-content{
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right:0;
-  opacity: 0;
-  transition: opacity .3s;
-}
-.card:hover .card-content{
-  opacity: 1;
-}
+
 .nav-option li{
   position: relative;
 }

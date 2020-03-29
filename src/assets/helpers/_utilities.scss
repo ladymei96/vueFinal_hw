@@ -29,3 +29,45 @@ $base-spacing:10px;
 .mt-80{
   margin-top: spacing(8);
 }
+
+//goTop-滾到指定位置，才出現
+.goTop-animated{
+  opacity: 0;
+  transition:.3s;
+}
+.goTop-fadein{
+  opacity: 1;
+}
+
+//卡片設定
+.card{
+  overflow: hidden;
+}
+.card-header,.card-footer{
+  background-color:transparent;
+  border:none;
+}
+.card-content{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right:0;
+  transition:.5s;
+}
+.card-fadeIn{
+  opacity: 0;
+}
+.card:hover .card-fadeIn{
+  opacity: 1;
+}
+.card-slideInUp{
+  transform: translateY(100%);
+}
+.card:hover .card-slideInUp{
+  transform: translateY(0);
+}
+// 卡片色彩設定(index+product共用)
+.bg-primary-opacity{
+  background-color: #10161e81;
+}

@@ -1,0 +1,51 @@
+// 共同使用
+.index-title{
+  display: inline-block;
+  margin-bottom: 3rem;
+  position: relative;
+}
+// 熱賣商品
+.index-hot{
+  background-color: $gray-100;
+}
+
+.index-title::before{
+  content: '';
+  display: block;
+  width: 8px;
+  height: 30px;
+  background-color: $primary;
+  position: absolute;
+  top: 50%;
+  left:-15px;
+  transform: translateY(-50%);
+}
+.index-hot-badge{
+  position: absolute;
+  top:10px;
+  right:10px;
+}
+// 優惠券介紹
+.index-couponIntro{
+  position: relative;
+  border:1px solid #000;
+}
+.index-couponIntro::before,
+.index-couponIntro::after{
+  position: absolute;
+  content:'';
+  display:block;
+  width: 100%;
+  height: 232px;/*想辦法隨父層100%*/
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.index-couponIntro::before{
+  top:-10%;
+  left:-10%;
+  // background-color: rgba(226, 113, 113, 0.315);
+}
+.index-couponIntro::after{
+  bottom:-10%;
+  right:-10%;
+  // background-color: rgba(115, 113, 226, 0.315);
+}

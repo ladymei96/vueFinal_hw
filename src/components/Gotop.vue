@@ -1,13 +1,20 @@
 <template>
   <div class="goTop">
-    <a href="#" @click.prevent="goTop" class="h1"><i class="fas fa-chevron-circle-up"></i></a>    
+    <a href="#" @click.prevent="goTop" class="h1 goTop-animated" :class="{'goTop-fadein':!isTop}"><i class="fas fa-chevron-circle-up"></i></a>    
   </div>
 </template>
 
 <script>
+//別的頁面還沒加上
 import $ from 'jquery';
 export default {
   name:'Gotop',
+  props:['windowScroll'],
+  data(){
+    return{
+      isTop:true,
+    }
+  },
   methods:{
     goTop(){
       let doc = document.documentElement;
@@ -16,6 +23,15 @@ export default {
       },500)
     }
   },
+  watch:{
+    windowScroll(){
+      if(this.windowScroll > 200){
+        this.isTop = false;
+      }else{
+        this.isTop = true;
+      }
+    }
+  }
 }
 </script>
 

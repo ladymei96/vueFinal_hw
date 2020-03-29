@@ -3,16 +3,23 @@
   background-size:cover;
 }
 //首頁背景圖
-.home-bg{
+.index-jumbotrom-bg{
   background-image: url(~@/assets/image/index_banner.jpg);
 }
-.block-bg{
+.index-block-bg{
   width: 135px;
   height: 180px;
   background-image: url(~@/assets/image/index_section.jpg);
-  position: fixed;
+  position: absolute;
   bottom:50px;
   right:12%;
+}
+.index-couponIntro-bg{
+  background-color: rgba(255, 255, 255, 0.479);
+  background-image: url(~@/assets/image/index_coupon50off.jpg);
+  height: 600px;
+  background-size: cover;
+  background-position: center top;
 }
 //產品列表輪播圖
 .carousel-bg-1{

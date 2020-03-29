@@ -10,6 +10,8 @@ import {required, email} from 'vee-validate/dist/rules';
 import TW from 'vee-validate/dist/locale/zh_TW';
 // import VueAwesomeSwiper from 'vue-awesome-swiper';
 // import 'swiper/dist/css/swiper.css';
+import 'animate.css';
+import WOW from 'wow.js';
 //套件內容
 
 import App from './App';
@@ -40,11 +42,12 @@ extend('required', required);
 extend('email', email);
 localize('zh_TW', TW);
 // Vue.use(VueAwesomeSwiper);
+new WOW({ live: false }).init();
 //啟用區
 
 
 
-/* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   components: { App },
