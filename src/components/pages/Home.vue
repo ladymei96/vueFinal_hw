@@ -104,7 +104,7 @@
   </div>
 <!-- 相片庫 -->
   <div class="container-lg p-5 index-photoLibarary">
-    <div class="row mb-3">
+    <div class="row">
       <div class="col-6">
         <div class="item-pic1 bg-cover"></div>
       </div>
@@ -114,20 +114,26 @@
             <div class="item-pic2 bg-cover"></div>
           </div>
           <div class="col-6 d-flex flex-column pl-0">
-            <div class="item-pic3 bg-cover"></div>
+            <div class="item-pic3 bg-cover position-relative">
+              <p class="item-pic3-text">
+                theme
+                <br>
+                HUMANITES
+              </p>
+            </div>
             <div class="item-pic4 bg-cover"></div>
           </div>
         </div>
       </div>
     </div>
     
-    <div class="row">
-      <div class="col-3">
+    <div class="row mt-3">
+      <div class="col-3 pr-0">
         <div class="item-pic5 bg-cover"></div>
       </div>
       <div class="col-9">
         <div class="row">
-          <div class="col-4">
+          <div class="col-4 pr-0">
             <div class="item-pic6 bg-cover"></div>
           </div>
           <div class="col-8">
@@ -138,7 +144,7 @@
           <div class="col-8">
             <div class="item-pic8 bg-cover"></div>
           </div>
-          <div class="col-4">
+          <div class="col-4 pl-0">
             <div class="item-pic9 bg-cover"></div>
           </div>
         </div>
