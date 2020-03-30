@@ -81,7 +81,7 @@ export default {
       swiperOption: {
         autoplay:true,//自行滑動
         loop:true,
-        speed:1500,
+        speed:1000,
         slidesPerView: 'auto',
         loopedSlides :3,
         centeredSlides: true,

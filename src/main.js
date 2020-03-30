@@ -2,6 +2,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'bootstrap';//運用到BS內互動元件時，需載入(會跳提示要安裝jq與popper.js)
+import 'jquery';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
         //表單驗證
@@ -42,7 +43,7 @@ extend('required', required);
 extend('email', email);
 localize('zh_TW', TW);
 // Vue.use(VueAwesomeSwiper);
-new WOW({ live: false }).init();
+new WOW().init();
 //啟用區
 
 

@@ -3,11 +3,11 @@
     <loading :active.sync="isLoading"></loading>
     <NavbarDark :current-page="isProductsPage"></NavbarDark>
 <!-- 輪播 -->
-    <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel" data-pause="false" data-interval="2500">
+    <div id="productsCarouse" class="carousel slide mb-5">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#productsCarouse" data-slide-to="0" class="active"></li>
+        <li data-target="#productsCarouse" data-slide-to="1"></li>
+        <li data-target="#productsCarouse" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item carousel-bg-1 carousel-item-height bg-cover active ">
@@ -17,11 +17,11 @@
         <div class="carousel-item carousel-bg-3 carousel-item-height bg-cover">
         </div>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#productsCarouse" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <a class="carousel-control-next" href="#productsCarouse" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
@@ -271,6 +271,11 @@ export default {
     $(window).scroll(function(){
       let scrollPos = $(window).scrollTop();
       vm.scrollPos = scrollPos;
+    });
+    $('.carousel').carousel({
+      interval: 2000,
+      ride:'carousel',
+      pause:false,
     })
   },
   beforeDestroy(){

@@ -24,9 +24,9 @@
     	    <h3 class="wow slideInUp mb-0">熱賣商品</h3>
     	  </div>
     	  <div class="row  justify-content-center mb-4">
-    	    <div class="col-10">
+    	    <div class="col-md-10">
     	      <div class="row">
-    	        <div class="col-lg-4 col-md-6" v-for="item in topProducts" :key="item.id">
+    	        <div class="col-lg-4 col-sm-6 mb-3" v-for="item in topProducts" :key="item.id">
     	          <div class="card h-100">
                   <span class="badge badge-danger index-hot-badge">{{`Top ${item.top}`}}</span>
     	            <div class="card-body pb-0">
@@ -43,7 +43,6 @@
     	        </div>
     	      </div>
     	    </div>
-    
     	  </div>
     	</div>
     </div>
@@ -60,60 +59,115 @@
           大家能帶著相機寶貝出門踏踏青、拍拍照
         </p>
       </div>
-        <a href="#" class="wow pulse index-couponIntro-link">每天都有小確幸，點我查看詳情</a>
+        <a href="#" class="wow pulse index-couponIntro-link"><i class="fas fa-angle-double-right"></i> 每天都有小確幸，點我查看詳情</a>
     </div>
 <!-- 最新消息 -->
     <div class="container text-center p-5">
       <div class="index-title mt-3">
         <h3 class="wow slideInUp mb-0">最新消息</h3>
       </div>
-      <div class="row">
-        <div class="col-12 index-news p-5"><!--p-5&text-left暫時排版-->
+      <div class="row mb-3">
+        <div class="col-12 index-news">
           <ul>
             <li v-for="(item, index) in latestNews" :key="index" class="text-left">
-              <span>{{item.date}}</span>
-              <span>{{item.content}}</span>
+              <p class="d-block d-md-inline-block">{{item.date}}</p>
+              <p class="d-block d-md-inline-block">{{item.content}}</p>
             </li>
           </ul>
         </div>
       </div>
     </div>
-<!-- 購買流程 -->
+<!-- 購買流程-重新規劃 -->
+  <div class="index-buyflow p-5">
+    <div class="container text-center">
+      <div class="index-title mt-3">
+        <h3 class="wow slideInUp mb-0">購買流程</h3>
+      </div>
+      <div class="row index-buyflow-content border"><!-- no-gutters-->
+        <div class="col-4 item">
+          <img src="../../assets/image/index_process_bag.png" alt="bagIcon">
+          <p class="item-num">1</p>
+          <p class="item-text">加入購物車</p>
+        </div>
+        <div class="col-4 item">
+          <img src="../../assets/image/index_process_order.png" alt="orderIcon">
+          <p class="item-num">2</p>
+          <p class="item-text">建立訂單</p>
+        </div>
+        <div class="col-4 item">
+          <img src="../../assets/image/index_process_pay.png" alt="creditcardIcon">
+          <p class="item-num">3</p>
+          <p class="item-text">確認付款</p>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- 相片庫 -->
+  <div class="container-lg p-5 index-photoLibarary">
+    <div class="row mb-3">
+      <div class="col-6">
+        <div class="item-pic1 bg-cover"></div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-6 pl-0">
+            <div class="item-pic2 bg-cover"></div>
+          </div>
+          <div class="col-6 d-flex flex-column pl-0">
+            <div class="item-pic3 bg-cover"></div>
+            <div class="item-pic4 bg-cover"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-3">
+        <div class="item-pic5 bg-cover"></div>
+      </div>
+      <div class="col-9">
+        <div class="row">
+          <div class="col-4">
+            <div class="item-pic6 bg-cover"></div>
+          </div>
+          <div class="col-8">
+            <div class="item-pic7 bg-cover"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="item-pic8 bg-cover"></div>
+          </div>
+          <div class="col-4">
+            <div class="item-pic9 bg-cover"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- 訂閱電子報 -->
 <!-- footer -->
   </div>
 </template>
 
 <script>
+import WOW from 'wow.js';
+
 export default {
   name: 'Home',
   data () {
     return {
-      topProducts:[
-        {
-          title:'Sony A7 III',    
-          imageUrl:'https://storage.googleapis.com/vue-course-api.appspot.com/ladymei%2F1583325614391.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=hJ3rN7uJ3KBcCXgbd6pD5EsvhfT2t%2F8YwoD5ap%2FsNDnsZhSCkfxD%2B2%2BcziK7gzuyV5LTomfC8jCTQ3chijbB%2BHwloh3GMfwbdVO8fT7w18RNHIUYyh5Ri4Y21E6uAqmSITdNV0552O5PvLdDSuFmcgLKdek959vI5HIq5gfOZHU9hTbk2aNaSxNQ0baYulYeNv%2BT08jzW8TmpqV0nlMvssfN00b7SXRbinZmfbYpCDd6Xmkh9ktrQEdEqwhTvOTubNhcAZeMHWJCvXxrUYUcAS5il%2BNencev5lNo2yK8VV57rljue1vIiY%2Ft3hysHHonj3V6zXTdcsEfDzrpieCHNw%3D%3D',
-          id:'-M1_Z0EZ5xnUlbMegcai',
-          top:1,
-        },
-        {
-          title:'Fujifilm X-3 銀',    
-          imageUrl:'https://storage.googleapis.com/vue-course-api.appspot.com/ladymei%2F1583325850623.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=lEcJIY8cAp8KfNu0gwSgpKSkmMv6NJJhguJYSmDF8tnEbeFEnLs0qadwINJTgFhXnZ46Vc1wcQOUGVYy3YKmsLmVY3qVp%2BiSWFdLDJBQPuMKqYjuIpaPNTZ9%2FY5Zjw3x139tdsLbPCkAa015%2BphzO%2B3zk%2Bx%2BYJWfHHFrlMIB2uSoywyypeOEeDRaJ4NEN7TyELevLoOALhBrQFToy%2FZuEUjCeMlYqsDEp9t6AVgxY6NFfFjLYFn8IK6TzzfffGUWCnVIDNQYN5u730jttRXcSVnuO55nesKc6VyhPLuBRV%2Bz0v%2FqSuwOFQ0hhGQ4Bj3gH4qBK7RAORbBP6NYqFYDMg%3D%3D',
-          id:'-M1_ZvRd0XmA5Sgx9oCR',
-          top:2,
-        },
-        {
-          title:'Canon EOS R',    
-          imageUrl:'https://storage.googleapis.com/vue-course-api.appspot.com/ladymei%2F1584790676800.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=fgi2Ygv4hFlV5IpG7H2wtSZ7fbaW%2BIDE4ddD2Gv7qmTcb3ykQbZxNcPNw%2F%2BJZSJUt1drw94Si%2BNo3zb0iMWryGeKyxlLxeIAeOreYF%2FLni%2B00DGtXmnIBTx6ianQJjYpjItLiZTH70i%2BsDiiYbKO%2BbAGcucXogIC8Jyqsf%2Ba6d57NOtgbmFRhboyVlGsC%2B5a%2BhZAIzrDrZl3e3IVqOtoINYQ1gGtMZjGMIu96TB9fpvZrbmmtO%2BMA1tDT5fd5kg%2Bj8%2BBWswzkMdhXCY4nQ0iUF%2FBUyYH9top3PzvhatU9CjnrjtW6tbsbjb0BhZJlqP6ylnbFIa0BY8%2FioHS6YatPg%3D%3D',
-          id:'-M2wsqWeKEjDRiwPSizI',
-          top:3
-        },
-      ],
+      topProducts:[],
       latestNews:[],
     }
   },
   methods:{
+    getTopProducts(){
+      const vm = this;
+      this.$http.get('../../../static/topProducts.json').then((re) => {
+        vm.topProducts = re.data;
+      })
+    },
     getLatestNews(){
       const vm = this;
       this.$http.get('../../../static/lastestNews.json').then((re) => {
@@ -122,8 +176,12 @@ export default {
     }
   },
   created(){ 
+    this.getTopProducts();
     this.getLatestNews();
   },
+  mounted(){
+    new WOW().init();
+}
 }
 </script>
 
