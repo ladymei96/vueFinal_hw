@@ -27,7 +27,7 @@
                 <div class="input-group-prepend">
                   <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="minNum">-</button>
                 </div>
-                <input type="number" class="form-control text-center border-1px" v-model.number="productNum" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+                <input type="tel" class="form-control text-center border-1px" v-model.number="productNum" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
                 <div class="input-group-append" id="button-addon4">
                   <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="productNum++">+</button>
                   <button class="btn btn-secondary font-weight-bolder" type="button" @click.prevent="addtoCart(productNum)">加到購物車</button>

@@ -36,7 +36,7 @@
     
     	            <div class="card card-content bg-primary-opacity text-white card-slideInUp"><!--父-->
     	              <div class="card-body d-flex justify-content-center"><!--子-->
-    	                <button type="button" class="btn btn-outline-light align-self-center">點擊前往</button>
+    	                <button type="button" class="btn btn-outline-light align-self-center" @click.prevent="productDetail(item.id)">點擊前往</button>
     	              </div>
     	            </div>
     	          </div>
@@ -78,44 +78,61 @@
       </div>
     </div>
 <!-- 購買流程-重新規劃 -->
-  <div class="index-buyflow p-5">
-    <div class="container text-center">
-      <div class="index-title mt-3">
-        <h3 class="wow slideInUp mb-0">購買流程</h3>
-      </div>
-      <div class="row index-buyflow-content border"><!-- no-gutters-->
-        <div class="col-4 item">
-          <img src="../../assets/image/index_process_bag.png" alt="bagIcon">
-          <p class="item-num">1</p>
-          <p class="item-text">加入購物車</p>
+    <div class="index-buyflow p-5">
+      <div class="container text-center">
+        <div class="index-title mt-3">
+          <h3 class="wow slideInUp mb-0">購買流程</h3>
         </div>
-        <div class="col-4 item">
-          <img src="../../assets/image/index_process_order.png" alt="orderIcon">
-          <p class="item-num">2</p>
-          <p class="item-text">建立訂單</p>
-        </div>
-        <div class="col-4 item">
-          <img src="../../assets/image/index_process_pay.png" alt="creditcardIcon">
-          <p class="item-num">3</p>
-          <p class="item-text">確認付款</p>
+        <div class="row index-buyflow-content mb-3"><!-- no-gutters-->
+          <div class="col-4 item">
+            <img src="../../assets/image/index_process_bag.png" alt="bagIcon">
+            <!-- <p class="item-num item-doc">1</p> -->
+            <p class="item-text item-text-1">加入購物車</p>
+          </div>
+          <div class="col-4 item">
+            <img src="../../assets/image/index_process_order.png" alt="orderIcon">
+            <!-- <p class="item-num item-doc">2</p> -->
+            <p class="item-text item-text-2">建立訂單</p>
+          </div>
+          <div class="col-4 item">
+            <img src="../../assets/image/index_process_pay.png" alt="creditcardIcon">
+            <!-- <p class="item-num item-doc">3</p> -->
+            <p class="item-text item-text-3">確認付款</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 <!-- 相片庫 -->
-  <div class="container-lg p-5 index-photoLibarary"><!--RWD p-5-->
-    <div class="item item-pic1"></div>
-    <div class="item item-pic2"></div>
-    <div class="item item-pic3"></div>
-    <div class="item item-pic4"></div>
-    <div class="item item-pic5"></div>
-    <div class="item item-pic6"></div>
-    <div class="item item-pic7"></div>
-    <div class="item item-pic8"></div>
-    <div class="item item-pic9"></div>
-  </div>
+    <div class="container-lg p-5 index-photoLibarary"><!--RWD p-5-->
+      <div class="item item-pic1"></div>
+      <div class="item item-pic2"></div>
+      <div class="item item-pic3"></div>
+      <div class="item item-pic4"></div>
+      <div class="item item-pic5"></div>
+      <div class="item item-pic6"></div>
+      <div class="item item-pic7"></div>
+      <div class="item item-pic8"></div>
+      <div class="item item-pic9"></div>
+    </div>
 <!-- 訂閱電子報 -->
+    <div class="index-subscribe p-5">
+      <div class="container text-center">
+        <div class="index-title mt-3">
+          <h3 class="wow slideInUp mb-0">訂閱電子報</h3>
+        </div>
+        <div class="row justify-content-center mb-3">
+          <div class="col-lg-8">
+            <form class="index-subs">
+              <input type="email" placeholder="your@email.com">
+              <input type="submit" value="訂閱電子報">
+            </form >
+          </div>
+        </div>
+      </div>
+    </div>
 <!-- footer -->
+    <Gotop :window-scroll="scrollPos" />
+    <Footer></Footer>
   </div>
 </template>
 
@@ -128,6 +145,7 @@ export default {
     return {
       topProducts:[],
       latestNews:[],
+      scrollPos:0,
     }
   },
   methods:{
@@ -142,6 +160,9 @@ export default {
       this.$http.get('../../../static/lastestNews.json').then((re) => {
         vm.latestNews = re.data;
       })
+    },
+    productDetail(id){
+      this.$router.push(`/product/${id}`);
     }
   },
   created(){ 
@@ -149,6 +170,11 @@ export default {
     this.getLatestNews();
   },
   mounted(){
+    const vm = this;
+    $(window).scroll(function(){
+      let scrollPos = $(window).scrollTop();
+      vm.scrollPos = scrollPos;
+    });
     new WOW().init();
 }
 }
