@@ -22,17 +22,79 @@
   background-position: center top;
 }
 // 首頁-相片庫
-.item-pic1{
-  background-image: url(~@/assets/image/index_photo_1.jpg);
-  padding-top:100%;
+.index-photoLibarary{
+  display:grid;
+  grid-template-areas:
+  "item-pic1 item-pic1 item-pic2 item-pic3"
+  "item-pic1 item-pic1 item-pic2 item-pic4"
+  "item-pic5 item-pic6 item-pic7 item-pic7"
+  "item-pic5 item-pic8 item-pic8 item-pic9";
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  .item{
+    outline: 5px solid #fff;
+    position:relative;
+    overflow: hidden;
+  }
+
+@mixin picZoom($pic-padding-top, $pic-scale) {
+  height: 0;
+  padding-top:$pic-padding-top;
+  &:after{
+    background-position: center center;
+    background-size: cover;
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    transform: scale(1);
+    transition: transform .3s;
+  }
+  &:hover::after{
+    transform: scale($pic-scale);
+  }
 }
-.item-pic2{
-  background-image: url(~@/assets/image/index_photo_2.jpg);
-  padding-top:200%
-}
-.item-pic3{
+  .item-pic1{
+    grid-area: item-pic1;
+    @include picZoom(100%, 1.2);
+    // grid-area: item-pic1;
+    // height: 0;
+    // padding-top:100%;
+    &:after{
+      background-image: url(~@/assets/image/index_photo_1.jpg);
+      // background-position: center center;
+      // background-size:cover;
+      // content: '';
+      // display: block;
+      // position: absolute;
+      // width: 100%;
+      // height: 100%;
+      // top:0;
+      // left:0;
+      // transform: scale(1);
+      // transition: transform .3s;
+    }
+    // &:hover::after{
+    //   transform: scale(1.2);
+    // }
+  }
+  .item-pic2{
+    grid-area: item-pic2;
+    @include picZoom(200%, 1.2);
+    &:after{
+      background-image: url(~@/assets/image/index_photo_2.jpg);
+    }
+    // height: 0;
+    // padding-top:200%
+  }
+  .item-pic3{
+    grid-area: item-pic3;
     background-color: $primary;
     // margin-bottom:15px;
+    height: 0;
     padding-top:100%;
     .item-pic3-text{
       position: absolute;
@@ -41,29 +103,57 @@
       color:#fff;
     }
   }
-.item-pic4{
-  background-image: url(~@/assets/image/index_photo_3.jpg);
-  padding-top:100%;
-}
-.item-pic5{
-  background-image: url(~@/assets/image/index_photo_4.jpg);
-  padding-top:200%
-}
-.item-pic6{
-  background-color: $primary;
-  padding-top:100%
-}
-.item-pic7{
-  background-image: url(~@/assets/image/index_photo_5.jpg);
-  padding-top:50%
-}
-.item-pic8{
-  background-image: url(~@/assets/image/index_photo_6.jpg);
-  padding-top:50%
-}
-.item-pic9{
-  background-image: url(~@/assets/image/index_photo_7.jpg);
-  padding-top:100%
+  .item-pic4{
+    grid-area: item-pic4;
+    @include picZoom(100%, 1.3);
+    &:after{
+      background-image: url(~@/assets/image/index_photo_3.jpg);
+    }
+    // height: 0;
+    // padding-top:100%;
+  }
+  .item-pic5{
+    grid-area: item-pic5;
+    @include picZoom(200%, 1.2);
+    &:after{
+      background-image: url(~@/assets/image/index_photo_4.jpg);
+    }
+    // height: 0;
+    // padding-top:200%
+  }
+  .item-pic6{
+    grid-area: item-pic6;
+    background-color: $primary;
+    height: 0;
+    padding-top:100%
+  }
+  .item-pic7{
+    grid-area: item-pic7;
+    @include picZoom(50%, 1.2);
+    &:after{
+      background-image: url(~@/assets/image/index_photo_5.jpg);
+    }
+    // height: 0;
+    // padding-top:50%
+  }
+  .item-pic8{
+    grid-area: item-pic8;
+    @include picZoom(50%, 1.2);
+    &:after{
+      background-image: url(~@/assets/image/index_photo_6.jpg);
+    }
+    // height: 0;
+    // padding-top:50%
+  }
+  .item-pic9{
+    grid-area: item-pic9;
+    @include picZoom(100%, 1.5);
+    &:after{
+      background-image: url(~@/assets/image/index_photo_7.jpg);
+    }
+    // height: 0;
+    // padding-top:100%
+  }
 }
 //產品列表輪播圖
 .carousel-bg-1{
