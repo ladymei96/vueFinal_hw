@@ -2,7 +2,7 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <div class="container-md my-5">
-      <div class="customerOrder p-2 p-sm-4">
+      <div class="customerOrder-box-shadow p-2 p-sm-4">
         <h2>MY BAG</h2>
         <p class="text-center h2" v-if="cart.carts.length == 0">清單內已無商品</p>
         <table class="table" v-if="cart.carts.length > 0">
@@ -62,7 +62,7 @@
 
       <ValidationObserver tag="div" ref="form" >
         <form @submit.prevent="createOrder">
-          <div class="customerOrder p-2 p-sm-4">
+          <div class="customerOrder-box-shadow p-2 p-sm-4">
             <h2>INFORMATION</h2>
             <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="姓名" rules="required">
               <label for="username">姓名Name</label>
@@ -108,7 +108,7 @@
 import {ValidationObserver, ValidationProvider} from 'vee-validate';
 
 export default {
-  name: 'CustomerOrder',
+  name: 'customerOrder-box-shadow',
   data () {
     return {
       isLoading:false,
@@ -203,20 +203,20 @@ export default {
   },
   created(){
     this.getCart();
-    this.$bus.$on('customerOrder:getCart', this.getCart);
+    this.$bus.$on('customerOrder-box-shadow:getCart', this.getCart);
   },
   beforeDestroy(){
-    this.$bus.$off('customerOrder:getCart');
+    this.$bus.$off('customerOrder-box-shadow:getCart');
   }
 }
 </script>
 <style>
-.customerOrder{
+.customerOrder-box-shadow{
   box-shadow: 4px 4px 10px #aaa;
   margin-bottom:30px;
 }
 @media (max-width: 575px){
-  .customerOrder .table th, .table td{
+  .customerOrder-box-shadow .table th, .table td{
     padding: 5px 0;
   }
 }

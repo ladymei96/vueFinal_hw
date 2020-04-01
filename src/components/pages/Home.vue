@@ -59,7 +59,7 @@
           大家能帶著相機寶貝出門踏踏青、拍拍照
         </p>
       </div>
-        <a href="#" class="wow pulse index-couponIntro-link"><i class="fas fa-angle-double-right"></i> 每天都有小確幸，點我查看詳情</a>
+        <a href="#" class="wow pulse index-couponIntro-link" @click.prevent="goCoupons"><i class="fas fa-angle-double-right"></i> 每天都有小確幸，點我查看詳情</a>
     </div>
 <!-- 最新消息 -->
     <div class="container text-center p-5">
@@ -115,22 +115,24 @@
       <div class="item item-pic9"></div>
     </div>
 <!-- 訂閱電子報 -->
-    <div class="index-subscribe p-5">
+    <div class="index-subscribe py-5">
       <div class="container text-center">
         <div class="index-title mt-3">
           <h3 class="wow slideInUp mb-0">訂閱電子報</h3>
         </div>
-        <div class="row justify-content-center mb-3">
+        <div class="row justify-content-center mb-1">
           <div class="col-lg-8">
             <form class="index-subs">
-              <input type="email" placeholder="your@email.com">
-              <input type="submit" value="訂閱電子報">
+              <input type="email" placeholder="your@email.com" v-model="customerEmail">
+              <input type="submit" @click.prevent="subsUs" value="訂閱電子報">
             </form >
+            <p class="index-subs-message" v-show="errorMessage">錯誤，須為有效的電子信箱</p>
           </div>
         </div>
       </div>
     </div>
 <!-- footer -->
+    <Message></Message>
     <Gotop :window-scroll="scrollPos" />
     <Footer></Footer>
   </div>
@@ -138,6 +140,7 @@
 
 <script>
 import WOW from 'wow.js';
+import Message from '../ScreenFull_message';
 
 export default {
   name: 'Home',
@@ -146,7 +149,12 @@ export default {
       topProducts:[],
       latestNews:[],
       scrollPos:0,
+      customerEmail:'',
+      errorMessage:false,
     }
+  },
+  components:{
+    Message,
   },
   methods:{
     getTopProducts(){
@@ -163,6 +171,30 @@ export default {
     },
     productDetail(id){
       this.$router.push(`/product/${id}`);
+    },
+    goCoupons(){
+      this.$router.push('/coupons');
+    },
+    subsUs(){
+      if(this.judgeEmail !== null){
+        this.$bus.$emit('message:show');
+        this.customerEmail = '';
+      }
+    }
+  },
+  computed:{
+    judgeEmail(){
+      let isMail =  /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+      return isMail.test(this.customerEmail) ? this.customerEmail : null
+    },
+  },
+  watch:{
+    customerEmail(){
+      if(this.judgeEmail == null && this.customerEmail != ''){
+        this.errorMessage = true;
+      }else{
+        this.errorMessage = false;
+      }
     }
   },
   created(){ 

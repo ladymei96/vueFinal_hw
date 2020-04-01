@@ -1,6 +1,6 @@
 <template>
   <div class="goTop">
-    <a href="#" @click.prevent="goTop" class="h1 goTop-animated" :class="{'goTop-fadein':!isTop}"><i class="fas fa-chevron-circle-up"></i></a>
+    <a href="#" @click.prevent="goTop" class="h1 goTop-animated" :class="{'goTop-fade':scrollPos}"><i class="fas fa-chevron-circle-up"></i></a>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   props:['windowScroll'],
   data(){
     return{
-      isTop:true,
+      // isTop:true,
     }
   },
   methods:{
@@ -22,15 +22,20 @@ export default {
       },500)
     }
   },
-  watch:{
-    windowScroll(){
-      if(this.windowScroll > 200){
-        this.isTop = false;
-      }else{
-        this.isTop = true;
-      }
+  computed:{
+    scrollPos(){ //滾動軸位置超過200，就讓top顯示；反之，隱藏
+      return this.windowScroll > 200 ? true : false
     }
-  }
+  },
+  // watch:{
+  //   windowScroll(){
+  //     if(this.windowScroll > 200){
+  //       this.isTop = false;
+  //     }else{
+  //       this.isTop = true;
+  //     }
+  //   }
+  // }
 }
 </script>
 

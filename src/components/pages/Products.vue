@@ -29,7 +29,7 @@
 <!-- 產品分類-選單 -->
     <div class="container text-center mb-md-5 mb-3">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
-        <a v-for="(listItem, index) in category" :key="index" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{listItem}}</a>
+        <a v-for="(listItem, index) in category" :key="listItem" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{listItem}} <i class="fas fa-caret-down" v-show="index != 0"></i></a>
       </div>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade" :class="{'active': categoryIndex == 0, 'show': categoryIndex == 0}">
