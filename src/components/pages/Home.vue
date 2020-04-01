@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-<!-- 購買流程-重新規劃 -->
+<!-- 購買流程-排版還要再優化 -->
     <div class="index-buyflow p-5">
       <div class="container text-center">
         <div class="index-title mt-3">

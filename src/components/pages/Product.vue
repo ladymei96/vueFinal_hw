@@ -41,6 +41,56 @@
       
       <a class="h3 d-inline-block" href="#" @click.prevent="goBack">back</a>
 
+      <div class="row product-technology">
+        <div class="col-lg-4">
+          <h2>追求巔峰的工程設計</h2>
+          <p>
+            在追求卓越的影像品質上，讓影像解析度及邊緣達到全所未有的提升。搭載最新且強大的影像處理引擎，讓功能全面升級，從解析度道色彩重現到降低造點，遠比前幾代機種優秀許多。
+          </p>
+        </div>
+        <div class="col-8">
+          <div class="row no-gutters">
+            <div class="col-4 d-flex flex-column">
+              <div class="product-item-num">
+                01
+              </div>
+              <div class="product-item-title">
+                最新影像處理
+              </div>
+              <div class="product-item-text">
+                EXPEED影像處理器搭配前端大型積體電路晶片，可將高解析度感光元件的性能提升到極致。
+              </div>
+              <img src="" class="product-item-text-pic" alt="">
+            </div>
+            <div class="col-4 d-flex flex-column">
+              <div class="product-item-num">
+                02
+              </div>
+              <div class="product-item-title">
+                內建五軸穩定系統
+              </div>
+              <div class="product-item-text">
+                機身內建五軸影像穩定器，演算法經過最佳化，可讓高解析度感光元件帶來最佳性能表現。
+              </div>
+              <img src="" class="product-item-text-pic" alt="">
+            </div>
+            <div class="col-4 d-flex flex-column">
+              <div class="product-item-num">
+                03
+              </div>
+              <div class="product-item-title">
+                背罩式感光元件
+              </div>
+              <div class="product-item-text">
+                全新開發的Exmor R CMOS感光元件具有無可匹敵的高解析度。
+              </div>
+              <img src="" class="product-item-text-pic" alt="">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <div class="row mb-3">
         <div class="col-md-6 p-3">
           <h2>極致操控性能</h2>
