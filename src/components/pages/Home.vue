@@ -18,10 +18,10 @@
       <img class="index-mouse" src="../../assets/image/index_mouse.png" alt="">
     </div>
 <!-- 熱賣商品 -->
-    <div class="index-hot p-5">
+    <div class="index-hot p-5"><!--區塊架構：帶背景色-->
     	<div class="container text-center">
     	  <div class="index-title mt-3">
-    	    <h3 class="wow slideInUp mb-0">熱賣商品</h3>
+    	    <h3 class="wow slideInUp">熱賣商品</h3>
     	  </div>
     	  <div class="row  justify-content-center mb-4">
     	    <div class="col-md-10">
@@ -62,9 +62,9 @@
         <a href="#" class="wow pulse index-couponIntro-link" @click.prevent="goCoupons"><i class="fas fa-angle-double-right"></i> 每天都有小確幸，點我查看詳情</a>
     </div>
 <!-- 最新消息 -->
-    <div class="container text-center p-5">
+    <div class="container text-center p-5"><!--區塊架構：沒有背景色-->
       <div class="index-title mt-3">
-        <h3 class="wow slideInUp mb-0">最新消息</h3>
+        <h3 class="wow slideInUp">最新消息</h3>
       </div>
       <div class="row mb-3">
         <div class="col-12 index-news">
@@ -81,7 +81,7 @@
     <div class="index-buyflow p-5">
       <div class="container text-center">
         <div class="index-title mt-3">
-          <h3 class="wow slideInUp mb-0">購買流程</h3>
+          <h3 class="wow slideInUp">購買流程</h3>
         </div>
         <div class="row index-buyflow-content mb-3"><!-- no-gutters-->
           <div class="col-4 item">
@@ -118,7 +118,7 @@
     <div class="index-subscribe py-5">
       <div class="container text-center">
         <div class="index-title mt-3">
-          <h3 class="wow slideInUp mb-0">訂閱電子報</h3>
+          <h3 class="wow slideInUp">訂閱電子報</h3>
         </div>
         <div class="row justify-content-center mb-1">
           <div class="col-lg-8">
@@ -126,7 +126,7 @@
               <input type="email" placeholder="your@email.com" v-model="customerEmail">
               <input type="submit" @click.prevent="subsUs" value="訂閱電子報">
             </form >
-            <p class="index-subs-message" v-show="errorMessage">錯誤，須為有效的電子信箱</p>
+            <p class="index-subs-message" :class="{'index-subs-message-visibility':errorMessage}">錯誤，須為有效的電子信箱</p><!--v-show="errorMessage"-->
           </div>
         </div>
       </div>

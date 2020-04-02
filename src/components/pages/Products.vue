@@ -33,7 +33,7 @@
       </div>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade" :class="{'active': categoryIndex == 0, 'show': categoryIndex == 0}">
-          <ul class="nav justify-content-center nav-option option-opacity">
+          <ul class="nav justify-content-center nav-option option-visibility">
             <li class="nav-item"><a class="nav-link" href="#">all</a></li>
           </ul>
         </div>
@@ -328,8 +328,7 @@ export default {
   position:absolute;
   left:0;
 }
-.option-opacity{
-  opacity: 0;
-  pointer-events: none;
+.option-visibility{
+  visibility:hidden;/*佔位隱藏*/ 
 }
 </style>

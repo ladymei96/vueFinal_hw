@@ -3,7 +3,7 @@
     <NavbarDark></NavbarDark>
     <loading :active.sync="isLoading"></loading>
     <div class="container">
-      <div>
+      <div><!--資料更動區-->
         <div class="text-center mb-4">
           <h1 class="h2 title-border-bottom d-inline-block pb-2">{{product.title}}</h1>
         </div>
@@ -40,7 +40,7 @@
       </div>
       
       <a class="h3 d-inline-block" href="#" @click.prevent="goBack">back</a>
-
+<!--內容固定區-->
       <div class="row product-technology">
         <div class="col-lg-4">
           <h2>追求巔峰的工程設計</h2>
@@ -90,7 +90,7 @@
           </div>
         </div>
       </div>
-
+<!-- 極致操控性能 -->
       <div class="row mb-3">
         <div class="col-md-6 p-3">
           <h2>極致操控性能</h2>
@@ -100,7 +100,7 @@
           <div class="h-md-100 h-260 description-bg-1 bg-cover" ></div>
         </div>
       </div>
-
+<!-- 細膩超乎想像 -->
       <div class="description-bg-2 bg-cover text-white mb-5">
           <div class="row h-100 align-items-center">
             <div class="col-lg-5 col-md-6 mx-3">
@@ -111,8 +111,8 @@
             </div>
           </div>
       </div>
-
-      <div class="description-bg-3 bg-cover  text-white mb-5">
+<!-- 成像無與倫比 -->
+      <div class="description-bg-3 bg-cover text-white mb-5">
         <div class="row h-100 justify-content-end align-items-center">
           <div class="col-lg-5 col-md-6 mx-3">
             <div class="bg-none bg-sm-white text-sm-black p-3">
@@ -122,26 +122,113 @@
           </div>
         </div>
       </div>
+<!-- 相關商品 -->
+      <div class="text-center py-5">
+        <div class="product-intro-title mt-3">
+          <h3>猜您也喜歡</h3>
+        </div>
+        <slick ref="slick" :options="slickOptions" v-if="filterData.length">
+          <div class="card h-100" v-for="item in filterData" :key="item.id">
+            <div class="card-body pb-0">
+              <img :src="item.imageUrl" class="card-img-top" alt="product-image">
+              <h5 class="card-title">{{item.title}}</h5>
+            </div>
+          </div>
+          <!-- <div class="card h-100">
+            <div class="card-body pb-0">
+              <img :src="filterData[0].imageUrl" class="card-img-top" alt="product-image">
+              <h5 class="card-title">{{filterData[0].title}}</h5>
+            </div>
+          </div>
+          <div class="card h-100">
+            <div class="card-body pb-0">
+              <img :src="filterData[1].imageUrl" class="card-img-top" alt="product-image">
+              <h5 class="card-title">{{filterData[1].title}}</h5>
+            </div>
+          </div>
+          <div class="card h-100">
+            <div class="card-body pb-0">
+              <img :src="filterData[2].imageUrl" class="card-img-top" alt="product-image">
+              <h5 class="card-title">{{filterData[2].title}}</h5>
+            </div>
+          </div> -->
 
+          <!-- <img src="https://picsum.photos/500/200?random=1" alt="">
+          <img src="https://picsum.photos/500/200?random=2" alt="">
+          <img src="https://picsum.photos/500/200?random=3" alt="">
+          <img src="https://picsum.photos/500/200?random=4" alt="">
+          <img src="https://picsum.photos/500/200?random=5" alt=""> -->
+        </slick>
+      </div>
     </div><!--container-->
-    <Gotop />
+    <Gotop :window-scroll="scrollPos" />
     <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Slick from 'vue-slick';
+import 'slick-carousel/slick/slick.css';
+import $ from 'jquery';
 export default {
   name: 'Product',
   data () {
     return {
       productId:'',
       product:{},
+      products:[],
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
       productNum: 1,
       isLoading:false,
+      scrollPos:0,
+    // 相關產品-輪播
+      slickOptions: {
+        slidesToShow: 4,//一次顯示幾個
+        slidesToScroll: 1,//切換下一頁時移動幾個
+        //基本設定
+        //dots: true, //項目點點，預設為false
+        arrows: true, //上下箭頭，預設為true
+        autoplay: true, //自動撥放
+        // autoplaySpeed: 500, //自動撥放的切換速率，單位毫秒
+        // speed: 500, //切換速率，單位毫秒
+        // easing: 'linear', //滑動效果頻率，和animate設定值一樣，預設為linear
+        // fade: true, //切換改為fadeIn方式，預設為false
+        // infinite: true, //是否要loop，預設為true
+        //RWD設定
+        // responsive: [
+        //   {
+        //     breakpoint: 1024, // RWD在1024寬度時切換顯示數量
+        //     settings: {
+        //       slidesToShow: 3, //一次顯示3個
+        //       slidesToScroll: 3,//切換下一頁時移動3個
+        //     }
+        //  },{
+        //     breakpoint: 600,// RWD在600寬度時切換顯示數量
+        //     settings: {
+        //       slidesToShow: 2,//一次顯示2個
+        //       slidesToScroll: 2,//切換下一頁時移動2個
+        //     }
+        //  },
+        // ]
+      },
     }
   },
+  components:{
+    Slick,
+  },
   methods:{
+    next() {
+      this.$refs.slick.next();
+    },
+    prev() {
+      this.$refs.slick.prev();
+    },
+    reInit() {
+      // Helpful if you have to deal with v-for to update dynamic lists
+      this.$nextTick(() => {
+        this.$refs.slick.reSlick();
+      });
+    },
     getProduct(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
@@ -150,6 +237,14 @@ export default {
         // console.log(re);
         vm.isLoading = false;
         vm.product = re.data.product;
+        vm.getProducts();
+      })
+    },
+    getProducts(){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
+      this.$http.get(api).then((re) => {
+        vm.products = re.data.products;
       })
     },
     addtoCart(qty){
@@ -187,13 +282,34 @@ export default {
     },
     goBack(){
       this.$router.push('/products');
-    }
+    },
+    productDetail(id){
+      this.$router.push(`/product/${id}`);
+    },
   },
   computed:{
     heartIcon(){
       return this.favoriteItem.indexOf(this.productId) != -1 ? 'fas' : 'far'
     },
+    filterData(){
+      const vm = this;
+      let filtered = this.products.filter((item) => {
+        return item.category == vm.product.category
+      })
+      return filtered
+    }
   },
+  // watch:{
+  //   filterData(){
+  //     if(this.filterData.length>0){
+  //       $('.slick').slick({
+  //         infinite: true,
+  //         slidesToShow: 3,
+  //         slidesToScroll: 1
+  //       })
+  //     }
+  //   }
+  // },
   created(){
     const vm = this;
     this.productId = this.$route.params.productId;
@@ -201,6 +317,13 @@ export default {
     this.$bus.$on('Product:updateFavoriteItem',(newFavoriteItem)=>{
       vm.favoriteItem = newFavoriteItem;
     })
+  },
+  mounted(){
+    const vm = this;
+    $(window).scroll(function(){
+      let scrollPos = $(window).scrollTop();
+      vm.scrollPos = scrollPos;
+    });
   },
   beforeDestroy(){
     this.$bus.$off('Product:updateFavoriteItem');
@@ -254,4 +377,5 @@ export default {
 /* .btn:hover{
   background-color: rgb(90, 90, 90);
 } */
+
 </style>
