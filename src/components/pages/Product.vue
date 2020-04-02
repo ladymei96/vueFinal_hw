@@ -41,58 +41,37 @@
       
       <a class="h3 d-inline-block" href="#" @click.prevent="goBack">back</a>
 <!--內容固定區-->
-      <div class="row product-technology">
-        <div class="col-lg-4">
-          <h2>追求巔峰的工程設計</h2>
+      <div class="row product-technology mb-5">
+        <div class="col-lg-4 align-self-center">
+          <h2 class="text-center">追求巔峰的工程設計</h2>
           <p>
             在追求卓越的影像品質上，讓影像解析度及邊緣達到全所未有的提升。搭載最新且強大的影像處理引擎，讓功能全面升級，從解析度道色彩重現到降低造點，遠比前幾代機種優秀許多。
           </p>
         </div>
         <div class="col-8">
           <div class="row no-gutters">
-            <div class="col-4 d-flex flex-column">
-              <div class="product-item-num">
-                01
+            <div class="col-4" v-for="item in productIntro" :key="item.title">
+              <div class="card h-100 border-0">
+                <div class="card-header">
+                  <p class="h1">{{item.num}}</p>
+                  <h5 class="card-title">{{item.title}}</h5>
+                </div>
+                <div class="card-body">
+                  <p class="h5 mb-0">
+                    {{item.description}}
+                  </p>              
+                </div>
+                <div class="card-footer">
+                  <img :src="item.imageUrl" class="product-item-text-pic img-fluid" alt="">
+                </div>
               </div>
-              <div class="product-item-title">
-                最新影像處理
-              </div>
-              <div class="product-item-text">
-                EXPEED影像處理器搭配前端大型積體電路晶片，可將高解析度感光元件的性能提升到極致。
-              </div>
-              <img src="" class="product-item-text-pic" alt="">
             </div>
-            <div class="col-4 d-flex flex-column">
-              <div class="product-item-num">
-                02
-              </div>
-              <div class="product-item-title">
-                內建五軸穩定系統
-              </div>
-              <div class="product-item-text">
-                機身內建五軸影像穩定器，演算法經過最佳化，可讓高解析度感光元件帶來最佳性能表現。
-              </div>
-              <img src="" class="product-item-text-pic" alt="">
-            </div>
-            <div class="col-4 d-flex flex-column">
-              <div class="product-item-num">
-                03
-              </div>
-              <div class="product-item-title">
-                背罩式感光元件
-              </div>
-              <div class="product-item-text">
-                全新開發的Exmor R CMOS感光元件具有無可匹敵的高解析度。
-              </div>
-              <img src="" class="product-item-text-pic" alt="">
-            </div>
-
           </div>
         </div>
       </div>
 <!-- 極致操控性能 -->
-      <div class="row mb-3">
-        <div class="col-md-6 p-3">
+      <div class="row mb-5">
+        <div class="col-md-6 p-3 align-self-center">
           <h2>極致操控性能</h2>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa ea itaque sunt dignissimos deserunt, illo, velit dolor atque aspernatur repellat cupiditate vitae. Alias, cupiditate illum veritatis qui possimus, deserunt, excepturi labore quae assumenda aut inventore placeat velit? Possimus, fuga quo?</p>
         </div>
@@ -128,36 +107,17 @@
           <h3>猜您也喜歡</h3>
         </div>
         <slick ref="slick" :options="slickOptions" v-if="filterData.length">
-          <div class="card h-100" v-for="item in filterData" :key="item.id">
-            <div class="card-body pb-0">
+          <div class="card border-0" v-for="item in filterData" :key="item.id">
+            <div class="card-body card-padding-bottom">
               <img :src="item.imageUrl" class="card-img-top" alt="product-image">
-              <h5 class="card-title">{{item.title}}</h5>
+            </div>
+            <div class="card card-content bg-primary-opacity text-white card-slideInUp">
+              <div class="card-body d-flex flex-column justify-content-center">
+                <h5 class="card-title">{{item.title}}</h5>
+                <button type="button" class="btn btn-outline-light align-self-center" @click.prevent="anotherProduct(item.id)">點擊前往</button>
+              </div>
             </div>
           </div>
-          <!-- <div class="card h-100">
-            <div class="card-body pb-0">
-              <img :src="filterData[0].imageUrl" class="card-img-top" alt="product-image">
-              <h5 class="card-title">{{filterData[0].title}}</h5>
-            </div>
-          </div>
-          <div class="card h-100">
-            <div class="card-body pb-0">
-              <img :src="filterData[1].imageUrl" class="card-img-top" alt="product-image">
-              <h5 class="card-title">{{filterData[1].title}}</h5>
-            </div>
-          </div>
-          <div class="card h-100">
-            <div class="card-body pb-0">
-              <img :src="filterData[2].imageUrl" class="card-img-top" alt="product-image">
-              <h5 class="card-title">{{filterData[2].title}}</h5>
-            </div>
-          </div> -->
-
-          <!-- <img src="https://picsum.photos/500/200?random=1" alt="">
-          <img src="https://picsum.photos/500/200?random=2" alt="">
-          <img src="https://picsum.photos/500/200?random=3" alt="">
-          <img src="https://picsum.photos/500/200?random=4" alt="">
-          <img src="https://picsum.photos/500/200?random=5" alt=""> -->
         </slick>
       </div>
     </div><!--container-->
@@ -179,6 +139,7 @@ export default {
       products:[],
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
       productNum: 1,
+      productIntro:[],
       isLoading:false,
       scrollPos:0,
     // 相關產品-輪播
@@ -187,29 +148,29 @@ export default {
         slidesToScroll: 1,//切換下一頁時移動幾個
         //基本設定
         //dots: true, //項目點點，預設為false
-        arrows: true, //上下箭頭，預設為true
+        arrows: false, //上下箭頭，預設為true
         autoplay: true, //自動撥放
-        // autoplaySpeed: 500, //自動撥放的切換速率，單位毫秒
-        // speed: 500, //切換速率，單位毫秒
+        autoplaySpeed: 500, //自動撥放的切換速率，單位毫秒
+        speed: 1500, //切換速率，單位毫秒
         // easing: 'linear', //滑動效果頻率，和animate設定值一樣，預設為linear
         // fade: true, //切換改為fadeIn方式，預設為false
         // infinite: true, //是否要loop，預設為true
-        //RWD設定
-        // responsive: [
-        //   {
-        //     breakpoint: 1024, // RWD在1024寬度時切換顯示數量
-        //     settings: {
-        //       slidesToShow: 3, //一次顯示3個
-        //       slidesToScroll: 3,//切換下一頁時移動3個
-        //     }
-        //  },{
-        //     breakpoint: 600,// RWD在600寬度時切換顯示數量
-        //     settings: {
-        //       slidesToShow: 2,//一次顯示2個
-        //       slidesToScroll: 2,//切換下一頁時移動2個
-        //     }
-        //  },
-        // ]
+    //RWD設定
+        responsive: [
+          {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+            }
+         },{
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+            }
+         },
+        ]
       },
     }
   },
@@ -222,12 +183,6 @@ export default {
     },
     prev() {
       this.$refs.slick.prev();
-    },
-    reInit() {
-      // Helpful if you have to deal with v-for to update dynamic lists
-      this.$nextTick(() => {
-        this.$refs.slick.reSlick();
-      });
     },
     getProduct(){
       const vm = this;
@@ -245,6 +200,12 @@ export default {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       this.$http.get(api).then((re) => {
         vm.products = re.data.products;
+      })
+    },
+    getProductIntro(){
+      const vm = this;
+      this.$http.get('../../../static/productIntro.json').then((re) => {
+        vm.productIntro = re.data;
       })
     },
     addtoCart(qty){
@@ -283,8 +244,11 @@ export default {
     goBack(){
       this.$router.push('/products');
     },
-    productDetail(id){
-      this.$router.push(`/product/${id}`);
+    anotherProduct(id){
+      let doc = document.documentElement;
+      this.productId = id;
+      this.getProduct();
+      $(doc).animate({scrollTop:0},800);
     },
   },
   computed:{
@@ -299,21 +263,11 @@ export default {
       return filtered
     }
   },
-  // watch:{
-  //   filterData(){
-  //     if(this.filterData.length>0){
-  //       $('.slick').slick({
-  //         infinite: true,
-  //         slidesToShow: 3,
-  //         slidesToScroll: 1
-  //       })
-  //     }
-  //   }
-  // },
   created(){
     const vm = this;
     this.productId = this.$route.params.productId;
     this.getProduct();
+    this.getProductIntro();
     this.$bus.$on('Product:updateFavoriteItem',(newFavoriteItem)=>{
       vm.favoriteItem = newFavoriteItem;
     })
@@ -345,6 +299,7 @@ export default {
     height:100%;
   }
 }
+/*名稱修正-這樣太籠統*/ 
 .h-260{
   height:260px;
 }
@@ -377,5 +332,4 @@ export default {
 /* .btn:hover{
   background-color: rgb(90, 90, 90);
 } */
-
 </style>

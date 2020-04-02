@@ -27,15 +27,6 @@ export default {
       return this.windowScroll > 200 ? true : false
     }
   },
-  // watch:{
-  //   windowScroll(){
-  //     if(this.windowScroll > 200){
-  //       this.isTop = false;
-  //     }else{
-  //       this.isTop = true;
-  //     }
-  //   }
-  // }
 }
 </script>
 
