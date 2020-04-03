@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <div class="container-md my-5">
+    <div class="container-md mt-3 mb-5">
       <div class="customerOrder-box-shadow p-4 text-center customerOrder-warn-fz">
         <h3><strong>詐騙猖獗</strong></h3>
         <p>會員折扣、提款機操作</p>
