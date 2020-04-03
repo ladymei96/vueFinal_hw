@@ -3,7 +3,7 @@
     <NavbarDark></NavbarDark>
     <loading :active.sync="isLoading"></loading>
     <div class="container">
-      <div><!--資料更動區-->
+      <div class="mb-5"><!--資料更動區-->
         <div class="text-center mb-4">
           <h1 class="h2 title-border-bottom d-inline-block pb-2">{{product.title}}</h1>
         </div>
@@ -48,13 +48,13 @@
             在追求卓越的影像品質上，讓影像解析度及邊緣達到全所未有的提升。搭載最新且強大的影像處理引擎，讓功能全面升級，從解析度道色彩重現到降低造點，遠比前幾代機種優秀許多。
           </p>
         </div>
-        <div class="col-8">
+        <div class="col-lg-8">
           <div class="row no-gutters">
-            <div class="col-4" v-for="item in productIntro" :key="item.title">
+            <div class="col-md-4" v-for="item in productIntro" :key="item.title">
               <div class="card h-100 border-0">
                 <div class="card-header">
-                  <p class="h1">{{item.num}}</p>
-                  <h5 class="card-title">{{item.title}}</h5>
+                  <p class="item-num text-center text-lg-left">{{item.num}}</p>
+                  <h5 class="card-title item-title text-center text-lg-left">{{item.title}}</h5>
                 </div>
                 <div class="card-body">
                   <p class="h5 mb-0">
@@ -73,7 +73,8 @@
       <div class="row mb-5">
         <div class="col-md-6 p-3 align-self-center">
           <h2>極致操控性能</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa ea itaque sunt dignissimos deserunt, illo, velit dolor atque aspernatur repellat cupiditate vitae. Alias, cupiditate illum veritatis qui possimus, deserunt, excepturi labore quae assumenda aut inventore placeat velit? Possimus, fuga quo?</p>
+          <p>您可透過檢視播放顯示，當場給予影像星等評分或是設定影像保護。還有每 10/100 張相片跳出顯示功能，以及群組檢視連拍相片功能，為您帶來額外便利性。獲得 提升的選單介面
+          選單畫面上的自訂按紐設定示意圖能讓您更容易瞭解使用方式。此外，只需單手撥動前轉盤或是按下 Fn 按鈕，就能在選單標籤之間切換。</p>
         </div>
         <div class="col-md-6">
           <div class="h-md-100 h-260 description-bg-1 bg-cover" ></div>
@@ -85,7 +86,7 @@
             <div class="col-lg-5 col-md-6 mx-3">
               <div class="bg-none bg-sm-white text-sm-black p-3">
                 <h2>細膩超乎想像</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore illo vero adipisci maxime eligendi omnis quia, natus quae fugiat officiis reiciendis rem perspiciatis recusandae eaque laborum voluptatibus, porro tempore a.</p>
+                <p>6,100 萬像素全片幅 Exmor R™ CMOS 感光元件搭配 BIONZ X™ 影像處理引擎，達成前所未有的解析度、精細的階調與低雜訊，開啟細節的全新境界，滿足專業攝影師的期待。α7R IV 能捕捉每個場景的情緒，以及主體的紋理。</p>
               </div>
             </div>
           </div>
@@ -96,7 +97,7 @@
           <div class="col-lg-5 col-md-6 mx-3">
             <div class="bg-none bg-sm-white text-sm-black p-3">
               <h2>成像無以倫比</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui quas illo mollitia vel dolores dicta modi adipisci perspiciatis, amet placeat.</p>
+              <p>高達 ISO 51200 的高感光度性能與演算法革新，能夠呈現更流暢的影像表現效果，包含自然的肌膚顏色、在天空等區域呈現柔和色調等。支援 14 位元 RAW 輸出。 </p>
             </div>
           </div>
         </div>
@@ -106,7 +107,7 @@
         <div class="product-intro-title mt-3">
           <h3>猜您也喜歡</h3>
         </div>
-        <slick ref="slick" :options="slickOptions" v-if="filterData.length">
+        <slick ref="slick" :options="slickOptions" v-if="filterData.length"><!-- v-if="filterData.length"-->
           <div class="card border-0" v-for="item in filterData" :key="item.id">
             <div class="card-body card-padding-bottom">
               <img :src="item.imageUrl" class="card-img-top" alt="product-image">
@@ -130,6 +131,7 @@
 import Slick from 'vue-slick';
 import 'slick-carousel/slick/slick.css';
 import $ from 'jquery';
+
 export default {
   name: 'Product',
   data () {
@@ -139,22 +141,42 @@ export default {
       products:[],
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
       productNum: 1,
-      productIntro:[],
+      productIntro:[
+        // {
+        //   num:'01',
+        //   title:'最新影像處理',
+        //   description:'EXPEED影像處理器搭配前端大型積體電路晶片，可將高解析度感光元件的性能提升到極致。',
+        //   imageUrl:'../../assets/image/product_最新影像處理引擎.jpg',
+        // },
+        // {
+        //   num:'02',
+        //   title:'內建五軸穩定系統',
+        //   description:'機身內建五軸影像穩定器，演算法經過最佳化，可讓高解析度感光元件帶來最佳性能表現。',
+        //   imageUrl:'../../assets/image/product_五軸穩定系統.jpg',
+        // },
+        // {
+        //   num:'03',
+        //   title:'背罩式感光元件',
+        //   description:'全新開發的Exmor R CMOS感光元件具有無可匹敵的高解析度。',
+        //   imageUrl:'../../assets/image/product_全片幅背罩式CMOS.jpg',          
+        // },
+      ],
       isLoading:false,
       scrollPos:0,
+      //isReady:false,
     // 相關產品-輪播
       slickOptions: {
         slidesToShow: 4,//一次顯示幾個
         slidesToScroll: 1,//切換下一頁時移動幾個
         //基本設定
-        //dots: true, //項目點點，預設為false
+        dots: true, //項目點點，預設為false
         arrows: false, //上下箭頭，預設為true
-        autoplay: true, //自動撥放
+        autoplay: false, //自動撥放
         autoplaySpeed: 500, //自動撥放的切換速率，單位毫秒
         speed: 1500, //切換速率，單位毫秒
         // easing: 'linear', //滑動效果頻率，和animate設定值一樣，預設為linear
         // fade: true, //切換改為fadeIn方式，預設為false
-        // infinite: true, //是否要loop，預設為true
+        infinite: false, //是否要loop，預設為true
     //RWD設定
         responsive: [
           {
@@ -192,7 +214,6 @@ export default {
         // console.log(re);
         vm.isLoading = false;
         vm.product = re.data.product;
-        vm.getProducts();
       })
     },
     getProducts(){
@@ -245,11 +266,28 @@ export default {
       this.$router.push('/products');
     },
     anotherProduct(id){
+      this.$router.push(`/product/${id}`);
       let doc = document.documentElement;
       this.productId = id;
       this.getProduct();
       $(doc).animate({scrollTop:0},800);
+      //重新初始slick
+      // this.reSlick();
     },
+    reSlick(){
+    //   // this.$refs.slick.slick();
+      this.$nextTick(() => {
+      this.$refs.slick.reSlick();
+      });
+    //     // this.$refs.slick.destroy();
+    //     // this.$nextTick(() => {
+    //     //     this.$refs.slick.create();
+    //     // })
+      console.log('this.$refs', this.$refs);
+      console.log('this.$refs.slick', this.$refs.slick.create);
+      console.log('this.$nextTick', this.$nextTick);
+      console.log('this.$refs.slick.reSlick', this.$refs.slick.reSlick);
+    }
   },
   computed:{
     heartIcon(){
@@ -258,15 +296,25 @@ export default {
     filterData(){
       const vm = this;
       let filtered = this.products.filter((item) => {
-        return item.category == vm.product.category
+        return item.category == vm.product.category //&& item.id !== vm.productId //取出不包含自己的相關產品
       })
       return filtered
-    }
+    },
+  },
+  watch:{
+    // filterData(){
+    //   this.$refs.slick.destroy();
+    //   this.$nextTick(() => {
+    //       this.$refs.slick.create();
+    //   })
+
+    // }
   },
   created(){
     const vm = this;
     this.productId = this.$route.params.productId;
     this.getProduct();
+    this.getProducts();
     this.getProductIntro();
     this.$bus.$on('Product:updateFavoriteItem',(newFavoriteItem)=>{
       vm.favoriteItem = newFavoriteItem;
@@ -332,4 +380,49 @@ export default {
 /* .btn:hover{
   background-color: rgb(90, 90, 90);
 } */
+/* 技術介紹-數字下方樣式 */
+.product-technology .item-num{
+  font-size: 3rem;
+  /* margin-bottom:0; */
+  position:relative;
+  font-weight: 700;
+}
+.product-technology .item-num::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform: translateX(-50%);
+  width: 3rem;
+  height: 4px;
+  background-color: #000;
+}
+@media (min-width:992px){
+  .product-technology .item-num::after{
+    left:2px;
+    transform: translateX(0);
+  }
+}
+.product-technology .item-title{
+  margin-bottom: 0;
+}
+/*項目點點*/
+.slick-dots{
+  display:flex;
+  justify-content: center;
+}
+.slick-dots li + li{
+  margin-left: 5px;
+}
+.slick-dots li button{
+  padding:0 5px;
+  /* color:#fff;*/
+  background-color:#ccc;
+  border-style:none;
+  border-radius: 50%;
+}
+.slick-dots li.slick-active button{
+  color:#fff;
+  background-color: #1f2733;
+}
 </style>

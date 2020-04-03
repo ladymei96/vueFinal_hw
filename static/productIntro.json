@@ -3,18 +3,18 @@
     "num":"01",
     "title":"最新影像處理",
     "description":"EXPEED影像處理器搭配前端大型積體電路晶片，可將高解析度感光元件的性能提升到極致。",
-    "imageUrl":"/static/img/product_最新影像處理引擎.6c2a5cb.jpg"
+    "imageUrl":"https://i.loli.net/2020/04/03/fVIZaqy9dDOHExi.jpg"
   },
   {
     "num":"02",
     "title":"內建五軸穩定系統",
     "description":"機身內建五軸影像穩定器，演算法經過最佳化，可讓高解析度感光元件帶來最佳性能表現。",
-    "imageUrl":"/static/img/product_五軸穩定系統.6e741d5.jpg"
+    "imageUrl":"https://i.loli.net/2020/04/03/EJ4Fna9oibNTLmv.jpg"
   },
   {
     "num":"03",
     "title":"背罩式感光元件",
     "description":"全新開發的Exmor R CMOS感光元件具有無可匹敵的高解析度。",
-    "imageUrl":"/static/img/product_全片幅背罩式CMOS.a6fc645.jpg"
+    "imageUrl":"https://i.loli.net/2020/04/03/pvD23BAIVSgJRk9.jpg"
   }
 ]
