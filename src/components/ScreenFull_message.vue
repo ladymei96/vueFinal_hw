@@ -1,27 +1,46 @@
 <template>
   <div class="full-screen" v-show="isSubs">
-    <p class="text">
+    <p class="text" v-show="subsText">
       感謝訂閱
       <br>
       我們將不定期寄送相關資訊給您
     </p>
+    <p class="text" v-show="cartText">{{cartMessage}}</p>
   </div>
 </template>
 
 <script>
   export default {
-    name:'thxMessage',
+    name:'screenFull_message',
+    props:['cartMessage'],
     data(){
       return {
         isSubs:false,
+        subsText:false,
+        cartText:false,
+      }
+    },
+    watch:{
+      cartMessage(){
+        const vm = this;
+        if(this.cartMessage != ''){
+          this.isSubs = true;
+          this.cartText = true;
+          setTimeout(() => {
+            vm.isSubs = false;
+            vm.cartText = false;
+          },2000);
+        }
       }
     },
     created(){
       const vm = this;
       this.$bus.$on('message:show',() => {
         vm.isSubs = true;
+        vm.subsText = true;
         setTimeout(() => {
           vm.isSubs = false;
+          vm.subsText = false;
         },2000);
       })
     },

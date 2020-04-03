@@ -122,6 +122,7 @@
         </slick>
       </div>
     </div><!--container-->
+    <Message :cart-message="cartSuccessMessage"></Message>
     <Gotop :window-scroll="scrollPos" />
     <Footer></Footer>
   </div>
@@ -130,7 +131,7 @@
 <script>
 import Slick from 'vue-slick';
 import 'slick-carousel/slick/slick.css';
-import $ from 'jquery';
+import Message from '../ScreenFull_message';
 
 export default {
   name: 'Product',
@@ -141,6 +142,7 @@ export default {
       products:[],
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
       productNum: 1,
+      cartSuccessMessage:'',
       productIntro:[
         // {
         //   num:'01',
@@ -167,7 +169,7 @@ export default {
     // 相關產品-輪播
       slickOptions: {
         slidesToShow: 4,//一次顯示幾個
-        slidesToScroll: 1,//切換下一頁時移動幾個
+        slidesToScroll: 2,//切換下一頁時移動幾個
         //基本設定
         dots: true, //項目點點，預設為false
         arrows: false, //上下箭頭，預設為true
@@ -183,13 +185,13 @@ export default {
             breakpoint: 991,
             settings: {
               slidesToShow: 3,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
             }
          },{
             breakpoint: 767,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
             }
          },
         ]
@@ -198,6 +200,7 @@ export default {
   },
   components:{
     Slick,
+    Message,
   },
   methods:{
     next() {
@@ -241,7 +244,11 @@ export default {
         if(re.data.success){
           this.$bus.$emit('Navbar:updateCart');
           vm.isLoading = false;
+          vm.cartSuccessMessage = '已加入購物車';
         }
+        setTimeout(()=>{
+          vm.cartSuccessMessage = '';
+        },2000)
       })
     },
     judgeFavorite(){
@@ -415,7 +422,9 @@ export default {
   margin-left: 5px;
 }
 .slick-dots li button{
-  padding:0 5px;
+  /* padding:0 5px; */
+  width: 21px;
+  height: 21px;
   /* color:#fff;*/
   background-color:#ccc;
   border-style:none;

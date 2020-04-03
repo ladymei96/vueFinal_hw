@@ -50,7 +50,7 @@
         </table>
 
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="請輸入優惠碼" v-model.trim="coupon_code">
+          <input type="text" class="form-control" placeholder="請輸入優惠碼" v-model.trim="coupon_code"  @keyup.enter="addCouponCode">
           <div class="input-group-append">
             <button class="btn btn-secondary" type="button" @click.prevent="addCouponCode">
               套用優惠碼

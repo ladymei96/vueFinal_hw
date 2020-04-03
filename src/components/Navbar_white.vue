@@ -84,7 +84,7 @@
             <router-link to="/products" class="nav-link" role="button" aria-haspopup="true">
               Products
             </router-link>
-            <a href="#" class="dropdown-toggle align-self-center nav-link pl-0" id="navbarDropdown" data-toggle="dropdown"></a>
+            <a href="#" class="dropdown-toggle nav-link px-2" id="navbarDropdown" data-toggle="dropdown"></a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#" @click.prevent="filterData(1)">單反相機</a>
               <a class="dropdown-item" href="#" @click.prevent="filterData(2)">單反鏡頭</a>
