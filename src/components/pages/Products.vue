@@ -146,6 +146,7 @@
         </li>
       </ul>
     </nav>
+    <Message :cart-message="cartSuccessMessage"></Message>
     <Gotop :window-scroll="scrollPos" />
     <Footer></Footer>
   </div>
@@ -153,9 +154,13 @@
 
 <script>
 import $ from 'jquery';
+import Message from '../ScreenFull_message';
 
 export default {
   name: 'Products',
+  components:{
+    Message,
+  },
   data () {
     return {
       products:[],
@@ -163,7 +168,7 @@ export default {
       currentCategory:'全部商品',
       brand:'',
       category:['全部商品', 'DSLR單反相機', 'DSLR單反鏡頭', 'EVIL無反相機', 'EVIL無反鏡頭'],
-      categoryIndex:0,
+      categoryIndex:0,//show出狀態為active的分類列表項目
       isProductsPage:true,
       totalPageData:[],
       singlePageData:[],
@@ -171,7 +176,76 @@ export default {
       has_pre:false,
       has_next:true,
       scrollPos:0,
+      cartSuccessMessage:'',
     }
+  },
+  computed:{
+    // filterData(){
+    //   if(this.currentCategory == '全部商品'){
+    //     return this.products;
+    //   }
+    //   let filtered = this.products.filter((item) => {
+    //     if(this.brand == ''){
+    //       return item.category == this.currentCategory;
+    //     }else{
+    //       return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
+    //     } 
+    //   });
+    //   return filtered;
+    // }
+    typeData(){
+      const vm = this;
+      if(this.currentCategory !== '全部商品'){
+        return this.products.filter((item) => {
+          return item.category === vm.currentCategory
+        })
+      }else{
+        return this.products;
+      }
+    },
+    brandData(){
+      const vm = this;
+    //如果brand不等於''，就回傳資料內同品牌的項目
+      if(this.brand !== ''){
+        return this.typeData.filter((item) => {
+          return item.title.indexOf(vm.brand) !== -1
+        })
+      }else{
+        return this.typeData//不然就回傳分類列表內的項目
+      }
+    }
+  },
+  watch:{
+    brandData(){
+      const pageContent = [];
+      this.brandData.forEach(function(item, i){
+      //每頁9筆資料，總共幾頁
+        if(i % 9 === 0){
+          pageContent.push([])
+        }
+      //每頁資料內容  
+        const page = parseInt(i/9)//第幾筆資料歸屬於第幾頁
+        pageContent[page].push(item);
+      })
+      this.totalPageData = pageContent;//全部分頁內容
+      //取出特定頁內容
+      this.pagination();
+    },
+    singlePageData(){//判斷是否有上/下頁，決定其按鈕可點擊狀態
+      if(this.currentPage == 1 && this.totalPageData.length > 1){
+        this.has_pre = false;
+        this.has_next = true;
+      }else if(this.currentPage>1 && this.currentPage< this.totalPageData.length){
+        this.has_pre = true;
+        this.has_next = true;
+      }else if(this.totalPageData.length == 1){
+        this.has_pre = false;
+        this.has_next = false;
+      }else if(this.currentPage == this.totalPageData.length){
+        this.has_pre = true;
+        this.has_next = false;
+      }
+    },
   },
   methods:{
     getProducts(){
@@ -198,65 +272,22 @@ export default {
         if(re.data.success){
           this.$bus.$emit('Navbar:updateCart');
           this.isLoading = false;
+          vm.cartSuccessMessage = '已加入購物車';
         }
+        setTimeout(()=>{
+          vm.cartSuccessMessage = '';
+        },2000)
       })
     },
     selectCategory(index){
       this.categoryIndex = index;
-      this.currentCategory = this.category[index];
+      this.currentCategory = this.category[index];//點擊後，取出相對應分類列表名稱
       this.brand = '';
     },
     pagination(index = 0){//預設取出第一頁內容(陣列索引為0的資料內容)
-      this.singlePageData = this.totalPageData[index];
-      this.currentPage = index + 1;
+      this.singlePageData = this.totalPageData[index];//由傳入的索引位置，取出對應頁面資料
+      this.currentPage = index + 1;//目前頁面為索引位置+1
     }
-  },
-  computed:{
-    filterData(){
-      if(this.currentCategory == '全部商品'){
-        return this.products;
-      }
-      let filtered = this.products.filter((item) => {
-        if(this.brand == ''){
-          return item.category == this.currentCategory;
-        }else{
-          return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
-        } 
-      });
-      return filtered;
-    }
-  },
-  watch:{
-    filterData(){
-      const pageContent = [];
-      this.filterData.forEach(function(item, i){
-      //每頁9筆資料，總共幾頁
-        if(i % 9 === 0){
-          pageContent.push([])
-        }
-      //每頁資料內容  
-        const page = parseInt(i/9)//第幾筆資料歸屬於第幾頁
-        pageContent[page].push(item);
-      })
-      this.totalPageData = pageContent;//全部分頁內容
-      //取出特定頁內容
-      this.pagination();
-    },
-    singlePageData(){
-      if(this.currentPage == 1 && this.totalPageData.length > 1){
-        this.has_pre = false;
-        this.has_next = true;
-      }else if(this.currentPage>1 && this.currentPage< this.totalPageData.length){
-        this.has_pre = true;
-        this.has_next = true;
-      }else if(this.totalPageData.length == 1){
-        this.has_pre = false;
-        this.has_next = false;
-      }else if(this.currentPage == this.totalPageData.length){
-        this.has_pre = true;
-        this.has_next = false;
-      }
-    },
   },
   created(){
     const vm = this;

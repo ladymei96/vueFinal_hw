@@ -11,7 +11,7 @@ export default {
   props:['windowScroll'],
   data(){
     return{
-      // isTop:true,
+      
     }
   },
   methods:{

@@ -115,12 +115,21 @@ export default {
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
     }
   },
+  computed:{
+    favoriteData(){
+      const vm = this;
+      let filtered = this.products.filter(function(item){
+        return vm.favoriteItem.indexOf(item.id) != -1
+      })
+      return filtered
+    }
+  },
   methods:{
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
       this.$http.get(api).then((re) => {
-        console.log('Navbar取得購物車列表', re.data);
+        //console.log('Navbar取得購物車列表', re.data);
         vm.cart = re.data.data;
       });
     },
@@ -151,15 +160,6 @@ export default {
       this.categoryIndex = index;
       this.$router.push('/products');
     },
-  },
-  computed:{
-    favoriteData(){
-      const vm = this;
-      let filtered = this.products.filter(function(item){
-        return vm.favoriteItem.indexOf(item.id) != -1
-      })
-      return filtered
-    }
   },
   created(){
     //元件建立，負責取得資料，呈現在購物車和最愛Icon數字

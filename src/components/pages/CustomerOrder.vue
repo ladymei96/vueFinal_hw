@@ -71,8 +71,8 @@
           <div class="order-total-grid">
             <p class="total-price-title">總計</p>
             <p class="total-price-num">{{cart.total  | currency }}</p>
-            <p class="total-discount-title text-success">折扣價</p>
-            <p class="total-discount-num text-success">{{ cart.final_total | currency}}</p>
+            <p class="total-discount-title text-success" v-show="cart.total !== cart.final_total">折扣價</p>
+            <p class="total-discount-num text-success" v-show="cart.total !== cart.final_total">{{ cart.final_total | currency}}</p>
           </div>
         </div>
         <div class="input-group mb-3">
@@ -135,6 +135,10 @@ import {ValidationObserver, ValidationProvider} from 'vee-validate';
 
 export default {
   name: 'customerOrder-box-shadow',
+  components:{
+    ValidationObserver,
+    ValidationProvider,
+  },
   data () {
     return {
       isLoading:false,
@@ -153,10 +157,6 @@ export default {
       },
       coupon_message:'',
     }
-  },
-  components:{
-    ValidationObserver,
-    ValidationProvider,
   },
   methods:{
     getCart(){

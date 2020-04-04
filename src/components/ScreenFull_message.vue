@@ -22,8 +22,8 @@
     },
     watch:{
       cartMessage(){
-        const vm = this;
-        if(this.cartMessage != ''){
+        const vm = this;//如果this.cartMessage有內容就...
+        if(this.cartMessage){//替代掉this.cartMessage !== ''
           this.isSubs = true;
           this.cartText = true;
           setTimeout(() => {

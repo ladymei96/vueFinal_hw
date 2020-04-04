@@ -21,17 +21,17 @@ import AlertMessage from './AlertMessage';
 
 export default {
   name: 'Dashboard',
-  data () {
-    return {
-      
-    }
-  },
   //元件區域註冊
   components:{
     NavbarBackEnd,
     SidebarBackEnd,
     AlertMessage,
-  }
+  },
+  data () {
+    return {
+      
+    }
+  },
 }
 </script>
 

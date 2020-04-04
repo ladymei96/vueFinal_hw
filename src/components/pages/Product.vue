@@ -135,6 +135,10 @@ import Message from '../ScreenFull_message';
 
 export default {
   name: 'Product',
+  components:{
+    Slick,
+    Message,
+  },
   data () {
     return {
       productId:'',
@@ -165,7 +169,6 @@ export default {
       ],
       isLoading:false,
       scrollPos:0,
-      //isReady:false,
     // 相關產品-輪播
       slickOptions: {
         slidesToShow: 4,//一次顯示幾個
@@ -179,8 +182,7 @@ export default {
         // easing: 'linear', //滑動效果頻率，和animate設定值一樣，預設為linear
         // fade: true, //切換改為fadeIn方式，預設為false
         infinite: false, //是否要loop，預設為true
-    //RWD設定
-        responsive: [
+        responsive: [    //RWD設定
           {
             breakpoint: 991,
             settings: {
@@ -198,9 +200,25 @@ export default {
       },
     }
   },
-  components:{
-    Slick,
-    Message,
+  computed:{
+    heartIcon(){
+      return this.favoriteItem.indexOf(this.productId) != -1 ? 'fas' : 'far'
+    },
+    filterData(){
+      const vm = this;
+      return this.products.filter((item) => {
+        return item.category == vm.product.category
+      })
+    },
+  },
+  watch:{
+    // filterData(){
+    //   this.$refs.slick.destroy();
+    //   this.$nextTick(() => {
+    //       this.$refs.slick.create();
+    //   })
+
+    // }
   },
   methods:{
     next() {
@@ -295,27 +313,6 @@ export default {
       console.log('this.$nextTick', this.$nextTick);
       console.log('this.$refs.slick.reSlick', this.$refs.slick.reSlick);
     }
-  },
-  computed:{
-    heartIcon(){
-      return this.favoriteItem.indexOf(this.productId) != -1 ? 'fas' : 'far'
-    },
-    filterData(){
-      const vm = this;
-      let filtered = this.products.filter((item) => {
-        return item.category == vm.product.category //&& item.id !== vm.productId //取出不包含自己的相關產品
-      })
-      return filtered
-    },
-  },
-  watch:{
-    // filterData(){
-    //   this.$refs.slick.destroy();
-    //   this.$nextTick(() => {
-    //       this.$refs.slick.create();
-    //   })
-
-    // }
   },
   created(){
     const vm = this;

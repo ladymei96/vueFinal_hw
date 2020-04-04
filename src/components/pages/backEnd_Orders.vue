@@ -32,8 +32,6 @@
 </template>
 
 <script>
-
-
   export default {
     name: 'Orders_backEnd',
     data(){
@@ -53,10 +51,6 @@
           vm.isLoading = false;
           vm.orders = response.data.orders;
           vm.pagination = response.data.pagination;
-        //   vm.orders.forEach((item) => {
-        // //購買時間格式，由timestamp轉為易閱讀格式(改為filter形式)
-        //     item.create_at = `${(new Date(item.create_at *1000)).getFullYear()}/${(new Date(item.create_at *1000)).getMonth()+1}/${(new Date(item.create_at *1000)).getDate()}`;
-        //   });
         })                                  
       },
     },

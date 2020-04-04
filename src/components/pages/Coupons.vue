@@ -76,12 +76,16 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper';
 
 export default {
   name: 'Coupons',
+  components: {
+    swiper,
+    swiperSlide
+  },
   data () {
     return {
       swiperOption: {
         autoplay:true,//自行滑動
         loop:true,
-        speed:1000,
+        speed:800,
         slidesPerView: 'auto',
         loopedSlides :3,
         centeredSlides: true,
@@ -96,10 +100,6 @@ export default {
       normal:false,
       OnlyMonday:false,
     }
-  },
-  components: {
-    swiper,
-    swiperSlide
   },
   methods:{
     judgeDay(){
