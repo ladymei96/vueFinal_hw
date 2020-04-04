@@ -1,0 +1,77 @@
+//介紹區塊設定
+.product-item{
+  display: flex;
+  flex-direction: column;
+  .product-text{
+    flex:1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p{
+      font-size: 20px;
+      text-indent:2em;
+      text-align: justify;
+      line-height: 2rem;
+    }
+  }
+  .product-price{
+    flex:0 0 auto;
+  }
+}
+/* 技術介紹-數字下方樣式 */
+.product-technology{
+  .item-num{ 
+    font-size: 3rem;
+    position:relative;
+    font-weight: 700;
+    &::after{
+      content:'';
+      position:absolute;
+      bottom:0;
+      left:50%;
+      transform: translateX(-50%);
+      width: 3rem;
+      height: 4px;
+      background-color: #000;
+      @media (min-width:992px){
+        left:2px;
+        transform: translateX(0);
+      }
+    }
+  }
+}
+.product-technology .item-title{
+  margin-bottom: 0;
+}
+.description-height{
+  height:260px;
+}
+@media (min-width: 576px) {
+  .bg-sm-white{
+    background-color: #fff;
+  }
+  .text-sm-black{
+    color:#000;
+  }
+}
+/*輪播-項目點點*/
+.slick-dots{
+  display:flex;
+  justify-content: center;
+  li{
+    button{
+      width: 21px;
+      height: 21px;
+      background-color:#ccc;
+      border-style:none;
+      border-radius: 50%;
+    }
+  }
+}
+.slick-dots li + li{
+  margin-left: 5px;
+}
+.slick-dots li.slick-active button{
+  color:#fff;
+  background-color: #1f2733;
+}

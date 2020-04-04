@@ -22,21 +22,6 @@
   background-position: center top;
 }
 // 首頁-相片庫
-.index-photoLibarary{
-  display:grid;
-  grid-template-areas:
-  "item-pic1 item-pic1 item-pic2 item-pic3"
-  "item-pic1 item-pic1 item-pic2 item-pic4"
-  "item-pic5 item-pic6 item-pic7 item-pic7"
-  "item-pic5 item-pic8 item-pic8 item-pic9";
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  .item{
-    outline: 5px solid #fff;
-    position:relative;
-    overflow: hidden;
-  }
-
 @mixin picZoom($pic-padding-top, $pic-scale) {
   height: 0;
   padding-top:$pic-padding-top;
@@ -57,6 +42,20 @@
     transform: scale($pic-scale);
   }
 }
+.index-photoLibarary{
+  display:grid;
+  grid-template-areas:
+  "item-pic1 item-pic1 item-pic2 item-pic3"
+  "item-pic1 item-pic1 item-pic2 item-pic4"
+  "item-pic5 item-pic6 item-pic7 item-pic7"
+  "item-pic5 item-pic8 item-pic8 item-pic9";
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  .item{
+    outline: 5px solid #fff;
+    position:relative;
+    overflow: hidden;
+  }
   .item-pic1{
     grid-area: item-pic1;
     @include picZoom(100%, 1.2);

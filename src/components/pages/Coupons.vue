@@ -179,5 +179,4 @@ export default {
   .slide-item-coupon-opacity{
     opacity: 0;
   }
-
 </style>

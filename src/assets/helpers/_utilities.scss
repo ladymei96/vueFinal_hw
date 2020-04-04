@@ -1,5 +1,4 @@
 $base-spacing:10px;
-
 @function spacing($count:1){
   @return $count * $base-spacing;
 }
@@ -23,144 +22,49 @@ $base-spacing:10px;
 .text-vertical{
   writing-mode: vertical-rl;
 }
-
-
+//邊框設定
+.title-border-bottom{
+  border-bottom: 3px solid $primary;
+}
+.border-1px{
+  border: 1px solid $primary;
+}
 //間距
 .mt-80{
   margin-top: spacing(8);
 }
 
-//goTop-滾到指定位置，才出現
-.goTop-animated{
-  opacity: 0;
-  transition:.3s;
-}
-.goTop-fade{
-  opacity: 1;
-}
-
 //卡片設定
 .card{
   overflow: hidden;
-}
-.card-header,.card-footer{
-  background-color:transparent;
-  border:none;
-}
-.card-content{
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right:0;
-  transition:.5s;
-}
-.card-fadeIn{
-  opacity: 0;
-}
-.card:hover .card-fadeIn{
-  opacity: 1;
-}
-.card-slideInUp{
-  transform: translateY(105%);
-}
-.card:hover .card-slideInUp{
-  transform: translateY(0);
+  .card-header,.card-footer{
+    background-color:transparent;
+    border:none;
+  }
+  .card-content{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right:0;
+    transition:.5s;
+  }
+  .card-fadeIn{
+    opacity: 0;
+  }
+  .card-slideInUp{
+    transform: translateY(105%);
+  }
+  &:hover{
+    .card-fadeIn{
+      opacity: 1;
+    }
+    .card-slideInUp{
+      transform: translateY(0);
+    } 
+  }
 }
 // 卡片色彩設定(index+product共用)
 .bg-primary-opacity{
   background-color: #10161e81;
-}
-
-//訂單
-.order-grid{
-  border-top:1px solid #ccc;
-  .order-header-grid{
-    display:grid;
-    grid-template-columns: 1fr 5fr 2fr 2fr 2fr;
-    border-bottom: 2px solid #ccc;
-    .order-header-item-grid{
-      text-align: center;
-      margin-bottom: 0;
-      padding:.75rem 0;
-      font-weight: 600;
-      font-size: 16px;
-    }
-    @media (max-width:767px){
-      display:none;
-    }
-  }
-  .order-product-grid{
-    display: grid;
-    grid-template-columns: 1fr 5fr 2fr 2fr 2fr;
-    text-align: center;
-    .order-product-item{
-      padding:.75rem 0;
-      border-bottom:1px solid #ccc;
-      display:flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .order-product-price,
-    .order-product-total{
-      text-align: right;
-    }
-    @media (max-width:767px){
-      border-bottom:1px solid #ccc;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 1fr 1fr;
-      grid-template-areas: 
-      "del del title title title title title title title title title title"
-      "del del price price price price qty qty total total total total";
-      .order-product-del{
-        grid-area: del;
-        border-bottom: none;
-      }
-      .order-product-title{
-        grid-area: title;
-      }
-      .order-product-price{
-        grid-area:price;
-        border-bottom: none;
-        text-align: center;
-      }
-      .order-product-qty{
-        grid-area:qty;
-        border-bottom: none;
-      }
-      .order-product-total{
-        grid-area:total;
-        border-bottom: none;
-        text-align: center;
-      }
-    }
-  }
-  .order-total-grid{
-    display:grid;
-    grid-template-columns: 10fr 2fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
-    "price-title price-num"
-    "discount-title discount-num";
-    p{
-      text-align: right;
-      padding: .75rem 0;
-      margin-bottom: 0;
-    }
-    .total-price-title{
-      grid-area: price-title;
-    }
-    .total-price-num{
-      grid-area: price-num;
-    }
-    .total-discount-title{
-      grid-area: discount-title;
-    }
-    .total-discount-num{
-      grid-area: discount-num;
-    }
-    @media (max-width:767px){
-      grid-template-columns: 7fr 5fr;
-    }
-  }
 }

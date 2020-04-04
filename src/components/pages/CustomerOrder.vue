@@ -165,7 +165,7 @@ export default {
       this.isLoading = true;
       this.$http.get(api).then((re) => {
         vm.isLoading = false;
-        console.log('購物車列表取得資料', re.data);
+        //console.log('購物車列表取得資料', re.data);
         vm.cart = re.data.data;
       })
     },
@@ -214,7 +214,6 @@ export default {
               console.log(re.data.message || re.data.messages);
             }
           })
-
         }else{
           console.log('驗證失敗');
         }
@@ -237,15 +236,6 @@ export default {
 }
 </script>
 <style>
-.customerOrder-box-shadow{
-  box-shadow: 4px 4px 10px #aaa;
-  margin-bottom:30px;
-}
-@media (max-width: 575px){
-  .customerOrder-box-shadow .table th, .table td{
-    padding: 5px 0;
-  }
-}
 
 </style>
 

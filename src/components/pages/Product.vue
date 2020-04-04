@@ -20,7 +20,7 @@
             <div class="product-price">
               <div class="text-right mb-3">
                 <span class="h3 font-weight-bolder">{{product.price | currency}}</span>
-                <span class="h5 text-muted ml-2"><del>{{product.origin_price  | currency}}</del></span>
+                <span class="h5 text-muted ml-2"><del>{{product.origin_price | currency}}</del></span>
               </div>
 
               <div class="input-group">
@@ -77,7 +77,7 @@
           選單畫面上的自訂按紐設定示意圖能讓您更容易瞭解使用方式。此外，只需單手撥動前轉盤或是按下 Fn 按鈕，就能在選單標籤之間切換。</p>
         </div>
         <div class="col-md-6">
-          <div class="h-md-100 h-260 description-bg-1 bg-cover" ></div>
+          <div class="description-height description-bg-1 bg-cover" ></div>
         </div>
       </div>
 <!-- 細膩超乎想像 -->
@@ -147,42 +147,22 @@ export default {
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
       productNum: 1,
       cartSuccessMessage:'',
-      productIntro:[
-        // {
-        //   num:'01',
-        //   title:'最新影像處理',
-        //   description:'EXPEED影像處理器搭配前端大型積體電路晶片，可將高解析度感光元件的性能提升到極致。',
-        //   imageUrl:'../../assets/image/product_最新影像處理引擎.jpg',
-        // },
-        // {
-        //   num:'02',
-        //   title:'內建五軸穩定系統',
-        //   description:'機身內建五軸影像穩定器，演算法經過最佳化，可讓高解析度感光元件帶來最佳性能表現。',
-        //   imageUrl:'../../assets/image/product_五軸穩定系統.jpg',
-        // },
-        // {
-        //   num:'03',
-        //   title:'背罩式感光元件',
-        //   description:'全新開發的Exmor R CMOS感光元件具有無可匹敵的高解析度。',
-        //   imageUrl:'../../assets/image/product_全片幅背罩式CMOS.jpg',          
-        // },
-      ],
+      productIntro:[],
       isLoading:false,
       scrollPos:0,
     // 相關產品-輪播
       slickOptions: {
+        //基本設定
         slidesToShow: 4,//一次顯示幾個
         slidesToScroll: 2,//切換下一頁時移動幾個
-        //基本設定
         dots: true, //項目點點，預設為false
         arrows: false, //上下箭頭，預設為true
         autoplay: false, //自動撥放
         autoplaySpeed: 500, //自動撥放的切換速率，單位毫秒
         speed: 1500, //切換速率，單位毫秒
-        // easing: 'linear', //滑動效果頻率，和animate設定值一樣，預設為linear
-        // fade: true, //切換改為fadeIn方式，預設為false
         infinite: false, //是否要loop，預設為true
-        responsive: [    //RWD設定
+        //RWD設定
+        responsive: [    
           {
             breakpoint: 991,
             settings: {
@@ -211,15 +191,6 @@ export default {
       })
     },
   },
-  watch:{
-    // filterData(){
-    //   this.$refs.slick.destroy();
-    //   this.$nextTick(() => {
-    //       this.$refs.slick.create();
-    //   })
-
-    // }
-  },
   methods:{
     next() {
       this.$refs.slick.next();
@@ -232,7 +203,6 @@ export default {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
       this.isLoading = true;
       this.$http.get(api).then((re) => {
-        // console.log(re);
         vm.isLoading = false;
         vm.product = re.data.product;
       })
@@ -296,23 +266,7 @@ export default {
       this.productId = id;
       this.getProduct();
       $(doc).animate({scrollTop:0},800);
-      //重新初始slick
-      // this.reSlick();
     },
-    reSlick(){
-    //   // this.$refs.slick.slick();
-      this.$nextTick(() => {
-      this.$refs.slick.reSlick();
-      });
-    //     // this.$refs.slick.destroy();
-    //     // this.$nextTick(() => {
-    //     //     this.$refs.slick.create();
-    //     // })
-      console.log('this.$refs', this.$refs);
-      console.log('this.$refs.slick', this.$refs.slick.create);
-      console.log('this.$nextTick', this.$nextTick);
-      console.log('this.$refs.slick.reSlick', this.$refs.slick.reSlick);
-    }
   },
   created(){
     const vm = this;
@@ -338,97 +292,5 @@ export default {
 </script>
 
 <style>
-@media (min-width: 576px) {
-  .bg-sm-white{
-    background-color: #fff;
-  }
-  .text-sm-black{
-    color:#000;
-  }
-}
-@media (min-width: 768px) {
-  .h-md-100{
-    height:100%;
-  }
-}
-/*名稱修正-這樣太籠統*/ 
-.h-260{
-  height:260px;
-}
-.title-border-bottom{
-  border-bottom: 3px solid #000;
-}
-.border-1px{
-  border: 1px solid #000;
-}
 
-.product-item{
-  display: flex;
-  flex-direction: column;
-}
-.product-text{
-  flex:1 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.product-text p{
-  font-size: 20px;
-  text-indent:2em;
-  text-align: justify;
-  line-height: 2rem;
-}
-.product-price{
-  flex:0 0 auto;
-}
-/* .btn:hover{
-  background-color: rgb(90, 90, 90);
-} */
-/* 技術介紹-數字下方樣式 */
-.product-technology .item-num{
-  font-size: 3rem;
-  /* margin-bottom:0; */
-  position:relative;
-  font-weight: 700;
-}
-.product-technology .item-num::after{
-  content:'';
-  position:absolute;
-  bottom:0;
-  left:50%;
-  transform: translateX(-50%);
-  width: 3rem;
-  height: 4px;
-  background-color: #000;
-}
-@media (min-width:992px){
-  .product-technology .item-num::after{
-    left:2px;
-    transform: translateX(0);
-  }
-}
-.product-technology .item-title{
-  margin-bottom: 0;
-}
-/*項目點點*/
-.slick-dots{
-  display:flex;
-  justify-content: center;
-}
-.slick-dots li + li{
-  margin-left: 5px;
-}
-.slick-dots li button{
-  /* padding:0 5px; */
-  width: 21px;
-  height: 21px;
-  /* color:#fff;*/
-  background-color:#ccc;
-  border-style:none;
-  border-radius: 50%;
-}
-.slick-dots li.slick-active button{
-  color:#fff;
-  background-color: #1f2733;
-}
 </style>

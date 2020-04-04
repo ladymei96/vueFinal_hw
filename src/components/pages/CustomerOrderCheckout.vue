@@ -118,8 +118,6 @@ export default {
 }
 </script>
 <style>
-.customerOrder-warn-fz{
-  font-size: 1.5rem;
-}
+
 </style>
 

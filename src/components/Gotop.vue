@@ -43,4 +43,12 @@ export default {
 .goTop:hover a{
   color:#575b61;
 }
+/*滑到指定位置，才出現*/
+.goTop-animated{
+  opacity: 0;
+  transition:.3s;
+}
+.goTop-fade{
+  opacity: 1;
+}
 </style>

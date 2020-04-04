@@ -317,49 +317,5 @@ export default {
 </script>
 
 <style>
-.carousel-item-height{
-  height: 200px;  
-  transition: .5s;
-}
-@media (min-width: 576px) { 
-  .carousel-item-height{
-    height: 250px;
-  }
-}
-@media (min-width: 768px) {
-  .carousel-item-height{
-    height: 300px;
-  }
-}
-@media (min-width: 992px) { 
-  .carousel-item-height{
-    height: 400px;
-  }
-}
 
-.nav-option li{
-  position: relative;
-}
-
-.list-group>a{
-  color:#10161e
-}
-
-.nav-option li a{
-  color:#575b61;
-  font-size: 1.3rem;
-}
-.nav-option li:hover a{
-  color:#10161e;
-}
-.nav-option li + li ::before{
-  content:'/';
-  color:#575b61;
-  font-weight: 100;
-  position:absolute;
-  left:0;
-}
-.option-visibility{
-  visibility:hidden;/*佔位隱藏*/ 
-}
 </style>

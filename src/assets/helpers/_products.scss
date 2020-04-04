@@ -1,0 +1,44 @@
+//輪播高度RWD設定
+  .carousel-item-height{
+    height: 400px;
+    transition: .5s;
+    @media (max-width: 991px){
+      height: 300px;
+    }
+    @media (max-width: 767px){
+      height: 250px;
+    }
+    @media (max-width:575px){
+      height: 200px;
+    }
+  }
+//列表分類
+.nav-option li{
+  position: relative;
+  >a{
+    color:#10161e;
+  }
+}
+.nav-option{
+  li{
+    a{
+      color:#575b61;
+      font-size: 1.3rem;
+    }
+    &:hover{
+      a{
+        color:#10161e;
+      }
+    }
+  }
+}
+.nav-option li + li ::before{
+  content:'/';
+  color:#575b61;
+  font-weight: 100;
+  position:absolute;
+  left:0;
+}
+.option-visibility{
+  visibility:hidden;/*佔位隱藏*/ 
+}

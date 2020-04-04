@@ -144,6 +144,9 @@ import Message from '../ScreenFull_message';
 
 export default {
   name: 'Home',
+  components:{
+    Message,
+  },
   data () {
     return {
       topProducts:[],
@@ -153,8 +156,20 @@ export default {
       errorMessage:false,
     }
   },
-  components:{
-    Message,
+  computed:{
+    judgeEmail(){//判斷客戶輸入字串，是否符合信箱格式
+      let isMail =  /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+      return isMail.test(this.customerEmail) ? this.customerEmail : null
+    },
+  },
+  watch:{
+    customerEmail(){
+      if(this.judgeEmail == null && this.customerEmail != ''){
+        this.errorMessage = true;
+      }else{
+        this.errorMessage = false;
+      }
+    }
   },
   methods:{
     getTopProducts(){
@@ -182,21 +197,6 @@ export default {
       }
     }
   },
-  computed:{
-    judgeEmail(){
-      let isMail =  /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-      return isMail.test(this.customerEmail) ? this.customerEmail : null
-    },
-  },
-  watch:{
-    customerEmail(){
-      if(this.judgeEmail == null && this.customerEmail != ''){
-        this.errorMessage = true;
-      }else{
-        this.errorMessage = false;
-      }
-    }
-  },
   created(){ 
     this.getTopProducts();
     this.getLatestNews();
@@ -208,7 +208,7 @@ export default {
       vm.scrollPos = scrollPos;
     });
     new WOW().init();
-}
+  }
 }
 </script>
 
@@ -221,12 +221,23 @@ export default {
   left:50%;
   transform: translateX(-50%);
   opacity: .5;
+  animation-name:move;
+  animation-duration: 1.5s;
+  animation-iteration-count:infinite;
+  animation-timing-function: linear;
 }
-.index-mouse:hover{
-  opacity: 1;
+@keyframes move{
+  0%{
+    bottom:0;
+    opacity: .5;
+  }
+  50%{
+    bottom:10px;
+    opacity: 1;
+  }
+  100%{
+    bottom:0;
+    opacity: .5;
+  }
 }
-/* animate.css 客製化 */
-/* .index-animated-duration{
-  animation-duration: 1s;
-} */
 </style>
