@@ -1,5 +1,4 @@
 $base-spacing:10px;
-
 @function spacing($count:1){
   @return $count * $base-spacing;
 }
@@ -23,9 +22,49 @@ $base-spacing:10px;
 .text-vertical{
   writing-mode: vertical-rl;
 }
-
-
+//邊框設定
+.title-border-bottom{
+  border-bottom: 3px solid $primary;
+}
+.border-1px{
+  border: 1px solid $primary;
+}
 //間距
 .mt-80{
   margin-top: spacing(8);
+}
+
+//卡片設定
+.card{
+  overflow: hidden;
+  .card-header,.card-footer{
+    background-color:transparent;
+    border:none;
+  }
+  .card-content{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right:0;
+    transition:.5s;
+  }
+  .card-fadeIn{
+    opacity: 0;
+  }
+  .card-slideInUp{
+    transform: translateY(105%);
+  }
+  &:hover{
+    .card-fadeIn{
+      opacity: 1;
+    }
+    .card-slideInUp{
+      transform: translateY(0);
+    } 
+  }
+}
+// 卡片色彩設定(index+product共用)
+.bg-primary-opacity{
+  background-color: #10161e81;
 }

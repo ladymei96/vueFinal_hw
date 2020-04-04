@@ -1,4 +1,5 @@
 'use strict'
+const webpack = require('webpack');//全域引入jQuery
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
@@ -29,6 +30,13 @@ module.exports = {
       '@': resolve('src'),
     }
   },
+  //添加代碼-全域引入jQuery
+  plugins:[
+    new webpack.ProvidePlugin({
+      $:'jquery',
+      jQuery:'jquery',
+    })
+  ],
   module: {
     rules: [
       {

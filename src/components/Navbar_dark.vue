@@ -83,7 +83,7 @@
             <router-link to="/products" class="nav-link" role="button" aria-haspopup="true">
               Products
             </router-link>
-            <a href="#" class="dropdown-toggle align-self-center nav-link pl-0 toggle--underline" id="navbarDropdown" data-toggle="dropdown"></a>
+            <a href="#" class="dropdown-toggle nav-link px-2" id="navbarDropdown" data-toggle="dropdown"></a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#" @click.prevent="filterData(1)">單反相機</a>
               <a class="dropdown-item" href="#" @click.prevent="filterData(2)">單反鏡頭</a>
@@ -97,14 +97,13 @@
         </ul>
       </div>
     </nav>
-
-
   </div>
 </template>
 
 <script>
 export default {
   name: 'Navbar_dark',
+  props:['currentPage'],
   data () {
     return {
       cart:{
@@ -117,13 +116,21 @@ export default {
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
     }
   },
-  props:['currentPage'],
+  computed:{
+    favoriteData(){
+      const vm = this;
+      let filtered = this.products.filter(function(item){
+        return vm.favoriteItem.indexOf(item.id) != -1
+      })
+      return filtered
+    }
+  },
   methods:{
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
       this.$http.get(api).then((re) => {
-        console.log('Navbar取得購物車列表', re.data);
+        //console.log('Navbar取得購物車列表', re.data);
         vm.cart = re.data.data;
       });
     },
@@ -163,15 +170,6 @@ export default {
     offEventBus(){//銷毀監聽事件
       this.$bus.$off('Navbar:updateCart');
       this.$bus.$off('Navbar:updateFavoriteItem');
-    }
-  },
-  computed:{
-    favoriteData(){
-      const vm = this;
-      let filtered = this.products.filter(function(item){
-        return vm.favoriteItem.indexOf(item.id) != -1
-      })
-      return filtered
     }
   },
   created(){

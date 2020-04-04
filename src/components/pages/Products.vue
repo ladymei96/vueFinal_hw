@@ -3,11 +3,11 @@
     <loading :active.sync="isLoading"></loading>
     <NavbarDark :current-page="isProductsPage"></NavbarDark>
 <!-- 輪播 -->
-    <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel" data-pause="false" data-interval="2500">
+    <div id="productsCarouse" class="carousel slide mb-5">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#productsCarouse" data-slide-to="0" class="active"></li>
+        <li data-target="#productsCarouse" data-slide-to="1"></li>
+        <li data-target="#productsCarouse" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item carousel-bg-1 carousel-item-height bg-cover active ">
@@ -17,11 +17,11 @@
         <div class="carousel-item carousel-bg-3 carousel-item-height bg-cover">
         </div>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#productsCarouse" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <a class="carousel-control-next" href="#productsCarouse" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
@@ -29,11 +29,11 @@
 <!-- 產品分類-選單 -->
     <div class="container text-center mb-md-5 mb-3">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
-        <a v-for="(listItem, index) in category" :key="index" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{listItem}}</a>
+        <a v-for="(listItem, index) in category" :key="listItem" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{listItem}} <i class="fas fa-caret-down" v-show="index != 0"></i></a>
       </div>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade" :class="{'active': categoryIndex == 0, 'show': categoryIndex == 0}">
-          <ul class="nav justify-content-center nav-option option-opacity">
+          <ul class="nav justify-content-center nav-option option-visibility">
             <li class="nav-item"><a class="nav-link" href="#">all</a></li>
           </ul>
         </div>
@@ -111,7 +111,7 @@
               <p class="h5 text-right mb-0">{{item.price | currency}}</p>              
             </div>
 
-            <div class="card card-content bg-primary text-white">
+            <div class="card card-content card-fadeIn bg-primary text-white">
               <div class="card-header h-25 pt-4">
                 <h5 class="card-title">{{item.title}}</h5>
               </div>
@@ -146,16 +146,21 @@
         </li>
       </ul>
     </nav>
-    <Gotop />
+    <Message :cart-message="cartSuccessMessage"></Message>
+    <Gotop :window-scroll="scrollPos" />
     <Footer></Footer>
   </div>
 </template>
 
 <script>
 import $ from 'jquery';
+import Message from '../ScreenFull_message';
 
 export default {
   name: 'Products',
+  components:{
+    Message,
+  },
   data () {
     return {
       products:[],
@@ -163,21 +168,93 @@ export default {
       currentCategory:'全部商品',
       brand:'',
       category:['全部商品', 'DSLR單反相機', 'DSLR單反鏡頭', 'EVIL無反相機', 'EVIL無反鏡頭'],
-      categoryIndex:0,
+      categoryIndex:0,//show出狀態為active的分類列表項目
       isProductsPage:true,
       totalPageData:[],
       singlePageData:[],
       currentPage:1,
       has_pre:false,
       has_next:true,
+      scrollPos:0,
+      cartSuccessMessage:'',
     }
+  },
+  computed:{
+    // filterData(){
+    //   if(this.currentCategory == '全部商品'){
+    //     return this.products;
+    //   }
+    //   let filtered = this.products.filter((item) => {
+    //     if(this.brand == ''){
+    //       return item.category == this.currentCategory;
+    //     }else{
+    //       return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
+    //     } 
+    //   });
+    //   return filtered;
+    // }
+    typeData(){
+      const vm = this;
+      if(this.currentCategory !== '全部商品'){
+        return this.products.filter((item) => {
+          return item.category === vm.currentCategory
+        })
+      }else{
+        return this.products;
+      }
+    },
+    brandData(){
+      const vm = this;
+    //如果brand不等於''，就回傳資料內同品牌的項目
+      if(this.brand !== ''){
+        return this.typeData.filter((item) => {
+          return item.title.indexOf(vm.brand) !== -1
+        })
+      }else{
+        return this.typeData//不然就回傳分類列表內的項目
+      }
+    }
+  },
+  watch:{
+    brandData(){
+      const pageContent = [];
+      this.brandData.forEach(function(item, i){
+      //每頁9筆資料，總共幾頁
+        if(i % 9 === 0){
+          pageContent.push([])
+        }
+      //每頁資料內容  
+        const page = parseInt(i/9)//第幾筆資料歸屬於第幾頁
+        pageContent[page].push(item);
+      })
+      this.totalPageData = pageContent;//全部分頁內容
+      //取出特定頁內容
+      this.pagination();
+    },
+    singlePageData(){//判斷是否有上/下頁，決定其按鈕可點擊狀態
+      if(this.currentPage == 1 && this.totalPageData.length > 1){
+        this.has_pre = false;
+        this.has_next = true;
+      }else if(this.currentPage>1 && this.currentPage< this.totalPageData.length){
+        this.has_pre = true;
+        this.has_next = true;
+      }else if(this.totalPageData.length == 1){
+        this.has_pre = false;
+        this.has_next = false;
+      }else if(this.currentPage == this.totalPageData.length){
+        this.has_pre = true;
+        this.has_next = false;
+      }
+    },
   },
   methods:{
     getProducts(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
+      this.isLoading = true;
       this.$http.get(api).then((re) => {
         vm.products = re.data.products;
+        this.isLoading = false;
       })
     },
     productDetail(id){
@@ -195,64 +272,21 @@ export default {
         if(re.data.success){
           this.$bus.$emit('Navbar:updateCart');
           this.isLoading = false;
+          vm.cartSuccessMessage = '已加入購物車';
         }
+        setTimeout(()=>{
+          vm.cartSuccessMessage = '';
+        },2000)
       })
     },
     selectCategory(index){
       this.categoryIndex = index;
-      this.currentCategory = this.category[index];
+      this.currentCategory = this.category[index];//點擊後，取出相對應分類列表名稱
       this.brand = '';
     },
     pagination(index = 0){//預設取出第一頁內容(陣列索引為0的資料內容)
-      this.singlePageData = this.totalPageData[index];
-      this.currentPage = index + 1;
-    }
-  },
-  computed:{
-    filterData(){
-      if(this.currentCategory == '全部商品'){
-        return this.products;
-      }
-      let filtered = this.products.filter((item) => {
-        if(this.brand == ''){
-          return item.category == this.currentCategory;
-        }else{
-          return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
-        } 
-      });
-      return filtered;
-    }
-  },
-  watch:{
-    filterData(){
-      const pageContent = [];
-      this.filterData.forEach(function(item, i){
-      //每頁9筆資料，總共幾頁
-        if(i % 9 === 0){
-          pageContent.push([])
-        }
-      //每頁資料內容  
-        const page = parseInt(i/9)//第幾筆資料歸屬於第幾頁
-        pageContent[page].push(item);
-      })
-      this.totalPageData = pageContent;//全部分頁內容
-      //取出特定頁內容
-      this.pagination();
-    },
-    singlePageData(){
-      if(this.currentPage == 1 && this.totalPageData.length > 1){
-        this.has_pre = false;
-        this.has_next = true;
-      }else if(this.currentPage>1 && this.currentPage< this.totalPageData.length){
-        this.has_pre = true;
-        this.has_next = true;
-      }else if(this.totalPageData.length == 1){
-        this.has_pre = false;
-        this.has_next = false;
-      }else if(this.currentPage == this.totalPageData.length){
-        this.has_pre = true;
-        this.has_next = false;
-      }
+      this.singlePageData = this.totalPageData[index];//由傳入的索引位置，取出對應頁面資料
+      this.currentPage = index + 1;//目前頁面為索引位置+1
     }
   },
   created(){
@@ -263,72 +297,25 @@ export default {
       vm.selectCategory(index);
     });
   },
+  mounted(){
+    const vm = this;
+    $(window).scroll(function(){
+      let scrollPos = $(window).scrollTop();
+      vm.scrollPos = scrollPos;
+    });
+    $('.carousel').carousel({
+      interval: 2000,
+      ride:'carousel',
+      pause:false,
+    })
+  },
   beforeDestroy(){
     this.$bus.$off('filterData:postIndex');
+    $(window).unbind('scroll');
   }
 }
 </script>
 
 <style>
-.carousel-item-height{
-  height: 200px;  
-  transition: .5s;
-}
-@media (min-width: 576px) { 
-  .carousel-item-height{
-    height: 250px;
-  }
-}
-@media (min-width: 768px) {
-  .carousel-item-height{
-    height: 300px;
-  }
-}
-@media (min-width: 992px) { 
-  .carousel-item-height{
-    height: 400px;
-  }
-}
-.card-header,.card-footer{
-  background-color:transparent;
-  border:none;
-}
-.card-content{
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right:0;
-  opacity: 0;
-  transition: opacity .3s;
-}
-.card:hover .card-content{
-  opacity: 1;
-}
-.nav-option li{
-  position: relative;
-}
 
-.list-group>a{
-  color:#10161e
-}
-
-.nav-option li a{
-  color:#575b61;
-  font-size: 1.3rem;
-}
-.nav-option li:hover a{
-  color:#10161e;
-}
-.nav-option li + li ::before{
-  content:'/';
-  color:#575b61;
-  font-weight: 100;
-  position:absolute;
-  left:0;
-}
-.option-opacity{
-  opacity: 0;
-  pointer-events: none;
-}
 </style>

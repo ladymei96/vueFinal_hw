@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-bg bg-cover">
     <form class="form-signin" @submit.prevent="signin">
       <h1 class="h3 mb-3 font-weight-normal text-center">登入</h1>
       <label for="inputEmail" class="sr-only">userName</label>
@@ -53,21 +53,6 @@ export default {
 </script>
 
 <style scoped>
-html,
-body {
-  height: 100%;
-}
-
-body {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
-}
-
 .form-signin {
   width: 100%;
   max-width: 330px;

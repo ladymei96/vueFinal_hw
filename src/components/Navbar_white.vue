@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <nav class="navbar navbar-expand-lg navbar-dark py-0 px-sm-5">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg py-0 px-sm-5">
       <div class="d-flex">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -18,13 +18,13 @@
 
       <ul class="navbar-nav navbar-nav-row order-lg-1">
         <li class="nav-item d-none d-lg-inline">
-          <router-link to="/login" class="nav-link text-primary navbar-icon-size mb-0">
+          <router-link to="/login" class="nav-link navbar-icon-size mb-0 text-white">
             <i class="fas fa-user-circle fa-lg"></i>
           </router-link>
         </li>
 
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link navbar-icon-badge navbar-icon-size icon-color mb-0" data-toggle="dropdown">
+          <a href="#" class="nav-link navbar-icon-badge navbar-icon-size mb-0 text-white" data-toggle="dropdown">
             <i class="fas fa-heart fa-lg"></i>
             <span class="badge badge-danger rounded-circle" v-if="favoriteData.length != 0">{{favoriteData.length}}</span>
           </a>
@@ -47,7 +47,7 @@
         </li>
 
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link btn-cart navbar-icon-badge navbar-icon-size icon-color mb-0" data-toggle="dropdown" data-flip="false">
+          <a href="#" class="nav-link btn-cart navbar-icon-badge navbar-icon-size mb-0 text-white" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
             <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
           </a>
@@ -84,7 +84,7 @@
             <router-link to="/products" class="nav-link" role="button" aria-haspopup="true">
               Products
             </router-link>
-            <a href="#" class="dropdown-toggle align-self-center nav-link pl-0" id="navbarDropdown" data-toggle="dropdown"></a>
+            <a href="#" class="dropdown-toggle nav-link px-2" id="navbarDropdown" data-toggle="dropdown"></a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#" @click.prevent="filterData(1)">單反相機</a>
               <a class="dropdown-item" href="#" @click.prevent="filterData(2)">單反鏡頭</a>
@@ -115,12 +115,21 @@ export default {
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
     }
   },
+  computed:{
+    favoriteData(){
+      const vm = this;
+      let filtered = this.products.filter(function(item){
+        return vm.favoriteItem.indexOf(item.id) != -1
+      })
+      return filtered
+    }
+  },
   methods:{
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
       this.$http.get(api).then((re) => {
-        console.log('Navbar取得購物車列表', re.data);
+        //console.log('Navbar取得購物車列表', re.data);
         vm.cart = re.data.data;
       });
     },
@@ -151,15 +160,6 @@ export default {
       this.categoryIndex = index;
       this.$router.push('/products');
     },
-  },
-  computed:{
-    favoriteData(){
-      const vm = this;
-      let filtered = this.products.filter(function(item){
-        return vm.favoriteItem.indexOf(item.id) != -1
-      })
-      return filtered
-    }
   },
   created(){
     //元件建立，負責取得資料，呈現在購物車和最愛Icon數字

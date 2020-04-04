@@ -1,9 +1,16 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <div class="container-md my-5">
+    <div class="container-md mt-3 mb-5">
+      <div class="customerOrder-box-shadow p-4 text-center customerOrder-warn-fz">
+        <h3><strong>詐騙猖獗</strong></h3>
+        <p>會員折扣、提款機操作</p>
+        <p>經銷商、12期分期等任何說詞</p>
+        <p class="text-danger"><strong>皆為詐騙</strong></p>
+        <p>切勿提供對方任何個資及卡號</p>
+      </div>
       <form @submit.prevent="payOrder">
-        <div class="customerOrder p-2 p-sm-4">
+        <div class="customerOrder-box-shadow p-2 p-sm-4">
           <h2>ORDER</h2>
           <table class="table">
             <thead>
@@ -55,12 +62,12 @@
             </tbody>
           </table>
         </div>
-        <div class="text-right" v-if="order.is_paid === false">
+        <div class="text-right" v-show="!order.is_paid">
           <button class="btn btn-primary" type="submit">確認付款去</button>
         </div>
       </form>
     </div>
-    <div class="mb-5 text-center" v-if="order.is_paid">
+    <div class="mb-5 text-center" v-show="order.is_paid">
       <a class="btn btn-primary btn-lg px-4" href="#" @click.prevent="goHome">回首頁</a>
     </div>
   </div>

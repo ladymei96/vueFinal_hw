@@ -14,7 +14,7 @@
           <div class="slide-item-discount align-self-center">
             <p><strong>50%</strong> OFF</p>
           </div>
-          <div class="slide-item-coupon bg-white text-dark align-self-center px-2">
+          <div class="slide-item-coupon  align-self-center px-2">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':weekend}">
                 NOT TODAY
               </p>
@@ -30,7 +30,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>30%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
+            <div class="slide-item-coupon  align-self-center w-50">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':OnlyMonday}">
                 NOT TODAY
               </p>
@@ -47,7 +47,7 @@
             <div class="slide-item-discount align-self-center">
               <p><strong>20%</strong> OFF</p>
             </div>
-            <div class="slide-item-coupon bg-white text-dark align-self-center w-50">
+            <div class="slide-item-coupon  align-self-center w-50">
               <p class="mb-0 slide-item-coupon-use" :class="{'slide-item-coupon-opacity':normal}">
                 NOT TODAY
               </p>
@@ -76,12 +76,16 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper';
 
 export default {
   name: 'Coupons',
+  components: {
+    swiper,
+    swiperSlide
+  },
   data () {
     return {
       swiperOption: {
         autoplay:true,//自行滑動
         loop:true,
-        speed:1500,
+        speed:800,
         slidesPerView: 'auto',
         loopedSlides :3,
         centeredSlides: true,
@@ -96,10 +100,6 @@ export default {
       normal:false,
       OnlyMonday:false,
     }
-  },
-  components: {
-    swiper,
-    swiperSlide
   },
   methods:{
     judgeDay(){
@@ -165,16 +165,18 @@ export default {
   }
   .slide-item-coupon{
     position: relative;
+    background-color: red;
+    color:#fff;
   }
   .slide-item-coupon-use{
     position: absolute;
     top:0;
     left:0;
     background-color: #fff;
+    color:#000;
     width: 100%;
   }
   .slide-item-coupon-opacity{
     opacity: 0;
   }
-
 </style>

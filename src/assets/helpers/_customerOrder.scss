@@ -1,0 +1,106 @@
+//訂單
+.customerOrder-box-shadow{
+  box-shadow: 4px 4px 10px #aaa;
+  margin-bottom:30px;
+  @media (max-width: 575px){
+    .table th,
+    .table td{
+      padding: 5px 0;
+    }
+  }
+}
+.order-grid{
+  border-top:1px solid #ccc;
+  .order-header-grid{
+    display:grid;
+    grid-template-columns: 1fr 5fr 2fr 2fr 2fr;
+    border-bottom: 2px solid #ccc;
+    .order-header-item-grid{
+      text-align: center;
+      margin-bottom: 0;
+      padding:.75rem 0;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    @media (max-width:767px){
+      display:none;
+    }
+  }
+  .order-product-grid{
+    display: grid;
+    grid-template-columns: 1fr 5fr 2fr 2fr 2fr;
+    text-align: center;
+    .order-product-item{
+      padding:.75rem 0;
+      border-bottom:1px solid #ccc;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .order-product-price,
+    .order-product-total{
+      text-align: right;
+    }
+    @media (max-width:767px){
+      border-bottom:1px solid #ccc;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: 
+      "del del title title title title title title title title title title"
+      "del del price price price price qty qty total total total total";
+      .order-product-del{
+        grid-area: del;
+        border-bottom: none;
+      }
+      .order-product-title{
+        grid-area: title;
+      }
+      .order-product-price{
+        grid-area:price;
+        border-bottom: none;
+        text-align: center;
+      }
+      .order-product-qty{
+        grid-area:qty;
+        border-bottom: none;
+      }
+      .order-product-total{
+        grid-area:total;
+        border-bottom: none;
+        text-align: center;
+      }
+    }
+  }
+  .order-total-grid{
+    display:grid;
+    grid-template-columns: 10fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    "price-title price-num"
+    "discount-title discount-num";
+    p{
+      text-align: right;
+      padding: .75rem 0;
+      margin-bottom: 0;
+    }
+    .total-price-title{
+      grid-area: price-title;
+    }
+    .total-price-num{
+      grid-area: price-num;
+    }
+    .total-discount-title{
+      grid-area: discount-title;
+    }
+    .total-discount-num{
+      grid-area: discount-num;
+    }
+    @media (max-width:767px){
+      grid-template-columns: 7fr 5fr;
+    }
+  }
+}
+//防詐騙宣導
+.customerOrder-warn-fz{
+  font-size: 1.5rem;
+}

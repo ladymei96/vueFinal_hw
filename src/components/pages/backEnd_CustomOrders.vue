@@ -169,11 +169,14 @@
 </template>
 
 <script>
-import $ from 'jquery';
 import {ValidationObserver, ValidationProvider} from 'vee-validate';
 
 export default {
   name: 'CustomOrders_backEnd',
+  components:{
+    ValidationObserver,
+    ValidationProvider,
+  },
   data () {
     return {
       products:[],
@@ -196,10 +199,6 @@ export default {
         message:'',
       },
     }
-  },
-  components:{
-    ValidationObserver,
-    ValidationProvider,
   },
   methods:{
     getProducts(page = 1){

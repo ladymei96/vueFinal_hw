@@ -155,8 +155,6 @@
 </template>
 
 <script>
-import $ from 'jquery';
-
 export default {
   name: 'Products_backEnd',
   data () {
@@ -182,12 +180,8 @@ export default {
           vm.isLoading = false;
           vm.products = re.data.products;
           vm.pagination = re.data.pagination;
-          vm.showpage();
         }
       })
-    },//測試用
-    showpage(){
-      console.log(this.pagination);
     },
     openModal(isNew, item){
       if(isNew){
@@ -251,9 +245,6 @@ export default {
         }
       })
     },
-  },
-  components:{
-
   },
   created(){
     this.getProducts();
