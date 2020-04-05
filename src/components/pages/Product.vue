@@ -105,9 +105,9 @@
 <!-- 相關商品 -->
       <div class="text-center py-5">
         <div class="product-intro-title mt-3">
-          <h3>猜您也喜歡</h3>
+          <h3 @click="reInit">猜您也喜歡</h3>
         </div>
-        <slick ref="slick" :options="slickOptions" v-if="filterData.length"><!-- v-if="filterData.length"-->
+        <slick ref="slick" :options="slickOptions" v-if="filterData.length">
           <div class="card border-0" v-for="item in filterData" :key="item.id">
             <div class="card-body card-padding-bottom">
               <img :src="item.imageUrl" class="card-img-top" alt="product-image">
@@ -147,7 +147,26 @@ export default {
       favoriteItem:JSON.parse(localStorage.getItem('favoriteItemId')) || [],
       productNum: 1,
       cartSuccessMessage:'',
-      productIntro:[],
+      productIntro:[
+        {
+          "num":"01",
+          "title":"最新影像處理",
+          "description":"EXPEED影像處理器搭配前端大型積體電路晶片，可將高解析度感光元件的性能提升到極致。",
+          "imageUrl":"https://i.loli.net/2020/04/03/fVIZaqy9dDOHExi.jpg"
+        },
+        {
+          "num":"02",
+          "title":"內建五軸穩定系統",
+          "description":"機身內建五軸影像穩定器，演算法經過最佳化，可讓高解析度感光元件帶來最佳性能表現。",
+          "imageUrl":"https://i.loli.net/2020/04/03/EJ4Fna9oibNTLmv.jpg"
+        },
+        {
+          "num":"03",
+          "title":"背罩式感光元件",
+          "description":"全新開發的Exmor R CMOS感光元件具有無可匹敵的高解析度。",
+          "imageUrl":"https://i.loli.net/2020/04/03/pvD23BAIVSgJRk9.jpg"
+        }
+      ],
       isLoading:false,
       scrollPos:0,
     // 相關產品-輪播
@@ -214,12 +233,12 @@ export default {
         vm.products = re.data.products;
       })
     },
-    getProductIntro(){
-      const vm = this;
-      this.$http.get('../../../static/productIntro.json').then((re) => {
-        vm.productIntro = re.data;
-      })
-    },
+    // getProductIntro(){
+    //   const vm = this;
+    //   this.$http.get('../../../static/productIntro.json').then((re) => {
+    //     vm.productIntro = re.data;
+    //   })
+    // },
     addtoCart(qty){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
@@ -267,13 +286,20 @@ export default {
       this.getProduct();
       $(doc).animate({scrollTop:0},800);
     },
+    reInit() {
+    // Helpful if you have to deal with v-for to update dynamic lists
+      this.$nextTick(() => {
+          this.$refs.slick.reSlick();
+      });
+      console.log('點');
+    },
   },
   created(){
     const vm = this;
     this.productId = this.$route.params.productId;
     this.getProduct();
     this.getProducts();
-    this.getProductIntro();
+    // this.getProductIntro();
     this.$bus.$on('Product:updateFavoriteItem',(newFavoriteItem)=>{
       vm.favoriteItem = newFavoriteItem;
     })

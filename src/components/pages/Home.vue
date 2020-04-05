@@ -149,8 +149,53 @@ export default {
   },
   data () {
     return {
-      topProducts:[],
-      latestNews:[],
+    //編譯過的檔案讀取不到json，哭哭
+      topProducts:[
+        {
+          "title":"Sony A7 III",    
+          "imageUrl":"https://storage.googleapis.com/vue-course-api.appspot.com/ladymei%2F1583325614391.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=hJ3rN7uJ3KBcCXgbd6pD5EsvhfT2t%2F8YwoD5ap%2FsNDnsZhSCkfxD%2B2%2BcziK7gzuyV5LTomfC8jCTQ3chijbB%2BHwloh3GMfwbdVO8fT7w18RNHIUYyh5Ri4Y21E6uAqmSITdNV0552O5PvLdDSuFmcgLKdek959vI5HIq5gfOZHU9hTbk2aNaSxNQ0baYulYeNv%2BT08jzW8TmpqV0nlMvssfN00b7SXRbinZmfbYpCDd6Xmkh9ktrQEdEqwhTvOTubNhcAZeMHWJCvXxrUYUcAS5il%2BNencev5lNo2yK8VV57rljue1vIiY%2Ft3hysHHonj3V6zXTdcsEfDzrpieCHNw%3D%3D",
+          "id":"-M1_Z0EZ5xnUlbMegcai",
+          "top":"1"
+        },
+        {
+          "title":"Fujifilm X-3 銀",    
+          "imageUrl":"https://storage.googleapis.com/vue-course-api.appspot.com/ladymei%2F1583325850623.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=lEcJIY8cAp8KfNu0gwSgpKSkmMv6NJJhguJYSmDF8tnEbeFEnLs0qadwINJTgFhXnZ46Vc1wcQOUGVYy3YKmsLmVY3qVp%2BiSWFdLDJBQPuMKqYjuIpaPNTZ9%2FY5Zjw3x139tdsLbPCkAa015%2BphzO%2B3zk%2Bx%2BYJWfHHFrlMIB2uSoywyypeOEeDRaJ4NEN7TyELevLoOALhBrQFToy%2FZuEUjCeMlYqsDEp9t6AVgxY6NFfFjLYFn8IK6TzzfffGUWCnVIDNQYN5u730jttRXcSVnuO55nesKc6VyhPLuBRV%2Bz0v%2FqSuwOFQ0hhGQ4Bj3gH4qBK7RAORbBP6NYqFYDMg%3D%3D",
+          "id":"-M1_ZvRd0XmA5Sgx9oCR",
+          "top":"2"
+        },
+        {
+          "title":"Canon EOS R",    
+          "imageUrl":"https://storage.googleapis.com/vue-course-api.appspot.com/ladymei%2F1584790676800.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=fgi2Ygv4hFlV5IpG7H2wtSZ7fbaW%2BIDE4ddD2Gv7qmTcb3ykQbZxNcPNw%2F%2BJZSJUt1drw94Si%2BNo3zb0iMWryGeKyxlLxeIAeOreYF%2FLni%2B00DGtXmnIBTx6ianQJjYpjItLiZTH70i%2BsDiiYbKO%2BbAGcucXogIC8Jyqsf%2Ba6d57NOtgbmFRhboyVlGsC%2B5a%2BhZAIzrDrZl3e3IVqOtoINYQ1gGtMZjGMIu96TB9fpvZrbmmtO%2BMA1tDT5fd5kg%2Bj8%2BBWswzkMdhXCY4nQ0iUF%2FBUyYH9top3PzvhatU9CjnrjtW6tbsbjb0BhZJlqP6ylnbFIa0BY8%2FioHS6YatPg%3D%3D",
+          "id":"-M2wsqWeKEjDRiwPSizI",
+          "top":"3"
+        }
+      ],
+      latestNews:[
+        {
+          "date":"2020-04-02",
+          "content":"錯過228，再錯過清明連假你會搥心肝"
+        },
+        {
+          "date":"2020-03-28",
+          "content":"Earth Hour關燈一小時"
+        },
+        {
+          "date":"2020-03-18",
+          "content":"Nikon專業級隨身機Z50開賣"
+        },
+        {
+          "date":"2020-03-01",
+          "content":"折價券-限時搶購中"
+        },
+        {
+          "date":"2020-02-28",
+          "content":"228連假，就該和新相機一起過"
+        },
+        {
+          "date":"2020-02-26",
+          "content":"超規格Canon全片幅機皇，EOS-1DX Mark III正式在台開賣"
+        }
+      ],
       scrollPos:0,
       customerEmail:'',
       errorMessage:false,
@@ -172,18 +217,18 @@ export default {
     }
   },
   methods:{
-    getTopProducts(){
-      const vm = this;
-      this.$http.get('../../../static/topProducts.json').then((re) => {
-        vm.topProducts = re.data;
-      })
-    },
-    getLatestNews(){
-      const vm = this;
-      this.$http.get('../../../static/lastestNews.json').then((re) => {
-        vm.latestNews = re.data;
-      })
-    },
+    // getTopProducts(){
+    //   const vm = this;
+    //   this.$http.get('../../../static/topProducts.json').then((re) => {
+    //     vm.topProducts = re.data;
+    //   })
+    // },
+    // getLatestNews(){
+    //   const vm = this;
+    //   this.$http.get('../../../static/lastestNews.json').then((re) => {
+    //     vm.latestNews = re.data;
+    //   })
+    // },
     productDetail(id){
       this.$router.push(`/product/${id}`);
     },
@@ -197,10 +242,10 @@ export default {
       }
     }
   },
-  created(){ 
-    this.getTopProducts();
-    this.getLatestNews();
-  },
+  // created(){ 
+  //   this.getTopProducts();
+  //   this.getLatestNews();
+  // },
   mounted(){
     const vm = this;
     $(window).scroll(function(){
