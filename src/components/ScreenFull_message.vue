@@ -10,7 +10,6 @@
 </template>
 
 <script>
-  let timer;
   export default {
     name:'screenFull_message',
     props:['cartMessage'],
@@ -24,11 +23,10 @@
     watch:{
       cartMessage(){
         const vm = this;//如果this.cartMessage有內容就...
-        if(this.cartMessage){//替代掉this.cartMessage !== ''
+        if(this.cartMessage){
           this.isSubs = true;
           this.cartText = true;
-          clearTimeout(timer);
-          timer = setTimeout(() => {
+          setTimeout(() => {
             vm.isSubs = false;
             vm.cartText = false;
           },2000);
@@ -40,8 +38,7 @@
       this.$bus.$on('message:show',() => {
         vm.isSubs = true;
         vm.subsText = true;
-        clearTimeout(timer);
-        timer = setTimeout(() => {
+        setTimeout(() => {
           vm.isSubs = false;
           vm.subsText = false;
         },2000);

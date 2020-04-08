@@ -253,8 +253,7 @@ export default {
           vm.isLoading = false;
           vm.cartSuccessMessage = '已加入購物車';
         }
-        clearTimeout(timer);
-        timer = setTimeout(()=>{
+        setTimeout(()=>{
           vm.cartSuccessMessage = '';
         },2000)
       })
