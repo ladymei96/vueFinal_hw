@@ -10,6 +10,7 @@
 </template>
 
 <script>
+  let timer;
   export default {
     name:'screenFull_message',
     props:['cartMessage'],
@@ -26,7 +27,8 @@
         if(this.cartMessage){//替代掉this.cartMessage !== ''
           this.isSubs = true;
           this.cartText = true;
-          setTimeout(() => {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
             vm.isSubs = false;
             vm.cartText = false;
           },2000);
@@ -38,7 +40,8 @@
       this.$bus.$on('message:show',() => {
         vm.isSubs = true;
         vm.subsText = true;
-        setTimeout(() => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
           vm.isSubs = false;
           vm.subsText = false;
         },2000);

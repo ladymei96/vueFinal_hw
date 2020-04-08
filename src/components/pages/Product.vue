@@ -132,7 +132,7 @@
 import Slick from 'vue-slick';
 import 'slick-carousel/slick/slick.css';
 import Message from '../ScreenFull_message';
-
+let timer;
 export default {
   name: 'Product',
   components:{
@@ -253,7 +253,8 @@ export default {
           vm.isLoading = false;
           vm.cartSuccessMessage = '已加入購物車';
         }
-        setTimeout(()=>{
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
           vm.cartSuccessMessage = '';
         },2000)
       })

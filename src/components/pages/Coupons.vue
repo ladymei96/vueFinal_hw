@@ -103,11 +103,11 @@ export default {
   },
   methods:{
     judgeDay(){
-      if(this.today == 1){
+      if(this.today == 1){//星期一顯示
         this.OnlyMonday = true;
       }else if([0, 6].indexOf(this.today) != -1){
-        this.weekend = true;
-      }else{
+        this.weekend = true;//星期六、日
+      }else{//其他日，二、三、四、五
         this.normal = true;
       }
     }
