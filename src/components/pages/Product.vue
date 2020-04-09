@@ -105,7 +105,7 @@
 <!-- 相關商品 -->
       <div class="text-center py-5">
         <div class="product-intro-title mt-3">
-          <h3 @click="reInit">猜您也喜歡</h3>
+          <h3>猜您也喜歡</h3>
         </div>
         <slick ref="slick" :options="slickOptions" v-if="filterData.length">
           <div class="card border-0" v-for="item in filterData" :key="item.id">
@@ -202,16 +202,16 @@ export default {
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
       this.isLoading = true;
-      this.$http.get(api).then((re) => {
+      this.$http.get(api).then((response) => {
         vm.isLoading = false;
-        vm.product = re.data.product;
+        vm.product = response.data.product;
       })
     },
     getProducts(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
-      this.$http.get(api).then((re) => {
-        vm.products = re.data.products;
+      this.$http.get(api).then((response) => {
+        vm.products = response.data.products;
       })
     },
     addtoCart(qty){
@@ -222,8 +222,8 @@ export default {
         qty,
       };
       this.isLoading = true;
-      this.$http.post(api, {data:cart}).then((re) => {
-        if(re.data.success){
+      this.$http.post(api, {data:cart}).then((response) => {
+        if(response.data.success){
           this.$bus.$emit('Navbar:updateCart');
           vm.isLoading = false;
           vm.cartSuccessMessage = '已加入購物車';
@@ -231,7 +231,9 @@ export default {
         setTimeout(()=>{
           vm.cartSuccessMessage = '';
         },2000)
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     judgeFavorite(){
       const vm = this;
@@ -261,13 +263,13 @@ export default {
       this.getProduct();
       $(doc).animate({scrollTop:0},800);
     },
-    reInit() {
-    // Helpful if you have to deal with v-for to update dynamic lists
-      this.$nextTick(() => {
-          this.$refs.slick.reSlick();
-      });
-      console.log('點');
-    },
+    // reInit() {
+    // // Helpful if you have to deal with v-for to update dynamic lists
+    //   this.$nextTick(() => {
+    //       this.$refs.slick.reSlick();
+    //   });
+    //   console.log('點');
+    // },
   },
   created(){
     const vm = this;

@@ -252,10 +252,12 @@ export default {
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       this.isLoading = true;
-      this.$http.get(api).then((re) => {
-        vm.products = re.data.products;
+      this.$http.get(api).then((response) => {
+        vm.products = response.data.products;
         this.isLoading = false;
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     productDetail(id){
       this.$router.push(`/product/${id}`);
@@ -268,8 +270,8 @@ export default {
         qty,
       };
       this.isLoading = true;
-      this.$http.post(api, {data:cart}).then((re) => {
-        if(re.data.success){
+      this.$http.post(api, {data:cart}).then((response) => {
+        if(response.data.success){
           this.$bus.$emit('Navbar:updateCart');
           this.isLoading = false;
           vm.cartSuccessMessage = '已加入購物車';
@@ -277,7 +279,9 @@ export default {
         setTimeout(()=>{
           vm.cartSuccessMessage = '';
         },2000)
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     selectCategory(index){
       this.categoryIndex = index;

@@ -43,7 +43,9 @@ export default {
         }else{
           alert(`${response.data.message} 請重新登入`);
         }
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     goHome(){
       this.$router.push('/');

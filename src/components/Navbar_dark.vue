@@ -129,27 +129,33 @@ export default {
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const vm = this;
-      this.$http.get(api).then((re) => {
+      this.$http.get(api).then((response) => {
         //console.log('Navbar取得購物車列表', re.data);
-        vm.cart = re.data.data;
+        vm.cart = response.data.data;
+      }).catch((error) => {
+        console.log(error);
       });
     },
     getProducts(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
-      this.$http.get(api).then((re) => {
-        vm.products = re.data.products;
-      })
+      this.$http.get(api).then((response) => {
+        vm.products = response.data.products;
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     removeCartItem(id){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
       const vm = this;
       this.isLoading = true;
-      this.$http.delete(api).then((re) => {
+      this.$http.delete(api).then((response) => {
         vm.getCart();
         vm.isLoading = false;
         this.$bus.$emit('customerOrder:getCart');//同步資料
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     removeFavoriteItem(itemId){
       this.favoriteItem.splice(this.favoriteItem.indexOf(itemId), 1);

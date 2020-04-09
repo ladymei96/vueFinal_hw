@@ -126,7 +126,9 @@ export default {
         vm.isLoading = false;
         //console.log('購物車列表取得資料', re.data);
         vm.cart = re.data.data;
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     removeCartItem(id){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
@@ -136,7 +138,9 @@ export default {
         this.isLoading = false;
         vm.getCart();
         this.$bus.$emit('Navbar:updateCart');
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     addCouponCode(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
@@ -158,7 +162,9 @@ export default {
           // console.log(re.data.message);
           vm.coupon_message = re.data.message;
         }
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     createOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
@@ -176,7 +182,9 @@ export default {
         }else{
           console.log('驗證失敗');
         }
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     goBack(){
       this.$router.push('/products');

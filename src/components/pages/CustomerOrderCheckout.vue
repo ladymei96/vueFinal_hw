@@ -103,7 +103,9 @@ export default {
         if(re.data.success){
           vm.getOrder();
         }
-      })
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     goHome(){
       this.$router.push('/');
