@@ -1,3 +1,7 @@
+公告
+此專案使用Vue CLI 2.0建置，暫時停更(仍可運行)
+會另開專案，並更改為Vue CLI 3.0版本，同時進行畫面與程式碼調整
+
 # vue_finalhw
 
 > A Vue.js project
