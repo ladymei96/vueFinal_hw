@@ -5,7 +5,7 @@
       <br>
       我們將不定期寄送相關資訊給您
     </p>
-    <p class="text" v-show="cartText">{{cartMessage}}</p>
+    <p class="text" v-show="cartText">{{ cartMessage }}</p>
   </div>
 </template>
 
@@ -22,26 +22,25 @@
     },
     watch:{
       cartMessage(){
-        const vm = this;//如果this.cartMessage有內容就...
+        //如果this.cartMessage有內容就...
         if(this.cartMessage){
           this.isSubs = true;
           this.cartText = true;
           setTimeout(() => {
-            vm.isSubs = false;
-            vm.cartText = false;
-          },2000);
+            this.isSubs = false;
+            this.cartText = false;
+          }, 2000);
         }
       }
     },
     created(){
-      const vm = this;
-      this.$bus.$on('message:show',() => {
-        vm.isSubs = true;
-        vm.subsText = true;
+      this.$bus.$on('message:show', () => {
+        this.isSubs = true;
+        this.subsText = true;
         setTimeout(() => {
-          vm.isSubs = false;
-          vm.subsText = false;
-        },2000);
+          this.isSubs = false;
+          this.subsText = false;
+        }, 2000);
       })
     },
     beforeDestroy(){

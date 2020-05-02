@@ -8,16 +8,16 @@
           :style="{backgroundImage:`url(${item.imageUrl})`}">
           </div>
           <div class="card-body">
-            <span class="badge badge-secondary float-right ml-2">{{item.category}}</span>
+            <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
             <h5 class="card-title">
-              <a href="#" class="text-dark">{{item.title}}</a>
+              <a href="#" class="text-dark">{{ item.title }}</a>
             </h5>
-            <p class="card-text" v-if="item.description">{{item.description}}</p>
+            <p class="card-text" v-if="item.description">{{ item.description }}</p>
             <p class="card-text" v-if="!item.description">沒有描述</p>
             <div class="d-flex justify-content-between align-items-baseline">
-              <div class="h5" v-if="!item.price">終身價 {{item.origin_price}} 元</div>
-              <del class="h6" v-if="item.price">原價 {{item.origin_price}} 元</del>
-              <div class="h5" v-if="item.price">現在只要 {{item.price}} 元</div>
+              <div class="h5" v-if="!item.price">終身價 {{ item.origin_price }} 元</div>
+              <del class="h6" v-if="item.price">原價 {{ item.origin_price }} 元</del>
+              <div class="h5" v-if="item.price">現在只要 {{ item.price }} 元</div>
             </div>
           </div>
           <div class="card-footer d-flex">
@@ -92,28 +92,28 @@
           <label for="useremail">Email</label>
           <input type="email" class="form-control" :class="{'is-invalid': failed}" name="email" id="useremail"
             v-model="form.user.email" placeholder="請輸入 Email">
-          <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+          <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
         </ValidationProvider>
       
         <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="姓名" rules="required">
           <label for="username">收件人姓名</label>
           <input type="text" class="form-control" :class="{'is-invalid': failed}" name="name" id="username"
             v-model="form.user.name" placeholder="輸入姓名">
-          <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+          <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
         </ValidationProvider>
       
         <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="電話" rules="required">
           <label for="usertel">收件人電話</label>
           <input type="tel" class="form-control" :class="{'is-invalid': failed}" name="tel" id="usertel" v-model="form.user.tel"
           placeholder="請輸入電話">
-          <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+          <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
         </ValidationProvider>
 
         <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="地址" rules="required">
           <label for="useraddress">收件人地址</label>
           <input type="text" class="form-control" :class="{'is-invalid': failed}" name="address" id="useraddress"
           v-model="form.user.address" placeholder="請輸入地址">
-          <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+          <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
         </ValidationProvider>
       
         <div class="form-group">
@@ -148,7 +148,7 @@
             </div>
             <select name="" class="form-control mt-3" v-model="productNum">
               <option :value="num" v-for="num in 10" :key="num">
-                選購 {{num}} {{product.unit}}
+                選購 {{ num }} {{ product.unit }}
               </option>
             </select>
           </div>
@@ -203,90 +203,83 @@ export default {
   methods:{
     getProducts(page = 1){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((re) => {
-        vm.isLoading = false;
-        if(re.data.success){
-          vm.products = re.data.products;
-          vm.pagination = re.data.pagination;
+      this.isLoading = true;
+      this.$http.get(api).then((response) => {
+        this.isLoading = false;
+        if(response.data.success){
+          this.products = response.data.products;
+          this.pagination = response.data.pagination;
         }
+      }).catch((err) => {
+        console.log(err);
       })
     },
     getProduct(id){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${id}`;
-      const vm = this;
       this.status.loadingItem = id;
-      this.$http.get(api).then((re) => {
-        vm.status.loadingItem = '';
-        if(re.data.success){
-          vm.product = re.data.product;
-          console.log(vm.product);
+      this.$http.get(api).then((response) => {
+        response.status.loadingItem = '';
+        if(response.data.success){
+          response.product = response.data.product;
         }else{
-          console.log(re.data.message);
+          console.log(response.data.message);
         }
       });
       $('#productModal').modal('show');
     },
     addtoCart(id, qty = 1){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
       const cart = {
         product_id : id,
         qty,
         };
-      vm.status.loadingItem = id;
-      this.$http.post(api, {data:cart}).then((re) => {
-        vm.status.loadingItem = '';
-        vm.getCart();
+      this.status.loadingItem = id;
+      this.$http.post(api, {data:cart}).then((response) => {
+        this.status.loadingItem = '';
+        this.getCart();
         $('#productModal').modal('hide');
       });
     },
     getCart(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
-      this.$http.get(api).then((re) => {
-        vm.cart = re.data.data;
-        console.log('取得購物車列表', re.data);
+      this.$http.get(api).then((response) => {
+        this.cart = response.data.data;
       });
     },
     removeCartItem(id){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      const vm = this;
-      this.$http.delete(api).then((re) => {
-        vm.getCart();
+      this.$http.delete(api).then((response) => {
+        this.getCart();
       })
     },
     addCouponCode(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
-      const vm = this;
       const coupon = {
-        code:vm.coupon_code,
+        code:this.coupon_code,
         };
       this.isLoading = true;
-      this.$http.post(api, {data:coupon}).then((re) => {
-        vm.isLoading = false;
-        if(re.data.success){
-          this.$bus.$emit('message:push', re.data.message, 'success');
-          vm.getCart();
+      this.$http.post(api, {data:coupon}).then((response) => {
+        this.isLoading = false;
+        if(response.data.success){
+          this.$bus.$emit('message:push', response.data.message, 'success');
+          this.getCart();
         }else{
-          this.$bus.$emit('message:push', re.data.message, 'danger');
+          this.$bus.$emit('message:push', response.data.message, 'danger');
         }
       })
     },
     createOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
-      const vm = this;
     //表單submit前，進行驗證
       this.$refs.form.validate().then((success) => {
         if(success){//驗證成功後，進行AJAX行為(送出訂單)
-          this.$http.post(api, {data:vm.form}).then((re) => {
-            if(re.data.success){
+          this.$http.post(api, {data:this.form}).then((response) => {
+            if(response.data.success){
           //訂單成功送出，進行跳頁
-              console.log(re.data.orderId);
-              this.$router.push(`/simulation/customer-order-checkout/${re.data.orderId}`);
+              console.log(response.data.orderId);
+              this.$router.push(`/simulation/customer-order-checkout/${response.data.orderId}`);
             }else{
-              this.$bus.$emit('message:push', re.data.message, 'danger'); 
+              this.$bus.$emit('message:push', response.data.message, 'danger'); 
             }
           })
         }else{

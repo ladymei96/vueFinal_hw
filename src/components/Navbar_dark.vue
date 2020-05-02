@@ -26,11 +26,11 @@
         <li class="nav-item dropdown">
           <a href="#" class="nav-link text-dark navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown">
             <i class="fas fa-heart fa-lg"></i>
-            <span class="badge badge-danger rounded-circle" v-if="favoriteData.length != 0">{{favoriteData.length}}</span>
+            <span class="badge badge-danger rounded-circle" v-if="favoriteData.length">{{ favoriteData.length }}</span>
           </a>
           <div class="dropdown-menu favorite-dropdown-menu-right p-3 position-absolute" :class="{'dropdown-menu-scroll':favoriteData.length > 3}" style="min-width: 280px" data-offset="400">
             <h6>最愛商品列表</h6>
-            <p class="empty" v-if="favoriteData.length == 0">清單內已無商品</p>
+            <p class="empty" v-if="!favoriteData.length">清單內已無商品</p>
             <table class="table table-sm mb-0">
               <tbody>
                 <tr v-for="item in favoriteData" :key="item.id">
@@ -39,7 +39,7 @@
                       <i class="fa fa-trash-o"></i>
                     </a>
                   </td>
-                  <td width="200" class="align-middle">{{item.title}}</td>
+                  <td width="200" class="align-middle">{{ item.title }}</td>
                 </tr>
               </tbody>
             </table>
@@ -49,11 +49,11 @@
         <li class="nav-item dropdown">
           <a href="#" class="nav-link text-dark navbar-icon-badge navbar-icon-size mb-0" data-toggle="dropdown" data-flip="false">
             <i class="fas fa-shopping-bag fa-lg"></i>
-            <span v-if="cart.carts.length != 0" class="badge badge-danger rounded-circle">{{cart.carts.length}}</span>
+            <span v-if="cart.carts.length" class="badge badge-danger rounded-circle">{{ cart.carts.length }}</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right position-absolute p-3" :class="{'dropdown-menu-scroll':cart.carts.length > 1}" style="width:300px" data-offset="400">
             <h6>已選擇商品</h6>
-            <p class="empty" v-if="cart.carts.length == 0">清單內已無商品</p>
+            <p class="empty" v-if="!cart.carts.length">清單內已無商品</p>
             <table class="table table-sm">
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
@@ -62,9 +62,9 @@
                       <i class="fa fa-trash-o"></i>
                     </a>
                   </td>
-                  <td class="align-middle">{{item.product.title}}</td>
-                  <td width="40" class="align-middle">{{item.qty}}{{item.product.unit}}</td>
-                  <td class="align-middle text-right">{{item.total | currency}}</td>
+                  <td class="align-middle">{{ item.product.title }}</td>
+                  <td width="40" class="align-middle">{{ item.qty }}{{ item.product.unit }}</td>
+                  <td class="align-middle text-right">{{ item.total | currency }}</td>
                 </tr>
               </tbody>
             </table>
@@ -118,43 +118,37 @@ export default {
   },
   computed:{
     favoriteData(){
-      const vm = this;
-      let filtered = this.products.filter(function(item){
-        return vm.favoriteItem.indexOf(item.id) != -1
+      return this.products.filter((item) => {
+        return this.favoriteItem.indexOf(item.id) != -1
       })
-      return filtered
     }
   },
   methods:{
     getCart(){
       const api =  `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
       this.$http.get(api).then((response) => {
-        //console.log('Navbar取得購物車列表', re.data);
-        vm.cart = response.data.data;
-      }).catch((error) => {
-        console.log(error);
+        this.cart = response.data.data;
+      }).catch((err) => {
+        console.log(err);
       });
     },
     getProducts(){
-      const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       this.$http.get(api).then((response) => {
-        vm.products = response.data.products;
-      }).catch((error) => {
-        console.log(error);
+        this.products = response.data.products;
+      }).catch((err) => {
+        console.log(err);
       });
     },
     removeCartItem(id){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      const vm = this;
       this.isLoading = true;
       this.$http.delete(api).then((response) => {
-        vm.getCart();
-        vm.isLoading = false;
+        this.getCart();
+        this.isLoading = false;
         this.$bus.$emit('customerOrder:getCart');//同步資料
-      }).catch((error) => {
-        console.log(error);
+      }).catch((err) => {
+        console.log(err);
       });
     },
     removeFavoriteItem(itemId){
@@ -185,10 +179,9 @@ export default {
   },
   mounted(){
     //等舊元件銷毀才註冊
-    const vm = this;
     this.$bus.$on('Navbar:updateCart', this.getCart);
     this.$bus.$on('Navbar:updateFavoriteItem',(newFavoriteItem) => {
-      vm.favoriteItem = newFavoriteItem;
+      this.favoriteItem = newFavoriteItem;
     });    
   },
   beforeDestroy(){

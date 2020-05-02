@@ -27,7 +27,7 @@ import Pagination from './components/backEnd_Pagination';
 import Gotop from './components/Gotop';
 //自定義內容
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;//前端把 cookie 開關打開
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
   //元件全域註冊

@@ -59,8 +59,6 @@
 </template>
 
 <script>
-import $ from 'jquery';
-
 export default {
   name: 'CustomerCheckOrder_backEnd',
   data () {
@@ -74,18 +72,16 @@ export default {
   methods:{
     getOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order/${this.orderId}`;
-      const vm = this;
-      this.$http.get(api).then((re) => {
-        console.log('取得某一筆訂單', re.data);
-        vm.order = re.data.order;
+      this.$http.get(api).then((response) => {
+        console.log('取得某一筆訂單', response.data);
+        this.order = response.data.order;
       });
     },
     payOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/pay/${this.orderId}`;
-      const vm = this;
-      this.$http.post(api).then((re) => {
-        this.$bus.$emit('message:push', re.data.message, 'success');
-        vm.getOrder();
+      this.$http.post(api).then((response) => {
+        this.$bus.$emit('message:push', response.data.message, 'success');
+        this.getOrder();
       });
     },
   },

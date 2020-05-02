@@ -31,17 +31,17 @@ export default new VueRouter({
       redirect:'/',
     },
     {
-      name:'首頁',
+      name:'Home',
       path:'/',
       component:Home,
     },
     {
-      name:'產品列表',
+      name:'Products',
       path:'/products',
       component:Products,
     },
     {
-      name:'單一產品頁',
+      name:'Product',
       path:'/product/:productId',
       component:Product,
     },
@@ -50,47 +50,47 @@ export default new VueRouter({
       component:CreateOrder,
       children:[
         {
-          name:'購物車清單',
+          name:'CustomerOrder',
           path:'',
           component:CustomerOrder,
         },
         {
-          name:'訂單資訊頁',
+          name:'CustomerOrderCheckout',
           path:':orderId',
           component:CustomerOrderCheckout,
         },
       ]
     },
     {
-      name:'優惠券',
+      name:'Coupons',
       path:'/coupons',
       component:Coupons,
     },
     {
+      name:'Login',
       path:'/login',
-      name:'登入頁',
       component:Login,
     },
     {
+      name:'Dashboard',
       path:'/admin',
-      name:'後台',
       component:Dashboard,
       children:[
         {
+          name:'ProductsBackEnd',
           path:'products',
-          name:'後台產品列表',
           component:ProductsBackEnd,
           meta: { requiresAuth: true },
         },
         {
+          name:'OrdersBackEnd',
           path:'orders',
-          name:'後台訂單列表',
           component:OrdersBackEnd,
           meta: { requiresAuth: true },
         },
         {
+          name:'CouponsBackEnd',
           path:'coupons',
-          name:'後台優惠券',
           component:CouponsBackEnd,
           meta: { requiresAuth: true },
         }
@@ -98,17 +98,17 @@ export default new VueRouter({
     },
     {
       path:'/simulation',
-      name:'後台模擬功能',
+      name:'DashboardVirtual',
       component:Dashboard,
       children:[
         {
+          name:'CustomOrdersBackEnd',
           path:'custom-order',
-          name:'模擬訂單',
           component:CustomOrdersBackEnd,
         },
         {
+          name:'CustomerOrderCheckBackEnd',
           path:'customer-order-checkout/:orderId',
-          name:'模擬訂單結帳頁面',
           component:CustomerOrderCheckBackEnd,
         }
       ]

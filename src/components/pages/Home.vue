@@ -28,10 +28,10 @@
     	      <div class="row">
     	        <div class="col-lg-4 col-sm-6 mb-3" v-for="item in topProducts" :key="item.id">
     	          <div class="card h-100">
-                  <span class="badge badge-danger index-hot-badge">{{`Top ${item.top}`}}</span>
+                  <span class="badge badge-danger index-hot-badge">TOP {{ item.top }}</span>
     	            <div class="card-body pb-0">
     	              <img :src="item.imageUrl" class="card-img-top" alt="product-image">
-    	              <h5 class="card-title">{{item.title}}</h5>
+    	              <h5 class="card-title">{{ item.title }}</h5>
     	            </div>
     
     	            <div class="card card-content bg-primary-opacity text-white card-slideInUp"><!--父-->
@@ -70,8 +70,8 @@
         <div class="col-12 index-news">
           <ul>
             <li v-for="(item, index) in latestNews" :key="index" class="text-left">
-              <p class="d-block d-md-inline-block">{{item.date}}</p>
-              <p class="d-block d-md-inline-block">{{item.content}}</p>
+              <p class="d-block d-md-inline-block">{{ item.date }}</p>
+              <p class="d-block d-md-inline-block">{{ item.content }}</p>
             </li>
           </ul>
         </div>
@@ -103,7 +103,7 @@
       </div>
     </div>
 <!-- 相片庫 -->
-    <div class="container-lg p-5 index-photoLibarary"><!--RWD p-5-->
+    <div class="container-lg p-5 index-photoLibrary"><!--RWD p-5-->
       <div class="item item-pic1"></div>
       <div class="item item-pic2"></div>
       <div class="item item-pic3"></div>
@@ -123,10 +123,10 @@
         <div class="row justify-content-center mb-1">
           <div class="col-lg-8">
             <form class="index-subs">
-              <input type="email" placeholder="your@email.com" v-model="customerEmail">
+              <input type="email" placeholder="your@email.com" v-model.trim="customerEmail">
               <input type="submit" @click.prevent="subsUs" value="訂閱電子報">
             </form >
-            <p class="index-subs-message" :class="{'index-subs-message-visibility':errorMessage}">錯誤，須為有效的電子信箱</p><!--v-show="errorMessage"-->
+            <p class="index-subs-message" :class="{'index-subs-message-visibility':errorMessage}">錯誤，須為有效的電子信箱</p>
           </div>
         </div>
       </div>
@@ -162,13 +162,13 @@ export default {
     judgeEmail(){//判斷客戶輸入字串，是否符合信箱格式
       let isMail =  /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
       return isMail.test(this.customerEmail) ? this.customerEmail : null
-    },
+    },//方法 test(檢測字串是否匹配)
   },
   watch:{
-    customerEmail(){
-      if(this.judgeEmail == null && this.customerEmail != ''){
+    customerEmail(){//判斷錯誤訊息顯示與否
+      if(this.judgeEmail == null && this.customerEmail != '') {
         this.errorMessage = true;
-      }else{
+      }else {
         this.errorMessage = false;
       }
     }
@@ -191,12 +191,14 @@ export default {
 
   },
   mounted(){
-    const vm = this;
-    $(window).scroll(function(){
+    $(window).scroll(() => {
       let scrollPos = $(window).scrollTop();
-      vm.scrollPos = scrollPos;
+      this.scrollPos = scrollPos;
     });
     new WOW().init();
+  },
+  beforeDestroy(){
+    $(window).unbind('scroll');
   }
 }
 </script>

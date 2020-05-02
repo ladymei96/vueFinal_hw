@@ -29,9 +29,9 @@
           </div>
           <div class="order-total-grid">
             <p class="total-price-title">總計</p>
-            <p class="total-price-num">{{cart.total  | currency }}</p>
+            <p class="total-price-num">{{ cart.total  | currency }}</p>
             <p class="total-discount-title text-success" v-show="cart.total !== cart.final_total">折扣價</p>
-            <p class="total-discount-num text-success" v-show="cart.total !== cart.final_total">{{ cart.final_total | currency}}</p>
+            <p class="total-discount-num text-success" v-show="cart.total !== cart.final_total">{{ cart.final_total | currency }}</p>
           </div>
         </div>
         <div class="input-group mb-3">
@@ -42,7 +42,7 @@
             </button>
           </div>
         </div>
-        <p class="text-danger mb-0" v-if="coupon_message != ''">{{coupon_message}}</p>
+        <p class="text-danger mb-0" v-if="coupon_message != ''">{{ coupon_message }}</p>
       </div>
 
       <ValidationObserver tag="div" ref="form" >
@@ -52,25 +52,25 @@
             <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="姓名" rules="required">
               <label for="username">姓名Name*</label>
               <input type="text" class="form-control" :class="{'is-invalid': failed}" id="username" name="name" placeholder="請輸入姓名" v-model="form.user.name">
-              <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+              <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
             </ValidationProvider>
   
             <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="電話" rules="required">
               <label for="usertel">電話Tel*</label>
               <input type="tel" class="form-control" :class="{'is-invalid': failed}" id="usertel" name="tel" placeholder="請輸入電話" v-model="form.user.tel">
-              <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+              <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
             </ValidationProvider>
   
             <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="信箱" rules="required">
               <label for="useremail">信箱Email*</label>
               <input type="email" class="form-control" :class="{'is-invalid': failed}" id="useremail" name="email" placeholder="請輸入email" v-model="form.user.email">
-              <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+              <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
             </ValidationProvider>
   
             <ValidationProvider tag="div" class="form-group" v-slot="{failed, errors}" name="地址" rules="required">
               <label for="useraddress">地址Address*</label>
               <input type="text" class="form-control" :class="{'is-invalid': failed}" id="useraddress" name="address" placeholder="請輸入地址" v-model="form.user.address">
-              <span v-if="failed" class="text-danger">{{errors[0]}}</span>
+              <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
             </ValidationProvider>
   
             <div class="form-group">
@@ -120,23 +120,20 @@ export default {
   methods:{
     getCart(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
       this.isLoading = true;
-      this.$http.get(api).then((re) => {
-        vm.isLoading = false;
-        //console.log('購物車列表取得資料', re.data);
-        vm.cart = re.data.data;
+      this.$http.get(api).then((response) => {
+        this.isLoading = false;
+        this.cart = response.data.data;
       }).catch((error) => {
         console.log(error);
       });
     },
     removeCartItem(id){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      const vm = this;
       this.isLoading = true;
-      this.$http.delete(api).then((re) => {
+      this.$http.delete(api).then((response) => {
         this.isLoading = false;
-        vm.getCart();
+        this.getCart();
         this.$bus.$emit('Navbar:updateCart');
       }).catch((error) => {
         console.log(error);
@@ -144,23 +141,21 @@ export default {
     },
     addCouponCode(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
-      const vm = this;
       const coupon = {
         code:this.coupon_code,
-        };
+      };
       if(!this.coupon_code){
         return;
       }
       this.isLoading = true;
-      this.$http.post(api, {data:coupon}).then((re) => {
+      this.$http.post(api, {data:coupon}).then((response) => {
         this.isLoading = false;
-        if(re.data.success){
-          vm.getCart();
-          vm.coupon_message = '';
-          vm.coupon_code = '';
+        if(response.data.success){
+          this.getCart();
+          this.coupon_message = '';
+          this.coupon_code = '';
         }else{
-          // console.log(re.data.message);
-          vm.coupon_message = re.data.message;
+          this.coupon_message = response.data.message;
         }
       }).catch((error) => {
         console.log(error);
@@ -168,15 +163,13 @@ export default {
     },
     createOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
-      const vm = this;
       this.$refs.form.validate().then((success) => {
         if(success){
-          this.$http.post(api, {data:vm.form}).then((re) => {
-            if(re.data.success){
-              this.$router.push(`/customer-order/${re.data.orderId}`);
-            }else{
-        //失敗跳訊息
-              console.log(re.data.message || re.data.messages);
+          this.$http.post(api, {data:this.form}).then((response) => {
+            if(response.data.success){
+              this.$router.push(`/customer-order/${response.data.orderId}`);
+            }else{//失敗跳訊息
+              console.log(response.data.message || response.data.messages);
             }
           })
         }else{

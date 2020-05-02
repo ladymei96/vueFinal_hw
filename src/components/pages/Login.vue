@@ -14,7 +14,7 @@
       <button class="btn btn-lg btn-primary btn-block mb-5" type="submit">Sign in</button>
       <div class="d-flex justify-content-between">
         <a href="#" @click.prevent="goHome">回到首頁</a>
-        <p class="text-muted">&copy; 2020 by mei 僅供學習使用</p>
+        <p class="text-muted">&copy; {{ years }} by mei 僅供學習使用</p>
       </div>
     </form>
   </div>
@@ -28,18 +28,18 @@ export default {
   data () {
     return {
       user:{
-        username:'',
-        password:'',
-      }
+        username: '',
+        password: '',
+      },
+      years: new Date().getFullYear(),
     }
   },
   methods:{
     signin(){
       const api = `${process.env.APIPATH}/admin/signin`;
-      const vm = this;
-      vm.$http.post(api, vm.user).then((response) => {
+      this.$http.post(api, this.user).then((response) => {
         if(response.data.success){
-          vm.$router.push('/admin/products');
+          this.$router.push('/admin/products');
         }else{
           alert(`${response.data.message} 請重新登入`);
         }

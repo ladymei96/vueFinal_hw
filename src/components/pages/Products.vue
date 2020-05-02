@@ -29,7 +29,7 @@
 <!-- 產品分類-選單 -->
     <div class="container text-center mb-md-5 mb-3">
       <div class="list-group list-group-horizontal-md" id="list-tab" role="tablist">
-        <a v-for="(listItem, index) in category" :key="listItem" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{listItem}} <i class="fas fa-caret-down" v-show="index != 0"></i></a>
+        <a v-for="(listItem, index) in category" :key="listItem" class="list-group-item list-group-item-action" @click.prevent="selectCategory(index)" :class="{'active':index == categoryIndex}" href="#">{{ listItem }} <i class="fas fa-caret-down" v-show="index != 0"></i></a>
       </div>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade" :class="{'active': categoryIndex == 0, 'show': categoryIndex == 0}">
@@ -107,16 +107,16 @@
               <h5 class="card-title">{{item.title}}</h5>
             </div>
             <div class="card-footer pt-0 pb-4">
-              <p class="text-right text-muted mb-0"><del>{{item.origin_price | currency}}</del></p>
-              <p class="h5 text-right mb-0">{{item.price | currency}}</p>              
+              <p class="text-right text-muted mb-0"><del>{{ item.origin_price | currency }}</del></p>
+              <p class="h5 text-right mb-0">{{ item.price | currency }}</p>              
             </div>
 
             <div class="card card-content card-fadeIn bg-primary text-white">
               <div class="card-header h-25 pt-4">
-                <h5 class="card-title">{{item.title}}</h5>
+                <h5 class="card-title">{{ item.title }}</h5>
               </div>
               <div class="card-body">
-                <p>{{item.description}}</p>
+                <p>{{ item.description }}</p>
               </div>
               <div class="card-footer d-flex flex-column">
                 <a href="#" @click.prevent="productDetail(item.id)" class="text-white align-self-end h3">more_</a>
@@ -137,7 +137,7 @@
           </a>
         </li>
         <li class="page-item" v-for="(page, index) in totalPageData.length" :key="page" :class="{'active': currentPage == page}">
-          <a class="page-link" @click.prevent="pagination(index)" href="#">{{page}}</a>
+          <a class="page-link" @click.prevent="pagination(index)" href="#">{{ page }}</a>
         </li>
         <li class="page-item changePageIcon" :class="{'disabled':!has_next}">
           <a class="page-link" href="#" aria-label="Next" @click.prevent="pagination(currentPage)">
@@ -180,35 +180,20 @@ export default {
     }
   },
   computed:{
-    // filterData(){
-    //   if(this.currentCategory == '全部商品'){
-    //     return this.products;
-    //   }
-    //   let filtered = this.products.filter((item) => {
-    //     if(this.brand == ''){
-    //       return item.category == this.currentCategory;
-    //     }else{
-    //       return item.category == this.currentCategory && item.title.indexOf(this.brand) != -1;
-    //     } 
-    //   });
-    //   return filtered;
-    // }
     typeData(){
-      const vm = this;
       if(this.currentCategory !== '全部商品'){
         return this.products.filter((item) => {
-          return item.category === vm.currentCategory
+          return item.category === this.currentCategory
         })
       }else{
         return this.products;
       }
     },
     brandData(){
-      const vm = this;
     //如果brand不等於''，就回傳資料內同品牌的項目
       if(this.brand !== ''){
         return this.typeData.filter((item) => {
-          return item.title.indexOf(vm.brand) !== -1
+          return item.title.indexOf(this.brand) !== -1
         })
       }else{
         return this.typeData//不然就回傳分類列表內的項目
@@ -249,14 +234,13 @@ export default {
   },
   methods:{
     getProducts(){
-      const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       this.isLoading = true;
       this.$http.get(api).then((response) => {
-        vm.products = response.data.products;
+        this.products = response.data.products;
         this.isLoading = false;
-      }).catch((error) => {
-        console.log(error);
+      }).catch((err) => {
+        console.log(err);
       });
     },
     productDetail(id){
@@ -264,7 +248,6 @@ export default {
     },
     addtoCart(id, qty = 1){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
       const cart = {
         product_id:id,
         qty,
@@ -274,13 +257,13 @@ export default {
         if(response.data.success){
           this.$bus.$emit('Navbar:updateCart');
           this.isLoading = false;
-          vm.cartSuccessMessage = '已加入購物車';
+          this.cartSuccessMessage = '已加入購物車';
         }
-        setTimeout(()=>{
-          vm.cartSuccessMessage = '';
-        },2000)
-      }).catch((error) => {
-        console.log(error);
+        setTimeout(() => {
+          this.cartSuccessMessage = '';
+        }, 2000)
+      }).catch((err) => {
+        console.log(err);
       });
     },
     selectCategory(index){
@@ -294,18 +277,16 @@ export default {
     }
   },
   created(){
-    const vm = this;
     this.getProducts();
   //註冊事件：點擊下拉選單項目，跳轉產品列表頁並顯示對應選項
     this.$bus.$on('filterData:postIndex', (index) => {
-      vm.selectCategory(index);
+      this.selectCategory(index);
     });
   },
   mounted(){
-    const vm = this;
-    $(window).scroll(function(){
+    $(window).scroll(() => {
       let scrollPos = $(window).scrollTop();
-      vm.scrollPos = scrollPos;
+      this.scrollPos = scrollPos;
     });
     $('.carousel').carousel({
       interval: 2000,

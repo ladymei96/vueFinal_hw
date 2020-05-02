@@ -132,16 +132,14 @@ export default {
       $('#couponModal').modal('show');
     },
     updateCoupon(){
-      const vm = this;
       let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon`;
       let httpMethods = 'post';
-      if(!vm.isNew){
-        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${vm.temCoupon.id}`;
+      if(!this.isNew){
+        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${this.temCoupon.id}`;
         httpMethods = 'put';
       }
-      this.$http[httpMethods](api, {data:vm.temCoupon}).then((re) => {
-        console.log('更新優惠券', re.data);
-        if(re.data.success){
+      this.$http[httpMethods](api, {data:this.temCoupon}).then((response) => {
+        if(response.data.success){
           $('#couponModal').modal('hide');
           this.getCoupons();
         }else{
@@ -152,37 +150,35 @@ export default {
       });
     },
     getCoupons(page = 1){
-      const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupons?page=${page}`;
-      vm.isLoading = true;
-      this.$http.get(api).then((re) => {
-        console.log('取得優惠券', re.data);
-        vm.isLoading = false;
-        if(re.data.success){
-          vm.coupons = re.data.coupons;
-          vm.pagination = re.data.pagination;
+      this.isLoading = true;
+      this.$http.get(api).then((response) => {
+        console.log('取得優惠券', response.data);
+        this.isLoading = false;
+        if(response.data.success){
+          this.coupons = response.data.coupons;
+          this.pagination = response.data.pagination;
         }else{
-          console.log(re.data.message);
+          console.log(response.data.message);
         }
       });
     },
     openRemoveModal(item){
-      const vm = this;
-      vm.temCoupon = Object.assign({}, item);
+      this.temCoupon = Object.assign({}, item);
       $('#removeCouponModal').modal('show');
     },
     removeCoupon(){
-      const vm = this;                          //openModal之前，item已傳入temCoupon，所以點擊時不用傳入id
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${vm.temCoupon.id}`;
-      this.$http.delete(api).then((re) => {
-        console.log('刪除優惠券', re.data);
-        if(re.data.success){
+      //openModal之前，item已傳入temCoupon，所以點擊時不用傳入id
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${this.temCoupon.id}`;
+      this.$http.delete(api).then((response) => {
+        console.log('刪除優惠券', response.data);
+        if(response.data.success){
           $('#removeCouponModal').modal('hide');
-          vm.getCoupons();
+          this.getCoupons();
         }else{
           console.log(data.re.message);
           $('#removeCouponModal').modal('hide');
-          vm.getCoupons();
+          this.getCoupons();
         }
       })
     }

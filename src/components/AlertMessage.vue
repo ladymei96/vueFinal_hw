@@ -30,23 +30,21 @@
         this.removeMessageWithTiming(timestamp);
       },
       removeMessageWithTiming(timestamp){
-        const vm = this;
-        setTimeout(()=>{
-          vm.messages.forEach((item, index) => {
+        setTimeout(() => {
+          this.messages.forEach((item, index) => {
             if(item.timestamp === timestamp){
-              vm.messages.splice(index, 1);
+              this.messages.splice(index, 1);
             }
           })
-        },5000);
+        }, 5000);
       },
       removeMessage(num){
         this.messages.splice(num, 1);
       },
     },
     created(){
-      const vm = this;
       this.$bus.$on('message:push', (message, status) => {
-        vm.updateMessage(message, status);
+        this.updateMessage(message, status);
       })
     }
   }

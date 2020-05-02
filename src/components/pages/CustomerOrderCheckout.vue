@@ -88,20 +88,18 @@ export default {
   methods:{
     getOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order/${this.orderId}`;
-      const vm = this;
       this.isLoading = true;
-      this.$http.get(api).then((re) => {
-        vm.isLoading = false;
-        vm.order = re.data.order;
+      this.$http.get(api).then((response) => {
+        this.isLoading = false;
+        this.order = response.data.order;
       })
     },
     payOrder(){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/pay/${this.orderId}`;
-      const vm = this;
       this.isLoading = true;
-      this.$http.post(api).then((re) => {
-        if(re.data.success){
-          vm.getOrder();
+      this.$http.post(api).then((response) => {
+        if(response.data.success){
+          this.getOrder();
         }
       }).catch((error) => {
         console.log(error);
@@ -112,7 +110,6 @@ export default {
     }
   },
   created(){
-    // -M2CbVv7W8yV-jYUyfkG
     this.orderId = this.$route.params.orderId;
     this.getOrder();
     this.$bus.$emit('Navbar:updateCart');//訂單建立，購物車會清空

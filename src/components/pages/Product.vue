@@ -5,7 +5,7 @@
     <div class="container">
       <div class="mb-5"><!--資料更動區-->
         <div class="text-center mb-4">
-          <h1 class="h2 title-border-bottom d-inline-block pb-2">{{product.title}}</h1>
+          <h1 class="h2 title-border-bottom d-inline-block pb-2">{{ product.title }}</h1>
         </div>
         <div class="row">
           <div class="col-lg-6 text-center">
@@ -14,23 +14,23 @@
           </div>
           <div class="col-lg-6 product-item">
             <div class="product-text">
-              <p>{{product.description}}</p>
+              <p>{{ product.description }}</p>
             </div>
             
             <div class="product-price">
               <div class="text-right mb-3">
-                <span class="h3 font-weight-bolder">{{product.price | currency}}</span>
-                <span class="h5 text-muted ml-2"><del>{{product.origin_price | currency}}</del></span>
+                <span class="h3 font-weight-bolder">{{ product.price | currency }}</span>
+                <span class="h5 text-muted ml-2"><del>{{ product.origin_price | currency }}</del></span>
               </div>
 
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="minNum">-</button>
+                  <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="changeNum(-1)">-</button>
                 </div>
                 <input type="tel" class="form-control text-center border-1px" v-model.number="productNum" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
                 <div class="input-group-append" id="button-addon4">
-                  <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="productNum++">+</button>
-                  <button class="btn btn-secondary font-weight-bolder" type="button" @click.prevent="addtoCart(productNum)">加到購物車</button>
+                  <button class="btn btn-outline-secondary px-sm-5" type="button" @click.prevent="changeNum(1)">+</button>
+                  <button class="btn btn-secondary font-weight-bolder" type="button" @click.prevent="addtoCart">加到購物車</button>
                 </div>
               </div>  
             </div>
@@ -53,12 +53,12 @@
             <div class="col-md-4" v-for="item in productIntro" :key="item.title">
               <div class="card h-100 border-0">
                 <div class="card-header">
-                  <p class="item-num text-center text-lg-left">{{item.num}}</p>
-                  <h5 class="card-title item-title text-center text-lg-left">{{item.title}}</h5>
+                  <p class="item-num text-center text-lg-left">{{ item.num }}</p>
+                  <h5 class="card-title item-title text-center text-lg-left">{{ item.title }}</h5>
                 </div>
                 <div class="card-body">
                   <p class="h5 mb-0">
-                    {{item.description}}
+                    {{ item.description }}
                   </p>              
                 </div>
                 <div class="card-footer">
@@ -114,7 +114,7 @@
             </div>
             <div class="card card-content bg-primary-opacity text-white card-slideInUp">
               <div class="card-body d-flex flex-column justify-content-center">
-                <h5 class="card-title">{{item.title}}</h5>
+                <h5 class="card-title">{{ item.title }}</h5>
                 <button type="button" class="btn btn-outline-light align-self-center" @click.prevent="anotherProduct(item.id)">點擊前往</button>
               </div>
             </div>
@@ -152,17 +152,17 @@ export default {
       scrollPos:0,
     // 相關產品-輪播
       slickOptions: {
-        //基本設定
-        slidesToShow: 4,//一次顯示幾個
-        slidesToScroll: 2,//切換下一頁時移動幾個
-        dots: true, //項目點點，預設為false
-        arrows: false, //上下箭頭，預設為true
-        autoplay: false, //自動撥放
-        autoplaySpeed: 500, //自動撥放的切換速率，單位毫秒
-        speed: 1500, //切換速率，單位毫秒
-        infinite: false, //是否要loop，預設為true
-        //RWD設定
-        responsive: [    
+        // 基本設定
+        slidesToShow: 4,// 一次顯示幾個
+        slidesToScroll: 2,// 切換下一頁時移動幾個
+        dots: true, // 項目點點，預設為false
+        arrows: false, // 上下箭頭，預設為true
+        autoplay: false, // 自動撥放
+        autoplaySpeed: 500, // 自動撥放的切換速率，單位毫秒
+        speed: 1500, // 切換速率，單位毫秒
+        infinite: false, // 是否要loop，預設為true
+        // RWD設定
+        responsive: [
           {
             breakpoint: 991,
             settings: {
@@ -185,9 +185,8 @@ export default {
       return this.favoriteItem.indexOf(this.productId) != -1 ? 'fas' : 'far'
     },
     filterData(){
-      const vm = this;
       return this.products.filter((item) => {
-        return item.category == vm.product.category
+        return item.category == this.product.category
       })
     },
   },
@@ -199,45 +198,48 @@ export default {
       this.$refs.slick.prev();
     },
     getProduct(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${this.productId}`;
       this.isLoading = true;
       this.$http.get(api).then((response) => {
-        vm.isLoading = false;
-        vm.product = response.data.product;
+        this.isLoading = false;
+        this.product = response.data.product;
+      }).catch((err) => {
+        console.log(err);
       })
     },
     getProducts(){
-      const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       this.$http.get(api).then((response) => {
-        vm.products = response.data.products;
+        this.products = response.data.products;
       })
     },
-    addtoCart(qty){
+    addtoCart(){
+      if(this.productNum < 1) {
+        this.productNum = 1;
+        return false;
+      }
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
       const cart = {
-        product_id:vm.productId,
-        qty,
+        product_id: this.productId,
+        qty: this.productNum,
       };
       this.isLoading = true;
       this.$http.post(api, {data:cart}).then((response) => {
         if(response.data.success){
           this.$bus.$emit('Navbar:updateCart');
-          vm.isLoading = false;
-          vm.cartSuccessMessage = '已加入購物車';
+          this.isLoading = false;
+          this.cartSuccessMessage = '已加入購物車';
+          this.productNum = 1;
         }
-        setTimeout(()=>{
-          vm.cartSuccessMessage = '';
-        },2000)
-      }).catch((error) => {
-        console.log(error);
+        setTimeout(() => {
+          this.cartSuccessMessage = '';
+        }, 2000)
+      }).catch((err) => {
+        console.log(err);
       });
     },
     judgeFavorite(){
-      const vm = this;
-      if(this.favoriteItem.indexOf(this.productId) == -1){
+      if(this.favoriteItem.indexOf(this.productId) === -1){
         this.favoriteItem.push(this.productId);
       }else{
         this.favoriteItem.splice(this.favoriteItem.indexOf(this.productId), 1);
@@ -246,11 +248,12 @@ export default {
       localStorage.setItem('favoriteItemId', JSON.stringify(this.favoriteItem));
       this.$bus.$emit('Navbar:updateFavoriteItem', this.favoriteItem);
     },
-    minNum(){
-      if(this.productNum < 2){
+    changeNum(num){
+      let qty = this.productNum + num;
+      if(qty < 1){
         this.productNum = 1;
       }else{
-        this.productNum-=1;
+        this.productNum = qty;
       }
     },
     goBack(){
@@ -261,31 +264,21 @@ export default {
       let doc = document.documentElement;
       this.productId = id;
       this.getProduct();
-      $(doc).animate({scrollTop:0},800);
+      $(doc).animate({scrollTop: 0}, 800);
     },
-    // reInit() {
-    // // Helpful if you have to deal with v-for to update dynamic lists
-    //   this.$nextTick(() => {
-    //       this.$refs.slick.reSlick();
-    //   });
-    //   console.log('點');
-    // },
   },
   created(){
-    const vm = this;
     this.productId = this.$route.params.productId;
     this.getProduct();
     this.getProducts();
-    // this.getProductIntro();
     this.$bus.$on('Product:updateFavoriteItem',(newFavoriteItem)=>{
-      vm.favoriteItem = newFavoriteItem;
+      this.favoriteItem = newFavoriteItem;
     })
   },
   mounted(){
-    const vm = this;
-    $(window).scroll(function(){
+    $(window).scroll(() => {
       let scrollPos = $(window).scrollTop();
-      vm.scrollPos = scrollPos;
+      this.scrollPos = scrollPos;
     });
   },
   beforeDestroy(){

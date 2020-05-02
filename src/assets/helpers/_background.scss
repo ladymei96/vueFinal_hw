@@ -42,7 +42,7 @@
     transform: scale($pic-scale);
   }
 }
-.index-photoLibarary{
+.index-photoLibrary{
   display:grid;
   grid-template-areas:
   "item-pic1 item-pic1 item-pic2 item-pic3"
@@ -153,7 +153,12 @@
   height:100vh;
 }
   //滿版背景圖下方留白問題
-@media (max-height: 736px){
+// @media (orientation: portrait){
+//   .coupon-bg{
+//     height: 100%;
+//   }
+// }
+@media (max-height: 730px){
   .coupon-bg{
     height: 100%;
   }

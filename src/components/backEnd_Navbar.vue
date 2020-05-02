@@ -22,7 +22,7 @@
     methods:{
       signout(){
         const api = `${process.env.APIPATH}/logout`;
-        this.$http.post(api).then((re)=>{
+        this.$http.post(api).then((response)=>{
           this.$router.push('/login');
         })
       }

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-//別的頁面還沒加上
 export default {
   name:'Gotop',
   props:['windowScroll'],
@@ -19,7 +18,7 @@ export default {
       let doc = document.documentElement;
       $(doc).animate({
         scrollTop:0
-      },500)
+      }, 500)
     }
   },
   computed:{
